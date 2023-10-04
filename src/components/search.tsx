@@ -1,12 +1,14 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState, ChangeEvent } from "react";
+import { PokemonClient } from "pokenode-ts";
 
 interface PokemonData {
   pokeName: string;
-  capture: number;
+  pokeMove: string[];
 }
 
 export default function Search() {
-  const [pokeSearch, setSearch] = useState<string>('');
+  const [pokeSearch, setSearch] = useState<string>("");
   const [pokeData, setPokeData] = useState<PokemonData[]>([]);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -14,20 +16,29 @@ export default function Search() {
   };
 
   const handleSearchClick = () => {
-    fetch(`https://pokeapi.co/api/v2/pokemon-species/${pokeSearch}`)
-      .then((res) => res.json())
+    const api = new PokemonClient();
+
+    api
+      .getPokemonByName(pokeSearch)
       .then((data) => {
+
+        const moveNames = data.moves.map((move) => move.name);
+
         const searchedPokemon: PokemonData = {
           pokeName: data.name,
-          capture: data.capture_rate,
+          pokeMove: moveNames,
         };
+
         setPokeData([searchedPokemon]);
+        console.log(data);
+      })
+      .catch((error) => {
+        console.error(error);
       });
   };
 
   return (
-    <div>
-    /*<div className="searchMain">
+    <div className="searchMain">
       <div className="searchContainer">
         <input
           type="text"
@@ -44,10 +55,16 @@ export default function Search() {
         {pokeData.map((pokemon) => (
           <div key={pokemon.pokeName}>
             <div className="pokeName">{pokemon.pokeName}</div>
-            <div className="pokeDescrip">{pokemon.capture}</div>
+            <div className="pokeMoves">
+              {pokemon.pokeMove.map((move) => (
+                <div key={move} className="pokeMove">
+                  {move}
+                </div>
+              ))}
+            </div>
           </div>
         ))}
       </div>
-    </div>*/
+    </div>
   );
 }
