@@ -4,7 +4,7 @@ import { PokemonClient } from "pokenode-ts";
 
 interface PokemonData {
   pokeName: string;
-  pokeMoves: Record<string, Record<string, string[]>>;
+  pokeMoves: Record<string, Record<string, Array<{ name: string; level?: string }>>>;
 }
 
 export default function Search() {
@@ -21,12 +21,16 @@ export default function Search() {
     api
       .getPokemonByName(pokeSearch)
       .then((data) => {
-        const movesByVersionAndMethod: Record<string, Record<string, string[]>> = {};
+        const movesByVersionAndMethod: Record<
+          string,
+          Record<string, Array<{ name: string; level?: string }>>
+        > = {};
 
         data.moves.forEach((move) => {
           move.version_group_details.forEach((groupDetail) => {
             const versionGroupName = groupDetail.version_group.name;
             const moveLearnMethod = groupDetail.move_learn_method.name;
+            let moveLevel;
 
             if (!movesByVersionAndMethod[versionGroupName]) {
               movesByVersionAndMethod[versionGroupName] = {};
@@ -36,7 +40,22 @@ export default function Search() {
               movesByVersionAndMethod[versionGroupName][moveLearnMethod] = [];
             }
 
-            movesByVersionAndMethod[versionGroupName][moveLearnMethod].push(move.move.name);
+            if (moveLearnMethod === "level-up") {
+              moveLevel = groupDetail.level_learned_at.toString();
+            }
+
+            if (moveLevel !== undefined) {
+              const newSet = {
+                name: move.move.name,
+                level: moveLevel,
+              };
+              movesByVersionAndMethod[versionGroupName][moveLearnMethod].push(
+                newSet
+              );
+            } else
+              movesByVersionAndMethod[versionGroupName][moveLearnMethod].push({
+                name: move.move.name,
+              });
           });
         });
 
@@ -47,6 +66,7 @@ export default function Search() {
 
         setPokeData([searchedPokemon]);
         console.log(data);
+        console.log(data.moves[3].version_group_details[0].level_learned_at);
         console.log(movesByVersionAndMethod);
       })
       .catch((error) => {
@@ -77,18 +97,25 @@ export default function Search() {
                 <div key={versionGroup}>
                   <div className="versionGroupName">{versionGroup}</div>
                   <div className="moveLearnMethods">
-                    {Object.keys(pokemon.pokeMoves[versionGroup]).map((moveLearnMethod) => (
-                      <div key={moveLearnMethod}>
-                        <div className="moveLearnMethod">{moveLearnMethod}</div>
-                        <div className="movesList">
-                          {pokemon.pokeMoves[versionGroup][moveLearnMethod].map((move) => (
-                            <div key={move} className="pokeMove">
-                              {move}
-                            </div>
-                          ))}
+                    {Object.keys(pokemon.pokeMoves[versionGroup]).map(
+                      (moveLearnMethod) => (
+                        <div key={moveLearnMethod}>
+                          <div className="moveLearnMethod">
+                            {moveLearnMethod}
+                          </div>
+                          <div className="movesList">
+                            {pokemon.pokeMoves[versionGroup][
+                              moveLearnMethod
+                            ].map((move) => (
+                              <div key={move.name} className="pokeMove">
+                                {move.name}
+                                {move.level && ` (Level: ${move.level})`}
+                              </div>
+                            ))}
+                          </div>
                         </div>
-                      </div>
-                    ))}
+                      )
+                    )}
                   </div>
                 </div>
               ))}
