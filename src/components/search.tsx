@@ -4,7 +4,7 @@ import { PokemonClient } from "pokenode-ts";
 
 interface PokemonData {
   pokeName: string;
-  pokeMoves: Record<string, string[]>; 
+  pokeMoves: Record<string, Record<string, string[]>>;
 }
 
 export default function Search() {
@@ -21,26 +21,33 @@ export default function Search() {
     api
       .getPokemonByName(pokeSearch)
       .then((data) => {
-        const movesByVersionGroup: Record<string, string[]> = {};
+        const movesByVersionAndMethod: Record<string, Record<string, string[]>> = {};
 
         data.moves.forEach((move) => {
           move.version_group_details.forEach((groupDetail) => {
             const versionGroupName = groupDetail.version_group.name;
-            if (!movesByVersionGroup[versionGroupName]) {
-              movesByVersionGroup[versionGroupName] = [];
+            const moveLearnMethod = groupDetail.move_learn_method.name;
+
+            if (!movesByVersionAndMethod[versionGroupName]) {
+              movesByVersionAndMethod[versionGroupName] = {};
             }
-            movesByVersionGroup[versionGroupName].push(move.move.name);
+
+            if (!movesByVersionAndMethod[versionGroupName][moveLearnMethod]) {
+              movesByVersionAndMethod[versionGroupName][moveLearnMethod] = [];
+            }
+
+            movesByVersionAndMethod[versionGroupName][moveLearnMethod].push(move.move.name);
           });
         });
 
         const searchedPokemon: PokemonData = {
           pokeName: data.name,
-          pokeMoves: movesByVersionGroup,
+          pokeMoves: movesByVersionAndMethod,
         };
 
         setPokeData([searchedPokemon]);
         console.log(data);
-        console.log(movesByVersionGroup);
+        console.log(movesByVersionAndMethod);
       })
       .catch((error) => {
         console.error(error);
@@ -69,10 +76,17 @@ export default function Search() {
               {Object.keys(pokemon.pokeMoves).map((versionGroup) => (
                 <div key={versionGroup}>
                   <div className="versionGroupName">{versionGroup}</div>
-                  <div className="movesList">
-                    {pokemon.pokeMoves[versionGroup].map((move) => (
-                      <div key={move} className="pokeMove">
-                        {move}
+                  <div className="moveLearnMethods">
+                    {Object.keys(pokemon.pokeMoves[versionGroup]).map((moveLearnMethod) => (
+                      <div key={moveLearnMethod}>
+                        <div className="moveLearnMethod">{moveLearnMethod}</div>
+                        <div className="movesList">
+                          {pokemon.pokeMoves[versionGroup][moveLearnMethod].map((move) => (
+                            <div key={move} className="pokeMove">
+                              {move}
+                            </div>
+                          ))}
+                        </div>
                       </div>
                     ))}
                   </div>
