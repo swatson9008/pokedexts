@@ -1,10 +1,10 @@
-import Search from "./components/search"
+import SearchBox from "./pages/searchBox"
 
 function App() {
 
   return (
     <>
-    <Search />
+    <SearchBox />
     </>
   )
 }
