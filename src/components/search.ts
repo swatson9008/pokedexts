@@ -1,9 +1,5 @@
 import { PokemonClient } from "pokenode-ts";
-
-interface PokemonData {
-  pokeName: string;
-  pokeMoves: Record<string, Record<string, Array<{ name: string; level?: string }>>>;
-}
+import { PokemonData } from "./pokemonData";
 
 export default async function Search(searchPoke: string) {
   try {
