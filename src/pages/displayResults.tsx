@@ -29,8 +29,8 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                             <div className="movesList">
                               {sortedData.pokeMoves[versionGroup][moveLearnMethod].map((move) => (
                                 <div key={move.name} className="pokeMove">
+                                  {move.level && `Level: ${move.level} `}
                                   {formatString(move.name)}
-                                  {move.level && ` (Level: ${move.level})`}
                                 </div>
                               ))}
                             </div>
