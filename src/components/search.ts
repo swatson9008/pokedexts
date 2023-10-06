@@ -64,7 +64,6 @@ export default async function Search(searchPoke: string) {
     console.log(data);
     console.log(data.moves[3].version_group_details[0].level_learned_at);
     console.log(movesByVersionAndMethod);
-
     return searchedPokemonData; 
   } catch (error) {
     console.error(error);

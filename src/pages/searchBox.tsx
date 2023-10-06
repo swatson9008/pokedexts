@@ -1,5 +1,5 @@
 import { useState, ChangeEvent } from "react";
-import Search from '../components/search'
+import Search from "../components/search";
 import DisplayResults from "./displayResults";
 import { PokemonData } from "../components/pokemonData";
 
