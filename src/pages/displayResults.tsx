@@ -9,11 +9,10 @@ interface DisplayResultsProps {
 
 export default function DisplayResults({ pokeData }: DisplayResultsProps) {
   const sortedData = sortMoves(pokeData);
-  const defaultGameTitle = Object.keys(sortedData.pokeMoves)[1];
+  const defaultGameTitle = Object.keys(sortedData.pokeMoves)[0];
   const [gameTitle, setGameT] = useState(defaultGameTitle);
   const [learnMethod, setMethod] = useState("level-up");
   const moveList = sortedData.pokeMoves[gameTitle][learnMethod] || [];
-  console.log(moveList);
   return (
     <div className="searchMain">
       <div className="displayResult">
