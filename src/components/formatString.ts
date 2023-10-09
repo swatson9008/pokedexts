@@ -1,4 +1,5 @@
 export default function formatString(input: string) {
+    if (input === "machine"){input = "TM/HM"}
     const words = input.split("-");
     const formatted = words
       .map((word) => {
