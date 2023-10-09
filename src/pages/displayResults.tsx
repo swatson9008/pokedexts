@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import formatString from "../components/formatString";
 import { PokemonData } from "../components/pokemonData";
 import sortMoves from "../components/sortMove";
-import { MoveClient } from 'pokenode-ts';
+import { MoveClient } from "pokenode-ts";
 
 interface DisplayResultsProps {
   pokeData: PokemonData;
@@ -16,9 +16,15 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
   const [learnMethod, setLearnMethod] = useState("level-up");
   const moveList = sortedData.pokeMoves[gameTitle][learnMethod] || [];
   const learnList = Object.keys(sortedData.pokeMoves[gameTitle] || {});
+  const [tmHM, setTmHm] = useState<string[]>([]);
 
-
-  const customLearnMethodOrder = ["level-up", "machine", "egg", "tutor", "stadium-surfing-pikachu"];
+  const customLearnMethodOrder = [
+    "level-up",
+    "machine",
+    "egg",
+    "tutor",
+    "stadium-surfing-pikachu",
+  ];
 
   learnList.sort((a, b) => {
     const indexA = customLearnMethodOrder.indexOf(a);
@@ -39,23 +45,37 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
       try {
         if (learnMethod === "machine") {
           const moveClient = new MoveClient();
-          const data = await moveClient.getMoveByName('return');
+          // const data = await moveClient.getMoveByName('return');
+          const moveDataArray = await Promise.all(
+            moveList.map(async (move) => {
+              let moveName = move.name; // Initialize moveName with the current move's name
+              const moveData = await moveClient.getMoveByName(moveName);
+              const matchingMachine = moveData.machines.find(
+                (machine) => machine.version_group.name === gameTitle
+              );
+              // return moveData;
   
-
-          const matchingMachine = data.machines.find(
-            (machine) => machine.version_group.name === gameTitle
+              if (matchingMachine) {
+                const url = matchingMachine.machine.url;
+                const response = await fetch(url);
+                const moveRes = await response.json();
+                const moveTM = moveRes.item.name;
+                console.log(moveTM);
+                moveName = `${moveTM} ${move.name}`; // Update moveName with the new value
+              } else {
+                console.log(
+                  `No machine found with version group name ${gameTitle}`
+                );
+              }
+  
+              return moveName; // Return the updated moveName
+            })
           );
   
-
-          if (matchingMachine) {
-            const url = matchingMachine.machine.url;
-            const response = await fetch(url);
-            const moveRes = await response.json();
-            const moveTM = moveRes.item.name;
-            console.log(moveTM);
-          } else {
-            console.log(`No machine found with version group name ${gameTitle}`);
-          }
+          // The code related to 'data' and 'matchingMachine' is commented out
+          console.log(moveDataArray); // This will contain the updated move names
+          setTmHm(moveDataArray);
+          console.log(tmHM)
         }
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -63,35 +83,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
     };
   
     fetchData();
-  }, [gameTitle, learnMethod]);
-  
-  
-
-  /*useEffect(() => {
-    const fetchData = async () => {
-      try {
-        if (learnMethod === "machine") {
-          const moveClient = new MoveClient();
-          const data = await moveClient.getMoveByName('return');
-          //const filteredGame = data.filter(moves => moves.machine.version_group === gameTitle)
-          //console.log(filteredGame)
-          const url = data.machines[0].machine.url;
-          const response = await fetch(url); 
-          const moveRes = await response.json();
-          const moveTM = moveRes.item.name;
-          console.log(data.machines)
-          console.log(data);
-          console.log(moveTM);
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-  
-    fetchData();
-  }, [gameTitle, learnMethod]);*/
-   
-
+  }, [gameTitle, learnMethod, moveList]);
 
   return (
     <div className="searchMain">
@@ -123,12 +115,19 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
               ))}
             </div>
             <div className="moveList">
-              {moveList.map((move) => (
-                <div key={move.name} className="pokeMove">
-                  {move.level && `Level: ${move.level} `}
-                  {formatString(move.name)}
-                </div>
-              ))}
+              {learnMethod === 'machine' ?
+                tmHM.map((move, index) => (
+                  <div key={index} className="pokeMove">
+                    {formatString(move)}{" "}
+                  </div>
+                )) :
+                moveList.map((move, index) => (
+                  <div key={index} className="pokeMove">
+                    {move.level && `Level: ${move.level} `}
+                    {formatString(move.name)}{" "}
+                  </div>
+                ))
+              }
             </div>
           </div>
         </div>
