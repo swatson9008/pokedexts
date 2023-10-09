@@ -15,6 +15,15 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
   const moveList = sortedData.pokeMoves[gameTitle][learnMethod] || [];
   const learnList = Object.keys(sortedData.pokeMoves[gameTitle] || {});
 
+
+  const customLearnMethodOrder = ["level-up", "machine", "egg", "tutor"];
+
+  learnList.sort((a, b) => {
+    const indexA = customLearnMethodOrder.indexOf(a);
+    const indexB = customLearnMethodOrder.indexOf(b);
+    return indexA - indexB;
+  });
+
   const handleTitle = (title: string) => {
     setGameTitle(title);
   };
@@ -44,7 +53,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
             <div className="learnMethodList">
               {learnList.map((method, index) => (
                 <div
-                  key={index}
+                  key={`${method}-${index}`}
                   className={method === learnMethod ? "selected" : ""}
                   onClick={() => handleLearnMethod(method)}
                 >
