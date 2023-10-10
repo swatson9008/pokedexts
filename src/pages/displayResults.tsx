@@ -124,6 +124,9 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
       <div className="displayResult">
         <div key={sortedData.pokeName}>
           <div className="pokeName">{formatString(sortedData.pokeName)}</div>
+          <div className="pokeTypes">{pokeData.pokeTypes.map((type, index) => (
+            <div key={index}>{formatString(type.name)}</div>
+          ))}</div>
           <div className="pokeMoves">
             <div className="pokeTitleList">
               {Object.keys(sortedData.pokeMoves).map((title, index) => (

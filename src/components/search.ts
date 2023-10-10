@@ -58,12 +58,17 @@ export default async function Search(searchPoke: string) {
 
     const searchedPokemonData: PokemonData = {
       pokeName: data.name,
-      pokeMoves: movesByVersionAndMethod,
+      pokeMoves: movesByVersionAndMethod, 
+      pokeTypes: data.types.map((typeInfo) => ({
+        name: typeInfo.type.name,
+        url: typeInfo.type.url,
+      })),
     };
+    
 
     console.log(data);
-    console.log(data.moves[3].version_group_details[0].level_learned_at);
     console.log(movesByVersionAndMethod);
+    console.log(searchedPokemonData)
     return searchedPokemonData; 
   } catch (error) {
     console.error(error);
