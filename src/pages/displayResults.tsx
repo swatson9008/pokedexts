@@ -11,15 +11,16 @@ interface DisplayResultsProps {
 
 export default function DisplayResults({ pokeData }: DisplayResultsProps) {
   const sortedData = sortMoves(pokeData);
-  const defaultGameTitle = Object.keys(sortedData.pokeMoves)[0];
+  const defaultGameTitle = Object.keys(sortedData.pokeMoves).slice(-1)[0];
   const [gameTitle, setGameTitle] = useState(defaultGameTitle);
   const [learnMethod, setLearnMethod] = useState("level-up");
   const learnMethodList = Object.keys(sortedData.pokeMoves[gameTitle] || {});
   const [tmHM, setTmHm] = useState<string[]>([]);
   const moveList = useMemo(() => {
     return sortedData.pokeMoves[gameTitle][learnMethod] || [];
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [learnMethod]);
+  }, [sortedData, gameTitle, learnMethod]);
+  
+
 
   const customLearnMethodOrder = [
     "level-up",
@@ -75,7 +76,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                   `No machine found with version group name ${gameTitle}`
                 );
               }
-
+              
               return moveName;
             })
           );
@@ -108,6 +109,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
 
           console.log(moveDataArray);
           setTmHm(moveDataArray);
+          console.log(sortedData)
         }
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -115,7 +117,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
     };
 
     fetchData();
-  }, [learnMethod]);
+  }, [learnMethod, gameTitle, moveList]);
 
   return (
     <div className="searchMain">
