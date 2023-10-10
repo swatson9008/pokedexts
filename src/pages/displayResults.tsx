@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import formatString from "../components/formatString";
 import { PokemonData } from "../components/pokemonData";
 import sortMoves from "../components/sortMove";
@@ -14,9 +14,13 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
   const defaultGameTitle = Object.keys(sortedData.pokeMoves)[0];
   const [gameTitle, setGameTitle] = useState(defaultGameTitle);
   const [learnMethod, setLearnMethod] = useState("level-up");
-  const moveList = sortedData.pokeMoves[gameTitle][learnMethod] || [];
-  const learnList = Object.keys(sortedData.pokeMoves[gameTitle] || {});
+  const learnMethodList = Object.keys(sortedData.pokeMoves[gameTitle] || {});
   const [tmHM, setTmHm] = useState<string[]>([]);
+  const moveList = useMemo(() => {
+    return sortedData.pokeMoves[gameTitle][learnMethod] || []; 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [learnMethod]);
+  
 
   const customLearnMethodOrder = [
     "level-up",
@@ -24,9 +28,15 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
     "egg",
     "tutor",
     "stadium-surfing-pikachu",
+    "light-ball-egg",
+    "colosseum-purification",
+    "xd-shadow",
+    "xd-purification",
+    "form-change",
+    "zygarde-cube"
   ];
 
-  learnList.sort((a, b) => {
+  learnMethodList.sort((a, b) => {
     const indexA = customLearnMethodOrder.indexOf(a);
     const indexB = customLearnMethodOrder.indexOf(b);
     return indexA - indexB;
@@ -45,45 +55,42 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
       try {
         if (learnMethod === "machine") {
           const moveClient = new MoveClient();
-          // const data = await moveClient.getMoveByName('return');
           const moveDataArray = await Promise.all(
             moveList.map(async (move) => {
-              let moveName = move.name; // Initialize moveName with the current move's name
+              let moveName = move.name;
               const moveData = await moveClient.getMoveByName(moveName);
               const matchingMachine = moveData.machines.find(
                 (machine) => machine.version_group.name === gameTitle
               );
               // return moveData;
-  
+
               if (matchingMachine) {
                 const url = matchingMachine.machine.url;
                 const response = await fetch(url);
                 const moveRes = await response.json();
                 const moveTM = moveRes.item.name;
                 console.log(moveTM);
-                moveName = `${moveTM} ${move.name}`; // Update moveName with the new value
+                moveName = `${moveTM}-${move.name}`;
               } else {
                 console.log(
                   `No machine found with version group name ${gameTitle}`
                 );
               }
-  
-              return moveName; // Return the updated moveName
+
+              return moveName;
             })
           );
-  
-          // The code related to 'data' and 'matchingMachine' is commented out
-          console.log(moveDataArray); // This will contain the updated move names
+
+          console.log(moveDataArray);
           setTmHm(moveDataArray);
-          console.log(tmHM)
         }
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
-  
+
     fetchData();
-  }, [gameTitle, learnMethod, moveList]);
+  }, [learnMethod]);
 
   return (
     <div className="searchMain">
@@ -104,7 +111,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
             </div>
             <div className="gameTitle">{formatString(gameTitle)}</div>
             <div className="learnMethodList">
-              {learnList.map((method, index) => (
+              {learnMethodList.map((method, index) => (
                 <div
                   key={`${method}-${index}`}
                   className={method === learnMethod ? "selected" : ""}
@@ -115,19 +122,18 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
               ))}
             </div>
             <div className="moveList">
-              {learnMethod === 'machine' ?
-                tmHM.map((move, index) => (
-                  <div key={index} className="pokeMove">
-                    {formatString(move)}{" "}
-                  </div>
-                )) :
-                moveList.map((move, index) => (
-                  <div key={index} className="pokeMove">
-                    {move.level && `Level: ${move.level} `}
-                    {formatString(move.name)}{" "}
-                  </div>
-                ))
-              }
+              {learnMethod === "machine"
+                ? tmHM.map((move, index) => (
+                    <div key={index} className="pokeMove">
+                      {formatString(move)}{" "}
+                    </div>
+                  ))
+                : moveList.map((move, index) => (
+                    <div key={index} className="pokeMove">
+                      {move.level && `Level: ${move.level} `}
+                      {formatString(move.name)}{" "}
+                    </div>
+                  ))}
             </div>
           </div>
         </div>
