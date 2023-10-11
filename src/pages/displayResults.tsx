@@ -19,8 +19,6 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
   const moveList = useMemo(() => {
     return sortedData.pokeMoves[gameTitle][learnMethod] || [];
   }, [sortedData, gameTitle, learnMethod]);
-  
-
 
   const customLearnMethodOrder = [
     "level-up",
@@ -76,7 +74,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                   `No machine found with version group name ${gameTitle}`
                 );
               }
-              
+
               return moveName;
             })
           );
@@ -84,23 +82,27 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
           const customSort = (a: string, b: string) => {
             const isTmA = a.startsWith("TM");
             const isTmB = b.startsWith("TM");
-          
+
             if (isTmA && !isTmB) {
               return 1;
             } else if (!isTmA && isTmB) {
               return -1;
             } else if (isTmA && isTmB) {
-              const tmNumberA = parseInt(a.slice(2)); 
+              const tmNumberA = parseInt(a.slice(2));
               const tmNumberB = parseInt(b.slice(2));
               return tmNumberA - tmNumberB;
             } else {
               const firstTwoLettersA = a.slice(0, 2);
               const firstTwoLettersB = b.slice(0, 2);
-              
+
               if (firstTwoLettersA === firstTwoLettersB) {
                 return parseInt(a.slice(2)) - parseInt(b.slice(2));
               } else {
-                return firstTwoLettersB.localeCompare(firstTwoLettersA, undefined, { numeric: true });
+                return firstTwoLettersB.localeCompare(
+                  firstTwoLettersA,
+                  undefined,
+                  { numeric: true }
+                );
               }
             }
           };
@@ -109,7 +111,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
 
           console.log(moveDataArray);
           setTmHm(moveDataArray);
-          console.log(sortedData)
+          console.log(sortedData);
         }
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -124,9 +126,24 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
       <div className="displayResult">
         <div key={sortedData.pokeName}>
           <div className="pokeName">{formatString(sortedData.pokeName)}</div>
-          <div className="pokeTypes">{pokeData.pokeTypes.map((type, index) => (
-            <div key={index}>{formatString(type.name)}</div>
-          ))}</div>
+          <div className="pokeTypes">
+            {pokeData.pokeTypes.map((type, index) => (
+              <div key={index}>{formatString(type.name)}</div>
+            ))}
+          </div>
+          {gameTitle === "red-blue" ||
+          gameTitle === "yellow" ||
+          gameTitle === "gold-silver" ||
+          gameTitle === "crystal" ? null : (
+            <div className="pokeAbilities">
+              {pokeData.pokeAbilities.map((abilities, index) => (
+                <div key={index}>
+                  {abilities.is_hidden ? "Hidden: " : "Regular: "}
+                  {formatString(abilities.name)}
+                </div>
+              ))}
+            </div>
+          )}
           <div className="pokeMoves">
             <div className="pokeTitleList">
               {Object.keys(sortedData.pokeMoves).map((title, index) => (

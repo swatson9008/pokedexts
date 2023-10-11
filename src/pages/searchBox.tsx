@@ -9,7 +9,7 @@ export default function SearchBox() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setSearch(event.target.value);
+    setSearch(event.target.value.toLowerCase());
   };
 
   const handleSearch = async () => {

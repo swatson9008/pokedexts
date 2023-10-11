@@ -63,6 +63,11 @@ export default async function Search(searchPoke: string) {
         name: typeInfo.type.name,
         url: typeInfo.type.url,
       })),
+      pokeAbilities: data.abilities.map((ability) => ({
+        name: ability.ability.name,
+        url: ability.ability.url,
+        is_hidden: ability.is_hidden
+      }))
     };
     
 
