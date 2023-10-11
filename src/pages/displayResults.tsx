@@ -121,6 +121,15 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
     fetchData();
   }, [learnMethod, gameTitle, moveList]);
 
+  /*useEffect(() => {
+    const fetchData = async () => {
+      try {
+        fetch pokeData.pokeAbilities[0]
+    };
+
+    fetchData();
+  }, []);*/
+
   return (
     <div className="searchMain">
       <div className="displayResult">
@@ -138,8 +147,17 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
             <div className="pokeAbilities">
               {pokeData.pokeAbilities.map((abilities, index) => (
                 <div key={index}>
-                  {abilities.is_hidden ? "Hidden: " : "Regular: "}
-                  {formatString(abilities.name)}
+                  {abilities.is_hidden &&
+                  (gameTitle === "ruby-sapphire" ||
+                    gameTitle === "emerald" ||
+                    gameTitle === "colosseum" ||
+                    gameTitle === "xd" ||
+                    gameTitle === "diamond-pearl" ||
+                    gameTitle === "platinum" ||
+                    gameTitle === "heartgold-soulsilver")
+                    ? null
+                    : (abilities.is_hidden ? "Hidden: " : "Regular: ") +
+                      formatString(abilities.name)}
                 </div>
               ))}
             </div>

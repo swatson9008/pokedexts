@@ -70,6 +70,17 @@ export default async function Search(searchPoke: string) {
       }))
     };
     
+    try {
+      const response = await fetch(searchedPokemonData.pokeAbilities[0].url);
+      if (!response.ok) {
+        throw new Error(`Unable to fetch ability data: ${response.statusText}`);
+      }
+      const abilityData = await response.json();
+      console.log(abilityData)
+    } catch (error) {
+      console.error(`Error fetching ability data: ${error}`);
+      throw error;
+    }
 
     console.log(data);
     console.log(movesByVersionAndMethod);
