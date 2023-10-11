@@ -10,6 +10,9 @@ interface DisplayResultsProps {
 }
 
 interface AbilityData {
+  generation: {
+    name: string;
+  }
   name: string;
   effect_entries: {
     short_effect: string;
