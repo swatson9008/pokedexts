@@ -146,7 +146,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
         );
 
         console.log("Ability Data:", abilityDataArray);
-        console.log(abilityDataArray[0].effect_entries[1].short_effect);
+        console.log(abilityDataArray[0].generation.name);
         setAbilityDataArray(abilityDataArray);
       } catch (error) {
         console.error("Error fetching ability data:", error);
@@ -173,22 +173,32 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
             <div className="pokeAbilities">
               {pokeData.pokeAbilities.map((abilities, index) => (
                 <div key={index}>
-                {abilities.is_hidden &&
-                (gameTitle === "ruby-sapphire" ||
-                  gameTitle === "emerald" ||
-                  gameTitle === "colosseum" ||
-                  gameTitle === "xd" ||
-                  gameTitle === "diamond-pearl" ||
-                  gameTitle === "platinum" ||
-                  gameTitle === "heartgold-soulsilver")
-                  ? null
-                  : (abilities.is_hidden ? "Hidden: " : "Regular: ") +
-                    formatString(abilities.name) + " - " + (abilityDataArray[index] &&
-                      abilityDataArray[index].effect_entries[1]
-                        ? abilityDataArray[index].effect_entries[1].short_effect
-                        : "")
-                }
-              </div>
+                  {abilities.is_hidden &&
+                  (gameTitle === "ruby-sapphire" ||
+                    gameTitle === "emerald" ||
+                    gameTitle === "colosseum" ||
+                    gameTitle === "xd" ||
+                    gameTitle === "diamond-pearl" ||
+                    gameTitle === "platinum" ||
+                    gameTitle === "heartgold-soulsilver")
+                    ? null
+                    : (abilities.is_hidden ? "Hidden: " : "Regular: ") +
+                      formatString(abilities.name) +
+                      " - " +
+                      (abilityDataArray[index]
+                        ? abilityDataArray[index].generation.name ===
+                          "generation-ix" ||
+                          abilityDataArray[index].generation.name ===
+                            "generation-viii"
+                          ? ""
+                          : abilityDataArray[index].generation.name ===
+                              "generation-vii" 
+                          ? abilityDataArray[index].effect_entries[0]
+                              .short_effect
+                          : abilityDataArray[index].effect_entries[1]
+                              .short_effect
+                      : "") }
+                </div>
               ))}
             </div>
           )}
@@ -225,8 +235,9 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                   ))
                 : moveList.map((move, index) => (
                     <div key={index} className="pokeMove">
-                      {move.level && `Level: ${
-                        move.level === '0' ? move.level = '-' : move.level
+                      {move.level &&
+                        `Level: ${
+                          move.level === "0" ? (move.level = "-") : move.level
                         } `}
                       {formatString(move.name)}{" "}
                     </div>
