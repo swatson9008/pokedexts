@@ -225,7 +225,9 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                   ))
                 : moveList.map((move, index) => (
                     <div key={index} className="pokeMove">
-                      {move.level && `Level: ${move.level} `}
+                      {move.level && `Level: ${
+                        move.level === '0' ? move.level = '-' : move.level
+                        } `}
                       {formatString(move.name)}{" "}
                     </div>
                   ))}
