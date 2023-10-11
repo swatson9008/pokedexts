@@ -9,6 +9,13 @@ interface DisplayResultsProps {
   pokeData: PokemonData;
 }
 
+interface AbilityData {
+  name: string;
+  effect_entries: {
+    short_effect: string;
+  }[];
+}
+
 export default function DisplayResults({ pokeData }: DisplayResultsProps) {
   const sortedData = sortMoves(pokeData);
   const defaultGameTitle = Object.keys(sortedData.pokeMoves).slice(-1)[0];
@@ -16,7 +23,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
   const [learnMethod, setLearnMethod] = useState("level-up");
   const learnMethodList = Object.keys(sortedData.pokeMoves[gameTitle] || {});
   const [tmHM, setTmHm] = useState<string[]>([]);
-  const [abilityDataArray, setAbilityDataArray] = useState<any[]>([]);
+  const [abilityDataArray, setAbilityDataArray] = useState<AbilityData[]>([]);
   const moveList = useMemo(() => {
     return sortedData.pokeMoves[gameTitle][learnMethod] || [];
   }, [sortedData, gameTitle, learnMethod]);
