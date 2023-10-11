@@ -16,6 +16,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
   const [learnMethod, setLearnMethod] = useState("level-up");
   const learnMethodList = Object.keys(sortedData.pokeMoves[gameTitle] || {});
   const [tmHM, setTmHm] = useState<string[]>([]);
+  const [abilityDataArray, setAbilityDataArray] = useState<any[]>([]);
   const moveList = useMemo(() => {
     return sortedData.pokeMoves[gameTitle][learnMethod] || [];
   }, [sortedData, gameTitle, learnMethod]);
@@ -121,14 +122,32 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
     fetchData();
   }, [learnMethod, gameTitle, moveList]);
 
-  /*useEffect(() => {
-    const fetchData = async () => {
+  useEffect(() => {
+    const fetchDataForAbilities = async () => {
       try {
-        fetch pokeData.pokeAbilities[0]
+        const abilityDataArray = await Promise.all(
+          pokeData.pokeAbilities.map(async (abilities) => {
+            if (abilities.url) {
+              const response = await fetch(abilities.url);
+              const abilityData = await response.json();
+              return abilityData;
+            } else {
+              console.log(`No URL found for ability: ${abilities.name}`);
+              return null;
+            }
+          })
+        );
+
+        console.log("Ability Data:", abilityDataArray);
+        console.log(abilityDataArray[0].effect_entries[1].short_effect);
+        setAbilityDataArray(abilityDataArray);
+      } catch (error) {
+        console.error("Error fetching ability data:", error);
+      }
     };
 
-    fetchData();
-  }, []);*/
+    fetchDataForAbilities();
+  }, []);
 
   return (
     <div className="searchMain">
@@ -147,18 +166,22 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
             <div className="pokeAbilities">
               {pokeData.pokeAbilities.map((abilities, index) => (
                 <div key={index}>
-                  {abilities.is_hidden &&
-                  (gameTitle === "ruby-sapphire" ||
-                    gameTitle === "emerald" ||
-                    gameTitle === "colosseum" ||
-                    gameTitle === "xd" ||
-                    gameTitle === "diamond-pearl" ||
-                    gameTitle === "platinum" ||
-                    gameTitle === "heartgold-soulsilver")
-                    ? null
-                    : (abilities.is_hidden ? "Hidden: " : "Regular: ") +
-                      formatString(abilities.name)}
-                </div>
+                {abilities.is_hidden &&
+                (gameTitle === "ruby-sapphire" ||
+                  gameTitle === "emerald" ||
+                  gameTitle === "colosseum" ||
+                  gameTitle === "xd" ||
+                  gameTitle === "diamond-pearl" ||
+                  gameTitle === "platinum" ||
+                  gameTitle === "heartgold-soulsilver")
+                  ? null
+                  : (abilities.is_hidden ? "Hidden: " : "Regular: ") +
+                    formatString(abilities.name) + " - " + (abilityDataArray[index] &&
+                      abilityDataArray[index].effect_entries[1]
+                        ? abilityDataArray[index].effect_entries[1].short_effect
+                        : "")
+                }
+              </div>
               ))}
             </div>
           )}
