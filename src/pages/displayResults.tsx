@@ -12,7 +12,7 @@ interface DisplayResultsProps {
 interface AbilityData {
   generation: {
     name: string;
-  }
+  };
   name: string;
   effect_entries: {
     short_effect: string;
@@ -130,6 +130,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
     };
 
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [learnMethod, gameTitle, moveList]);
 
   useEffect(() => {
@@ -157,7 +158,57 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
     };
 
     fetchDataForAbilities();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const smogonLinkGen = (pokemon: string, generation: string) => {
+    if (generation === "red-blue" || generation === "yellow") {
+      generation = "rb";
+    }
+    if (generation === "gold-silver" || generation === "crystal") {
+      generation = "gs";
+    }
+    if (
+      generation === "ruby-sapphire" ||
+      generation === "emerald" ||
+      generation === "firered-leafgreen" ||
+      generation === "colosseum" ||
+      generation === "xd"
+    ) {
+      generation = "rs";
+    }
+    if (
+      generation === "diamond-pearl" ||
+      generation === "platinum" ||
+      generation === "heartgold-soulsilver"
+    ) {
+      generation = "dp";
+    }
+    if (generation === "black-white" || generation === "black-2-white-2") {
+      generation = "bw";
+    }
+    if (generation === "x-y" || generation === "omega-ruby-alpha-sapphire") {
+      generation = "xy";
+    }
+    if (
+      generation === "sun-moon" ||
+      generation === "ultra-sun-ultra-moon" ||
+      generation === "lets-go-pikachu-lets-go-eevee"
+    ) {
+      generation = "sm";
+    }
+    if (
+      generation === "sword-shield" ||
+      generation === "brilliant-diamond-and-shining-pearl"
+    ) {
+      generation = "ss";
+    }
+    if (generation === "scarlet-violet") {
+      generation = "sv";
+    }
+
+    return `https://www.smogon.com/dex/${generation}/pokemon/${pokemon}/`;
+  };
 
   return (
     <div className="searchMain">
@@ -190,21 +241,26 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                       " - " +
                       (abilityDataArray[index]
                         ? abilityDataArray[index].generation.name ===
-                          "generation-ix" ||
+                            "generation-ix" ||
                           abilityDataArray[index].generation.name ===
                             "generation-viii"
                           ? ""
                           : abilityDataArray[index].generation.name ===
-                              "generation-vii" 
+                            "generation-vii"
                           ? abilityDataArray[index].effect_entries[0]
                               .short_effect
                           : abilityDataArray[index].effect_entries[1]
                               .short_effect
-                      : "") }
+                        : "")}
                 </div>
               ))}
             </div>
           )}
+          <div className="smogonLink">
+            <a href={smogonLinkGen(pokeData.pokeName, gameTitle)}>
+              Recommended Smogon Movesets
+            </a>
+          </div>
           <div className="pokeMoves">
             <div className="pokeTitleList">
               {Object.keys(sortedData.pokeMoves).map((title, index) => (
