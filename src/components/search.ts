@@ -81,29 +81,41 @@ export default async function Search(searchPoke: string) {
       })),
       pokeStats: data.stats.map((stats) => ({
         name: stats.stat.name,
-        base_stat: stats.base_stat.toString()
-      }))
+        base_stat: stats.base_stat.toString(),
+      })),
+      pokeSpecies: { url: data.species.url },
     };
-    
-    
+
     try {
       const response = await fetch(searchedPokemonData.pokeAbilities[0].url);
       if (!response.ok) {
         throw new Error(`Unable to fetch ability data: ${response.statusText}`);
       }
       const abilityData = await response.json();
-      console.log(abilityData)
+      console.log(abilityData);
     } catch (error) {
       console.error(`Error fetching ability data: ${error}`);
       throw error;
     }
 
+    try {
+      const response = await fetch(searchedPokemonData.pokeSpecies.url);
+      if (!response.ok) {
+        throw new Error(`Unable to fetch species data: ${response.statusText}`);
+      }
+      const speciesData = await response.json();
+      console.log(speciesData);
+    } catch (error) {
+      console.error(`Error fetching species data: ${error}`);
+      throw error;
+    }
+
     console.log(data);
     console.log(movesByVersionAndMethod);
-    console.log(searchedPokemonData)
-    return searchedPokemonData; 
+    console.log(searchedPokemonData);
+    return searchedPokemonData;
   } catch (error) {
     console.error(error);
-    throw error; 
+    throw error;
   }
 }

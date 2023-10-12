@@ -17,5 +17,6 @@ export interface PokemonData {
     }>;
   }>;
   pokeAbilities: Array<{ name: string; url: string; is_hidden: boolean }>;
-  pokeStats: Array<{name: string; base_stat: string}>
+  pokeStats: Array<{name: string; base_stat: string}>;
+  pokeSpecies: { url: string };
 }
