@@ -278,7 +278,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
               {learnMethod === "machine"
                 ? tmHM.map((move, index) => (
                     <div key={index} className="pokeMove">
-                      {otherFormatString(move)}{" "}
+                      {formatString(move)}{" "}
                     </div>
                   ))
                 : moveList.map((move, index) => (
