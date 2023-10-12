@@ -181,6 +181,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
             gameTitle === "crystal" ||
             gameTitle === "ruby-sapphire" ||
             gameTitle === "emerald" ||
+            gameTitle === "firered-leafgreen" ||
             gameTitle === "colosseum" ||
             gameTitle === "xd" ||
             gameTitle === "diamond-pearl" ||
@@ -212,6 +213,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                   {abilities.is_hidden &&
                   (gameTitle === "ruby-sapphire" ||
                     gameTitle === "emerald" ||
+                    gameTitle === "firered-leafgreen" ||
                     gameTitle === "colosseum" ||
                     gameTitle === "xd" ||
                     gameTitle === "diamond-pearl" ||
