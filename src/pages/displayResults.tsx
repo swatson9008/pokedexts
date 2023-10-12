@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState, useEffect, useMemo } from "react";
-import formatString from "../components/formatString";
+import { formatString, otherFormatString } from "../components/formatString";
 import { PokemonData } from "../components/pokemonData";
 import sortMoves from "../components/sortMove";
 import { MoveClient } from "pokenode-ts";
@@ -174,7 +174,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
         <div key={sortedData.pokeName}>
           <div className="pokeName">{formatString(sortedData.pokeName)}</div>
           <div className="pokeTypes">
-            {pokeData.pastTypes.length
+            Types: {pokeData.pastTypes.length
               ? (gameTitle === "red-blue" ||
                   gameTitle === "yellow" ||
                   gameTitle === "gold-silver" ||
@@ -278,7 +278,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
               {learnMethod === "machine"
                 ? tmHM.map((move, index) => (
                     <div key={index} className="pokeMove">
-                      {formatString(move)}{" "}
+                      {otherFormatString(move)}{" "}
                     </div>
                   ))
                 : moveList.map((move, index) => (
