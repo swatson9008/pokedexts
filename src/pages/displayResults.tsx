@@ -4,6 +4,7 @@ import formatString from "../components/formatString";
 import { PokemonData } from "../components/pokemonData";
 import sortMoves from "../components/sortMove";
 import { MoveClient } from "pokenode-ts";
+import generationConverter from "../components/generationConverter";
 
 interface DisplayResultsProps {
   pokeData: PokemonData;
@@ -162,52 +163,9 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
   }, []);
 
   const smogonLinkGen = (pokemon: string, generation: string) => {
-    if (generation === "red-blue" || generation === "yellow") {
-      generation = "rb";
-    }
-    if (generation === "gold-silver" || generation === "crystal") {
-      generation = "gs";
-    }
-    if (
-      generation === "ruby-sapphire" ||
-      generation === "emerald" ||
-      generation === "firered-leafgreen" ||
-      generation === "colosseum" ||
-      generation === "xd"
-    ) {
-      generation = "rs";
-    }
-    if (
-      generation === "diamond-pearl" ||
-      generation === "platinum" ||
-      generation === "heartgold-soulsilver"
-    ) {
-      generation = "dp";
-    }
-    if (generation === "black-white" || generation === "black-2-white-2") {
-      generation = "bw";
-    }
-    if (generation === "x-y" || generation === "omega-ruby-alpha-sapphire") {
-      generation = "xy";
-    }
-    if (
-      generation === "sun-moon" ||
-      generation === "ultra-sun-ultra-moon" ||
-      generation === "lets-go-pikachu-lets-go-eevee"
-    ) {
-      generation = "sm";
-    }
-    if (
-      generation === "sword-shield" ||
-      generation === "brilliant-diamond-and-shining-pearl"
-    ) {
-      generation = "ss";
-    }
-    if (generation === "scarlet-violet") {
-      generation = "sv";
-    }
-
-    return `https://www.smogon.com/dex/${generation}/pokemon/${pokemon}/`;
+    return `https://www.smogon.com/dex/${generationConverter(
+      generation
+    )}/pokemon/${pokemon}/`;
   };
 
   return (
@@ -216,10 +174,34 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
         <div key={sortedData.pokeName}>
           <div className="pokeName">{formatString(sortedData.pokeName)}</div>
           <div className="pokeTypes">
-            {pokeData.pokeTypes.map((type, index) => (
-              <div key={index}>{formatString(type.name)}</div>
-            ))}
+            {
+            (gameTitle === "red-blue" ||
+            gameTitle === "yellow" ||
+            gameTitle === "gold-silver" ||
+            gameTitle === "crystal" ||
+            gameTitle === "ruby-sapphire" ||
+            gameTitle === "emerald" ||
+            gameTitle === "colosseum" ||
+            gameTitle === "xd" ||
+            gameTitle === "diamond-pearl" ||
+            gameTitle === "platinum" ||
+            gameTitle === "heartgold-soulsilver" ||
+            gameTitle === "black-white" ||
+            gameTitle === "black-2-white-2")
+              && pokeData.pastTypes[0].generation.name === "generation-v"
+                ? pokeData.pastTypes[0].types.map((type, index) => (
+                    <div key={index}>{formatString(type.type.name)}</div>
+                  ))
+              : (gameTitle === "red-blue" || gameTitle === "yellow")
+              && pokeData.pastTypes[0].generation.name === "generation-i"
+                ? pokeData.pastTypes[0].types.map((type, index) => (
+                    <div key={index}>{formatString(type.type.name)}</div>
+                  ))
+              : pokeData.pokeTypes.map((type, index) => (
+                  <div key={index}>{formatString(type.name)}</div>
+                ))}
           </div>
+
           {gameTitle === "red-blue" ||
           gameTitle === "yellow" ||
           gameTitle === "gold-silver" ||

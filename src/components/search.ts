@@ -58,7 +58,7 @@ export default async function Search(searchPoke: string) {
 
     const searchedPokemonData: PokemonData = {
       pokeName: data.name,
-      pokeMoves: movesByVersionAndMethod, 
+      pokeMoves: movesByVersionAndMethod,
       pokeTypes: data.types.map((typeInfo) => ({
         name: typeInfo.type.name,
         url: typeInfo.type.url,
@@ -66,9 +66,21 @@ export default async function Search(searchPoke: string) {
       pokeAbilities: data.abilities.map((ability) => ({
         name: ability.ability.name,
         url: ability.ability.url,
-        is_hidden: ability.is_hidden
-      }))
+        is_hidden: ability.is_hidden,
+      })),
+      pastTypes: data.past_types.map((pastType) => ({
+        generation: {
+          name: pastType.generation.name,
+        },
+        types: pastType.types.map((type) => ({
+          slot: type.slot,
+          type: {
+            name: type.type.name,
+          },
+        })),
+      })),
     };
+    
     
     try {
       const response = await fetch(searchedPokemonData.pokeAbilities[0].url);
