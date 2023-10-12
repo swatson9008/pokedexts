@@ -79,6 +79,10 @@ export default async function Search(searchPoke: string) {
           },
         })),
       })),
+      pokeStats: data.stats.map((stats) => ({
+        name: stats.stat.name,
+        base_stat: stats.base_stat.toString()
+      }))
     };
     
     

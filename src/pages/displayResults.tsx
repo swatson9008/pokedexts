@@ -238,6 +238,13 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
               ))}
             </div>
           )}
+          <div className="pokeBaseStats">
+            {pokeData.pokeStats.map((stats, index) => (
+              <div key={index}>
+                {formatString(stats.name) + " - " + stats.base_stat}
+              </div>
+            ))}
+          </div>
           <div className="smogonLink">
             <a href={smogonLinkGen(pokeData.pokeName, gameTitle)}>
               Recommended Smogon Movesets
