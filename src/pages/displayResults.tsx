@@ -174,8 +174,9 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
         <div key={sortedData.pokeName}>
           <div className="pokeName">{formatString(sortedData.pokeName)}</div>
           <div className="pokeTypes">
-            Types: {pokeData.pastTypes.length
-              ? (gameTitle === "red-blue" ||
+            Types:{" "}
+            {pokeData.pastTypes.length
+              && (gameTitle === "red-blue" ||
                   gameTitle === "yellow" ||
                   gameTitle === "gold-silver" ||
                   gameTitle === "crystal" ||
@@ -193,12 +194,14 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                 ? pokeData.pastTypes[0].types.map((type, index) => (
                     <div key={index}>{formatString(type.type.name)}</div>
                   ))
-                : pokeData.pastTypes[0].types.map((type, index) => (
+                : pokeData.pastTypes.length && (gameTitle === "red-blue" || gameTitle === "yellow") &&
+                  pokeData.pastTypes[0].generation.name === "generation-i"
+                ? pokeData.pastTypes[0].types.map((type, index) => (
                     <div key={index}>{formatString(type.type.name)}</div>
                   ))
-              : pokeData.pokeTypes.map((type, index) => (
-                  <div key={index}>{formatString(type.name)}</div>
-                ))}
+                : pokeData.pokeTypes.map((type, index) => (
+                    <div key={index}>{formatString(type.name)}</div>
+                  ))}
           </div>
 
           {gameTitle === "red-blue" ||
@@ -278,7 +281,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
               {learnMethod === "machine"
                 ? tmHM.map((move, index) => (
                     <div key={index} className="pokeMove">
-                      {formatString(move)}{" "}
+                      {otherFormatString(move)}{" "}
                     </div>
                   ))
                 : moveList.map((move, index) => (
