@@ -172,36 +172,44 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
     <div className="searchMain">
       <div className="displayResult">
         <div key={sortedData.pokeName}>
+          <div>
+            {pokeData.pokeSprites.sprite === null ? (
+              "image not found"
+            ) : (
+              <img src={pokeData.pokeSprites.sprite} alt={pokeData.pokeName} />
+            )}
+          </div>
           <div className="pokeName">{formatString(sortedData.pokeName)}</div>
           <div className="pokeTypes">
             Types:{" "}
-            {pokeData.pastTypes.length
-              && (gameTitle === "red-blue" ||
-                  gameTitle === "yellow" ||
-                  gameTitle === "gold-silver" ||
-                  gameTitle === "crystal" ||
-                  gameTitle === "ruby-sapphire" ||
-                  gameTitle === "emerald" ||
-                  gameTitle === "firered-leafgreen" ||
-                  gameTitle === "colosseum" ||
-                  gameTitle === "xd" ||
-                  gameTitle === "diamond-pearl" ||
-                  gameTitle === "platinum" ||
-                  gameTitle === "heartgold-soulsilver" ||
-                  gameTitle === "black-white" ||
-                  gameTitle === "black-2-white-2") &&
-                pokeData.pastTypes[0].generation.name === "generation-v"
-                ? pokeData.pastTypes[0].types.map((type, index) => (
-                    <div key={index}>{formatString(type.type.name)}</div>
-                  ))
-                : pokeData.pastTypes.length && (gameTitle === "red-blue" || gameTitle === "yellow") &&
-                  pokeData.pastTypes[0].generation.name === "generation-i"
-                ? pokeData.pastTypes[0].types.map((type, index) => (
-                    <div key={index}>{formatString(type.type.name)}</div>
-                  ))
-                : pokeData.pokeTypes.map((type, index) => (
-                    <div key={index}>{formatString(type.name)}</div>
-                  ))}
+            {pokeData.pastTypes.length &&
+            (gameTitle === "red-blue" ||
+              gameTitle === "yellow" ||
+              gameTitle === "gold-silver" ||
+              gameTitle === "crystal" ||
+              gameTitle === "ruby-sapphire" ||
+              gameTitle === "emerald" ||
+              gameTitle === "firered-leafgreen" ||
+              gameTitle === "colosseum" ||
+              gameTitle === "xd" ||
+              gameTitle === "diamond-pearl" ||
+              gameTitle === "platinum" ||
+              gameTitle === "heartgold-soulsilver" ||
+              gameTitle === "black-white" ||
+              gameTitle === "black-2-white-2") &&
+            pokeData.pastTypes[0].generation.name === "generation-v"
+              ? pokeData.pastTypes[0].types.map((type, index) => (
+                  <div key={index}>{formatString(type.type.name)}</div>
+                ))
+              : pokeData.pastTypes.length &&
+                (gameTitle === "red-blue" || gameTitle === "yellow") &&
+                pokeData.pastTypes[0].generation.name === "generation-i"
+              ? pokeData.pastTypes[0].types.map((type, index) => (
+                  <div key={index}>{formatString(type.type.name)}</div>
+                ))
+              : pokeData.pokeTypes.map((type, index) => (
+                  <div key={index}>{formatString(type.name)}</div>
+                ))}
           </div>
 
           {gameTitle === "red-blue" ||

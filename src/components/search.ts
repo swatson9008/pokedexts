@@ -84,6 +84,7 @@ export default async function Search(searchPoke: string) {
         base_stat: stats.base_stat.toString(),
       })),
       pokeSpecies: { url: data.species.url },
+      pokeSprites: { sprite: data.sprites.front_default}
     };
 
     try {
