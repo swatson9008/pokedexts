@@ -69,16 +69,31 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
             moveList.map(async (move) => {
               let moveName = move.name;
               const moveData = await moveClient.getMoveByName(moveName);
-              const matchingMachine = moveData.machines.find(
-                (machine) => machine.version_group.name === gameTitle
-              );
-              // return moveData;
+              let matchingMachine = null; 
+
+              if (gameTitle === "brilliant-diamond-and-shining-pearl") {
+                matchingMachine = moveData.machines.find(
+                  (machine) => machine.version_group.name === "diamond-pearl"
+                );
+              } else {
+                matchingMachine = moveData.machines.find(
+                  (machine) => machine.version_group.name === gameTitle
+                );
+              }
 
               if (matchingMachine) {
                 const url = matchingMachine.machine.url;
                 const response = await fetch(url);
                 const moveRes = await response.json();
-                const moveTM = moveRes.item.name;
+                let moveTM = moveRes.item.name;
+                if (gameTitle === 'brilliant-diamond-and-shining-pearl' && moveTM.startsWith('hm')) {
+                  const thirdLetter = moveTM[2];
+                  const fourthLetter = moveTM[3];
+                  const number = parseInt(thirdLetter + fourthLetter, 10);
+                  const newNumber = number + 92;
+                  moveTM = `tm${newNumber}`;
+                  console.log('converted')
+                }
                 console.log(moveTM);
                 moveName = `${moveTM}-${move.name}`;
               } else {
