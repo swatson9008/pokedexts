@@ -5,7 +5,7 @@ export default async function Search(searchPoke: string) {
   try {
     const api = new PokemonClient();
     const data = await api.getPokemonByName(searchPoke);
-    
+
     const movesByVersionAndMethod: Record<
       string,
       Record<string, Array<{ name: string; level?: string }>>
@@ -66,13 +66,20 @@ export default async function Search(searchPoke: string) {
           if (matches && matches.length > 1) {
             searchedPokemonData.pokeEvoID = matches[1];
           } else {
-            console.log('Evolution chain ID not found in URL:', evolutionChainUrl);
+            console.log(
+              "Evolution chain ID not found in URL:",
+              evolutionChainUrl
+            );
           }
         } else {
-          console.error('Failed to fetch species data:', response.status, response.statusText);
+          console.error(
+            "Failed to fetch species data:",
+            response.status,
+            response.statusText
+          );
         }
       } catch (error) {
-        console.error('Error fetching species data:', error);
+        console.error("Error fetching species data:", error);
       }
     };
 
@@ -105,10 +112,10 @@ export default async function Search(searchPoke: string) {
       })),
       pokeSpecies: { url: data.species.url },
       pokeSprites: { sprite: data.sprites.front_default },
-      pokeEvoID: {id: 0}
+      pokeEvoID: "",
     };
 
-    await fetchAndExtractEvolutionChain()
+    await fetchAndExtractEvolutionChain();
 
     try {
       const response = await fetch(searchedPokemonData.pokeAbilities[0].url);

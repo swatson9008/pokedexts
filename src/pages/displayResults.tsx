@@ -3,7 +3,7 @@ import { useState, useEffect, useMemo } from "react";
 import { formatString, otherFormatString } from "../components/formatString";
 import { PokemonData } from "../components/pokemonData";
 import sortMoves from "../components/sortMove";
-import { MoveClient } from "pokenode-ts";
+import { MoveClient, EvolutionClient } from "pokenode-ts";
 import generationConverter from "../components/generationConverter";
 
 interface DisplayResultsProps {
@@ -16,9 +16,12 @@ interface AbilityData {
   };
   name: string;
   effect_entries: {
+    language: {name: string}
     short_effect: string;
   }[];
 }
+
+interface EvoData {}
 
 export default function DisplayResults({ pokeData }: DisplayResultsProps) {
   const sortedData = sortMoves(pokeData);
@@ -28,6 +31,8 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
   const learnMethodList = Object.keys(sortedData.pokeMoves[gameTitle] || {});
   const [tmHM, setTmHm] = useState<string[]>([]);
   const [abilityDataArray, setAbilityDataArray] = useState<AbilityData[]>([]);
+  const [evoData, setEvoData] = useState<EvoData[]>([]);
+
   const moveList = useMemo(() => {
     return sortedData.pokeMoves[gameTitle][learnMethod] || [];
   }, [sortedData, gameTitle, learnMethod]);
@@ -102,57 +107,42 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                 move.name === "volt-switch"
               ) {
                 moveName = `tm43-volt-switch`;
-              } 
-              else if (
+              } else if (
                 gameTitle === "brilliant-diamond-and-shining-pearl" &&
                 move.name === "workup"
               ) {
                 moveName = `tm10-workup`;
-              }
-
-              else if (
+              } else if (
                 gameTitle === "brilliant-diamond-and-shining-pearl" &&
                 move.name === "dazzling-gleam"
               ) {
                 moveName = `tm21-dazzling-gleam`;
-              }
-
-              else if (
+              } else if (
                 gameTitle === "brilliant-diamond-and-shining-pearl" &&
                 move.name === "low-sweep"
               ) {
                 moveName = `tm27-low-sweep`;
-              }
-
-              else if (
+              } else if (
                 gameTitle === "brilliant-diamond-and-shining-pearl" &&
                 move.name === "scald"
               ) {
                 moveName = `tm49-scald`;
-              }
-
-              else if (
+              } else if (
                 gameTitle === "brilliant-diamond-and-shining-pearl" &&
                 move.name === "bug-buzz"
               ) {
                 moveName = `tm62-bug-buzz`;
-              }
-
-              else if (
+              } else if (
                 gameTitle === "brilliant-diamond-and-shining-pearl" &&
                 move.name === "nasty-plot"
               ) {
                 moveName = `tm63-nasty-plot`;
-              }
-
-              else if (
+              } else if (
                 gameTitle === "brilliant-diamond-and-shining-pearl" &&
                 move.name === "bulldoze"
               ) {
                 moveName = `tm83-bulldoze`;
-              }
-              
-              else {
+              } else {
                 console.log(
                   `No machine found with version group name ${gameTitle}`
                 );
@@ -232,6 +222,23 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    const fetchDataForEvos = async () => {
+      try {
+        const api = new EvolutionClient();
+        const data: EvoData = await api.getEvolutionChainById(parseInt(pokeData.pokeEvoID));
+        console.log(data);
+        setEvoData([data]); 
+      } catch (error) {
+        console.error(error);
+      }
+    };
+  
+    fetchDataForEvos();
+  
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const smogonLinkGen = (pokemon: string, generation: string) => {
     return `https://www.smogon.com/dex/${generationConverter(
       generation
@@ -281,7 +288,6 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                   <div key={index}>{formatString(type.name)}</div>
                 ))}
           </div>
-
           {gameTitle === "red-blue" ||
           gameTitle === "yellow" ||
           gameTitle === "gold-silver" ||
@@ -299,7 +305,9 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                     gameTitle === "platinum" ||
                     gameTitle === "heartgold-soulsilver")
                     ? null
-                    : (abilities.is_hidden ? "Hidden Ability: " : "Regular Ability: ") +
+                    : (abilities.is_hidden
+                        ? "Hidden Ability: "
+                        : "Regular Ability: ") +
                       formatString(abilities.name) +
                       " - " +
                       (abilityDataArray[index]
@@ -312,8 +320,9 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                             "generation-vii"
                           ? abilityDataArray[index].effect_entries[0]
                               .short_effect
-                          : abilityDataArray[index].effect_entries[1]
-                              .short_effect
+                              : (abilityDataArray[index].effect_entries.find(
+                                (entry) => entry.language.name === "en"
+                              ) || {}).short_effect || ""
                         : "")}
                 </div>
               ))}
