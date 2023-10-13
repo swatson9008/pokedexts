@@ -21,7 +21,6 @@ interface AbilityData {
   }[];
 }
 
-
 export default function DisplayResults({ pokeData }: DisplayResultsProps) {
   const sortedData = sortMoves(pokeData);
   const defaultGameTitle = Object.keys(sortedData.pokeMoves).slice(-1)[0];
@@ -30,7 +29,9 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
   const learnMethodList = Object.keys(sortedData.pokeMoves[gameTitle] || {});
   const [tmHM, setTmHm] = useState<string[]>([]);
   const [abilityDataArray, setAbilityDataArray] = useState<AbilityData[]>([]);
-  const [evolutionChain, setEvolutionChain] = useState<EvolutionChain | null>(null);
+  const [evolutionChain, setEvolutionChain] = useState<EvolutionChain | null>(
+    null
+  );
 
   const moveList = useMemo(() => {
     return sortedData.pokeMoves[gameTitle][learnMethod] || [];
@@ -221,27 +222,28 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
- useEffect(() => {
-  const fetchDataForEvos = async () => {
-    try {
-      const api = new EvolutionClient();
-      const data = await api.getEvolutionChainById(parseInt(pokeData.pokeEvoID));
-      setEvolutionChain(data)
-    } 
-    catch (error) {
-      console.error(error);
+  useEffect(() => {
+    const fetchDataForEvos = async () => {
+      try {
+        const api = new EvolutionClient();
+        const data = await api.getEvolutionChainById(
+          parseInt(pokeData.pokeEvoID)
+        );
+        setEvolutionChain(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchDataForEvos();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (evolutionChain) {
+      console.log(evolutionChain); // Log the data here
     }
-  };
-
-  fetchDataForEvos();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-}, []);
-
-useEffect(() => {
-  if (evolutionChain) {
-    console.log(evolutionChain); // Log the data here
-  }
-}, [evolutionChain]);
+  }, [evolutionChain]);
 
   const smogonLinkGen = (pokemon: string, generation: string) => {
     return `https://www.smogon.com/dex/${generationConverter(
@@ -346,6 +348,12 @@ useEffect(() => {
               Recommended Smogon Movesets
             </a>
           </div>
+          <div className="pokeEvoInfo">
+            {evolutionChain?.chain.evolves_to.length === 0
+              ? "This Pokemon does not evolve"
+              : "Has an evolution"}
+          </div>
+
           <div className="pokeMoves">
             <div className="pokeTitleList">
               {Object.keys(sortedData.pokeMoves).map((title, index) => (
