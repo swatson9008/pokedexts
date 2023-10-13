@@ -95,9 +95,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                   const number = parseInt(thirdLetter + fourthLetter, 10);
                   const newNumber = number + 92;
                   moveTM = `tm${newNumber}`;
-                  console.log("converted");
                 }
-                console.log(moveTM);
                 moveName = `${moveTM}-${move.name}`;
               } else if (
                 gameTitle === "brilliant-diamond-and-shining-pearl" &&
@@ -224,7 +222,6 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
         );
 
         console.log("Ability Data:", abilityDataArray);
-        console.log(abilityDataArray[0].generation.name);
         setAbilityDataArray(abilityDataArray);
       } catch (error) {
         console.error("Error fetching ability data:", error);

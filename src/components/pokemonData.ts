@@ -20,4 +20,5 @@ export interface PokemonData {
   pokeStats: Array<{name: string; base_stat: string}>;
   pokeSpecies: { url: string };
   pokeSprites: { sprite: string | null }
+  pokeEvoID: { id: number },
 }
