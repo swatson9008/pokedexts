@@ -3,7 +3,7 @@ import { useState, useEffect, useMemo } from "react";
 import { formatString, otherFormatString } from "../components/formatString";
 import { PokemonData } from "../components/pokemonData";
 import sortMoves from "../components/sortMove";
-import { MoveClient, EvolutionClient } from "pokenode-ts";
+import { MoveClient, EvolutionClient, EvolutionChain } from "pokenode-ts";
 import generationConverter from "../components/generationConverter";
 
 interface DisplayResultsProps {
@@ -16,12 +16,11 @@ interface AbilityData {
   };
   name: string;
   effect_entries: {
-    language: {name: string}
+    language: { name: string };
     short_effect: string;
   }[];
 }
 
-interface EvoData {}
 
 export default function DisplayResults({ pokeData }: DisplayResultsProps) {
   const sortedData = sortMoves(pokeData);
@@ -31,7 +30,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
   const learnMethodList = Object.keys(sortedData.pokeMoves[gameTitle] || {});
   const [tmHM, setTmHm] = useState<string[]>([]);
   const [abilityDataArray, setAbilityDataArray] = useState<AbilityData[]>([]);
-  const [evoData, setEvoData] = useState<EvoData[]>([]);
+  const [evolutionChain, setEvolutionChain] = useState<EvolutionChain | null>(null);
 
   const moveList = useMemo(() => {
     return sortedData.pokeMoves[gameTitle][learnMethod] || [];
@@ -222,22 +221,27 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    const fetchDataForEvos = async () => {
-      try {
-        const api = new EvolutionClient();
-        const data: EvoData = await api.getEvolutionChainById(parseInt(pokeData.pokeEvoID));
-        console.log(data);
-        setEvoData([data]); 
-      } catch (error) {
-        console.error(error);
-      }
-    };
-  
-    fetchDataForEvos();
-  
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+ useEffect(() => {
+  const fetchDataForEvos = async () => {
+    try {
+      const api = new EvolutionClient();
+      const data = await api.getEvolutionChainById(parseInt(pokeData.pokeEvoID));
+      setEvolutionChain(data)
+    } 
+    catch (error) {
+      console.error(error);
+    }
+  };
+
+  fetchDataForEvos();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+}, []);
+
+useEffect(() => {
+  if (evolutionChain) {
+    console.log(evolutionChain); // Log the data here
+  }
+}, [evolutionChain]);
 
   const smogonLinkGen = (pokemon: string, generation: string) => {
     return `https://www.smogon.com/dex/${generationConverter(
@@ -320,9 +324,11 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                             "generation-vii"
                           ? abilityDataArray[index].effect_entries[0]
                               .short_effect
-                              : (abilityDataArray[index].effect_entries.find(
+                          : (
+                              abilityDataArray[index].effect_entries.find(
                                 (entry) => entry.language.name === "en"
-                              ) || {}).short_effect || ""
+                              ) || {}
+                            ).short_effect || ""
                         : "")}
                 </div>
               ))}
