@@ -69,7 +69,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
             moveList.map(async (move) => {
               let moveName = move.name;
               const moveData = await moveClient.getMoveByName(moveName);
-              let matchingMachine = null; 
+              let matchingMachine = null;
 
               if (gameTitle === "brilliant-diamond-and-shining-pearl") {
                 matchingMachine = moveData.machines.find(
@@ -86,17 +86,75 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                 const response = await fetch(url);
                 const moveRes = await response.json();
                 let moveTM = moveRes.item.name;
-                if (gameTitle === 'brilliant-diamond-and-shining-pearl' && moveTM.startsWith('hm')) {
+                if (
+                  gameTitle === "brilliant-diamond-and-shining-pearl" &&
+                  moveTM.startsWith("hm")
+                ) {
                   const thirdLetter = moveTM[2];
                   const fourthLetter = moveTM[3];
                   const number = parseInt(thirdLetter + fourthLetter, 10);
                   const newNumber = number + 92;
                   moveTM = `tm${newNumber}`;
-                  console.log('converted')
+                  console.log("converted");
                 }
                 console.log(moveTM);
                 moveName = `${moveTM}-${move.name}`;
-              } else {
+              } else if (
+                gameTitle === "brilliant-diamond-and-shining-pearl" &&
+                move.name === "volt-switch"
+              ) {
+                moveName = `tm43-volt-switch`;
+              } 
+              else if (
+                gameTitle === "brilliant-diamond-and-shining-pearl" &&
+                move.name === "workup"
+              ) {
+                moveName = `tm10-workup`;
+              }
+
+              else if (
+                gameTitle === "brilliant-diamond-and-shining-pearl" &&
+                move.name === "dazzling-gleam"
+              ) {
+                moveName = `tm21-dazzling-gleam`;
+              }
+
+              else if (
+                gameTitle === "brilliant-diamond-and-shining-pearl" &&
+                move.name === "low-sweep"
+              ) {
+                moveName = `tm27-low-sweep`;
+              }
+
+              else if (
+                gameTitle === "brilliant-diamond-and-shining-pearl" &&
+                move.name === "scald"
+              ) {
+                moveName = `tm49-scald`;
+              }
+
+              else if (
+                gameTitle === "brilliant-diamond-and-shining-pearl" &&
+                move.name === "bug-buzz"
+              ) {
+                moveName = `tm62-bug-buzz`;
+              }
+
+              else if (
+                gameTitle === "brilliant-diamond-and-shining-pearl" &&
+                move.name === "nasty-plot"
+              ) {
+                moveName = `tm63-nasty-plot`;
+              }
+
+              else if (
+                gameTitle === "brilliant-diamond-and-shining-pearl" &&
+                move.name === "bulldoze"
+              ) {
+                moveName = `tm83-bulldoze`;
+              }
+              
+              else {
                 console.log(
                   `No machine found with version group name ${gameTitle}`
                 );
@@ -244,7 +302,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                     gameTitle === "platinum" ||
                     gameTitle === "heartgold-soulsilver")
                     ? null
-                    : (abilities.is_hidden ? "Hidden: " : "Regular: ") +
+                    : (abilities.is_hidden ? "Hidden Ability: " : "Regular Ability: ") +
                       formatString(abilities.name) +
                       " - " +
                       (abilityDataArray[index]
