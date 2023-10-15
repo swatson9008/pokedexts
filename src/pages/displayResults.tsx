@@ -9,6 +9,7 @@ import { PokemonData } from "../components/pokemonData";
 import sortMoves from "../components/sortMove";
 import { MoveClient, EvolutionClient, EvolutionChain } from "pokenode-ts";
 import generationConverter from "../components/generationConverter";
+import formatEvos from "../components/formatEvos";
 
 interface DisplayResultsProps {
   pokeData: PokemonData;
@@ -364,9 +365,14 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                     )}.png`}
                     alt={evolutionChain?.chain.species.name}
                   />
-                  {evolutionChain?.chain.species.name !== undefined ?
-                  formatString(evolutionChain?.chain.species.name) : ''
-                  }
+                  {evolutionChain?.chain.species.name !== undefined
+                    ? formatString(evolutionChain?.chain.species.name)
+                    : ""}
+                </div>
+                <div className="firstStageMethod">
+                  {evolutionChain?.chain.evolves_to.length === 1
+                    ? formatEvos(evolutionChain)
+                    : null}
                 </div>
               </div>
             )}
