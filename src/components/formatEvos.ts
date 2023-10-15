@@ -43,5 +43,18 @@ export default function formatEvos(evolutionChain: EvolutionChain) {
     )} at level ${firstStageEvoMethods.minLevel?.toString() || "not known"}`;
   }
 
-  return "";
+  if (
+    triggerMethod === "trade" &&
+    Object.values(sliceEvoMethods(firstStageEvoMethods, 2)).every(
+      (prop) => !prop
+    )
+  ) {
+    return `${formatString(
+      evolutionChain.chain.species.name
+    )} evolves to ${formatString(
+      evolutionChain.chain.evolves_to[0].species.name
+    )} from being traded` || "not known";
+  }
+
+  else return "";
 }
