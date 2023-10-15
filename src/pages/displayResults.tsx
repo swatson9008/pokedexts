@@ -1,6 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState, useEffect, useMemo } from "react";
-import { formatString, otherFormatString } from "../components/formatString";
+import {
+  formatString,
+  otherFormatString,
+  getIDNo,
+} from "../components/formatString";
 import { PokemonData } from "../components/pokemonData";
 import sortMoves from "../components/sortMove";
 import { MoveClient, EvolutionClient, EvolutionChain } from "pokenode-ts";
@@ -349,9 +353,23 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
             </a>
           </div>
           <div className="pokeEvoInfo">
-            {evolutionChain?.chain.evolves_to.length === 0
-              ? "This Pokemon does not evolve"
-              : "Has an evolution"}
+            {evolutionChain?.chain.evolves_to.length === 0 ? (
+              "This Pokemon has no evolution line"
+            ) : (
+              <div className="pokeEvoChain">
+                <div className="firstStageEvo">
+                  <img
+                    src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${getIDNo(
+                      evolutionChain?.chain.species.url
+                    )}.png`}
+                    alt={evolutionChain?.chain.species.name}
+                  />
+                  {evolutionChain?.chain.species.name !== undefined ?
+                  formatString(evolutionChain?.chain.species.name) : ''
+                  }
+                </div>
+              </div>
+            )}
           </div>
 
           <div className="pokeMoves">
