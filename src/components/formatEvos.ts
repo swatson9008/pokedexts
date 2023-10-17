@@ -29,12 +29,12 @@ export default function formatEvos(evolutionChain: EvolutionChain) {
       .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {});
     return result;
   }
-  
+
   if (
     triggerMethod === "level-up" &&
-    Object.values(sliceEvoMethods(firstStageEvoMethods, {minLevel: true})).every(
-      (prop) => !prop
-    )
+    Object.values(
+      sliceEvoMethods(firstStageEvoMethods, { minLevel: true })
+    ).every((prop) => !prop)
   ) {
     return `${formatString(
       evolutionChain.chain.species.name
@@ -45,9 +45,7 @@ export default function formatEvos(evolutionChain: EvolutionChain) {
 
   if (
     triggerMethod === "trade" &&
-    Object.values(firstStageEvoMethods).every(
-      (prop) => !prop
-    )
+    Object.values(firstStageEvoMethods).every((prop) => !prop)
   ) {
     return (
       `${formatString(
@@ -57,13 +55,13 @@ export default function formatEvos(evolutionChain: EvolutionChain) {
       )} from being traded` || "not known"
     );
   }
-/*
+
   if (
     ///happiness evolution
     triggerMethod === "level-up" &&
-    Object.values(sliceEvoMethods(firstStageEvoMethods, 3)).every(
-      (prop) => !prop
-    )
+    Object.values(
+      sliceEvoMethods(firstStageEvoMethods, { minHappiness: true })
+    ).every((prop) => !prop)
   ) {
     return (
       `${formatString(
@@ -77,9 +75,9 @@ export default function formatEvos(evolutionChain: EvolutionChain) {
   if (
     ///move specific evolution
     triggerMethod === "level-up" &&
-    Object.values(sliceEvoMethods(firstStageEvoMethods, 8)).every(
-      (prop) => !prop
-    )
+    Object.values(
+      sliceEvoMethods(firstStageEvoMethods, { knownMove: true })
+    ).every((prop) => !prop)
   ) {
     return `${formatString(
       evolutionChain.chain.species.name
@@ -90,23 +88,65 @@ export default function formatEvos(evolutionChain: EvolutionChain) {
         ? "unknown move"
         : formatString(evoShortcut.known_move?.name) || "not known"
     }`;
-  } 
-  
+  }
+
   if (
     ///time of day evolution
     triggerMethod === "level-up" &&
-    Object.values(sliceEvoMethods(firstStageEvoMethods, 6)).every(
-      (prop) => !prop && evoShortcut.min_level != null
-    )
+    Object.values(
+      sliceEvoMethods(firstStageEvoMethods, { timeOfDay: true, minLevel: true })
+    ).every((prop) => !prop && evoShortcut.min_level != null)
   ) {
     return (
       `${formatString(
         evolutionChain.chain.species.name
       )} evolves to ${formatString(
         evolutionChain.chain.evolves_to[0].species.name
-      )} from leveling up during the ${evoShortcut.time_of_day}-time starting at level ${evoShortcut.min_level}` || "not known"
+      )} from leveling up during the ${
+        evoShortcut.time_of_day
+      }time starting at level ${evoShortcut.min_level}` || "not known"
     );
-  }*/
+  }
+
+  if (
+    ///time of day + item evolution
+    triggerMethod === "level-up" &&
+    Object.values(
+      sliceEvoMethods(firstStageEvoMethods, { timeOfDay: true, itemHeld: true })
+    ).every((prop) => !prop)
+  ) {
+    return (
+      `${formatString(
+        evolutionChain.chain.species.name
+      )} evolves to ${formatString(
+        evolutionChain.chain.evolves_to[0].species.name
+      )} from leveling up during the ${
+        evoShortcut.time_of_day
+      }time starting at level ${evoShortcut.min_level} while holding ${
+        evoShortcut.held_item?.name === undefined
+          ? "unknown item "
+          : formatString(evoShortcut.held_item?.name)
+      }` || "not known"
+    );
+  } 
+  
+  if (
+    ///gender evolution
+    triggerMethod === "level-up" &&
+    Object.values(
+      sliceEvoMethods(firstStageEvoMethods, { genderCheck: true, minLevel: true })
+    ).every((prop) => !prop)
+  ) {
+    return (
+      `${formatString(
+        evolutionChain.chain.species.name
+      )} evolves to ${formatString(
+        evolutionChain.chain.evolves_to[0].species.name
+      )} if they are ${evoShortcut.gender === 1 ? "female" : "male"} starting at ${evoShortcut.min_level}` || "not known"
+    );
+  }
+  
+  
   
   else return "";
 }
