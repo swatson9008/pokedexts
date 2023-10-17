@@ -15,6 +15,7 @@ export default function formatEvos(evolutionChain: EvolutionChain) {
     minLevel: evoShortcut?.min_level,
     minAfection: evoShortcut?.min_affection,
     itemHeld: evoShortcut?.held_item,
+    itemUsed: evoShortcut.item,
     minHappiness: evoShortcut?.min_happiness,
     genderCheck: evoShortcut?.gender,
     minBeauty: evoShortcut?.min_beauty,
@@ -22,6 +23,9 @@ export default function formatEvos(evolutionChain: EvolutionChain) {
     overworldRain: evoShortcut?.needs_overworld_rain,
     knownMove: evoShortcut?.known_move,
     partySpecies: evoShortcut.party_species,
+    partyType: evoShortcut.party_type,
+    upsideDown: evoShortcut.turn_upside_down,
+    tradeSpecies: evoShortcut.trade_species,
   };
 
   function sliceEvoMethods(
@@ -54,6 +58,60 @@ export default function formatEvos(evolutionChain: EvolutionChain) {
       `${formatString(baseSpecies)} evolves to ${formatString(
         secondSpecies
       )} from being traded` || "not known"
+    );
+  }
+
+  if (
+    //item evolution
+    triggerMethod === "use-item" &&
+    Object.values(
+      sliceEvoMethods(firstStageEvoMethods, { itemUsed: true })
+    ).every((prop) => !prop)
+  ) {
+    return `${formatString(baseSpecies)} evolves to ${formatString(
+      secondSpecies
+    )} from using a ${
+      evoShortcut?.item?.name === undefined
+        ? "unknown item"
+        : formatString(evoShortcut.item.name)
+    }`;
+  }
+
+  if (
+    ///trade item evolution
+    triggerMethod === "trade" &&
+    Object.values(
+      sliceEvoMethods(firstStageEvoMethods, { itemHeld: true })
+    ).every((prop) => !prop)
+  ) {
+    return (
+      `${formatString(baseSpecies)} evolves to ${formatString(
+        secondSpecies
+      )} from being traded holding the ${
+        evoShortcut?.held_item?.name === undefined
+          ? "unknown item"
+          : formatString(evoShortcut.held_item.name)
+      } 
+      ` || "not known"
+    );
+  }
+
+  if (
+    ///trade species evolution
+    triggerMethod === "trade" &&
+    Object.values(
+      sliceEvoMethods(firstStageEvoMethods, { tradeSpecies: true })
+    ).every((prop) => !prop)
+  ) {
+    return (
+      `${formatString(baseSpecies)} evolves to ${formatString(
+        secondSpecies
+      )} from being in a trade with ${
+        evoShortcut?.trade_species?.name === undefined
+          ? "unknown Pokemon"
+          : formatString(evoShortcut?.trade_species?.name)
+      } 
+      ` || "not known"
     );
   }
 
@@ -142,7 +200,8 @@ export default function formatEvos(evolutionChain: EvolutionChain) {
     );
   }
 
-  if (//party based evolution
+  if (
+    //party species based evolution
     triggerMethod === "level-up" &&
     Object.values(
       sliceEvoMethods(firstStageEvoMethods, { partySpecies: true })
@@ -155,6 +214,55 @@ export default function formatEvos(evolutionChain: EvolutionChain) {
         ? "unknown Pokemon"
         : evoShortcut.party_species.name
     )} in the party`;
+  }
+
+  if (
+    //party type based evolution
+    triggerMethod === "level-up" &&
+    Object.values(
+      sliceEvoMethods(firstStageEvoMethods, { partyType: true, minLevel: true })
+    ).every((prop) => !prop)
+  ) {
+    return `${formatString(baseSpecies)} evolves to ${formatString(
+      secondSpecies
+    )} starting at level ${evoShortcut.min_level} and by having ${formatString(
+      evoShortcut.party_type?.name === undefined
+        ? "unknown Pokemon type"
+        : evoShortcut.party_type.name
+    )} type Pokemon in the party`;
+  }
+
+  if (
+    //upside down evolution
+    triggerMethod === "level-up" &&
+    Object.values(
+      sliceEvoMethods(firstStageEvoMethods, {
+        upsideDown: true,
+        minLevel: true,
+      })
+    ).every((prop) => !prop)
+  ) {
+    return `${formatString(baseSpecies)} evolves to ${formatString(
+      secondSpecies
+    )} starting at level ${
+      evoShortcut.min_level
+    } by having the game device turned upside down`;
+  }
+
+  if (
+    //stantlet evolution
+    triggerMethod === "agile-style-move" &&
+    Object.values(
+      sliceEvoMethods(firstStageEvoMethods, { knownMove:true })
+    ).every((prop) => !prop)
+  ) {
+    return `${formatString(baseSpecies)} evolves to ${formatString(
+      secondSpecies
+    )} from using ${
+      evoShortcut?.known_move?.name === undefined
+        ? "unknown move"
+        : formatString(evoShortcut?.known_move?.name)
+    } in agile style 20 times in Pokemon Arceus` ;
   }
 
   if (
