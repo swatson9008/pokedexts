@@ -7,7 +7,6 @@ export default function formatEvos(evolutionChain: EvolutionChain) {
 
   const evoShortcut = evolutionChain.chain.evolves_to[0].evolution_details[0];
 
-
   const firstStageEvoMethods = {
     minLevel: evoShortcut?.min_level,
     minAfection: evoShortcut?.min_affection,
@@ -20,19 +19,20 @@ export default function formatEvos(evolutionChain: EvolutionChain) {
     knownMove: evoShortcut?.known_move,
   };
 
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  function sliceEvoMethods(obj: any, keyValue: number) {
-    const keys = Object.keys(obj) as Array<keyof typeof firstStageEvoMethods>;
-    const firstKey = keys[keyValue];
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { [firstKey]: _, ...rest } = obj;
-    return rest;
+  function sliceEvoMethods(
+    obj: typeof firstStageEvoMethods,
+    toExclude: { [key: string]: boolean }
+  ) {
+    const result = Object.entries(obj)
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      .filter(([key, _]) => !toExclude[key])
+      .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {});
+    return result;
   }
-
+  
   if (
     triggerMethod === "level-up" &&
-    Object.values(sliceEvoMethods(firstStageEvoMethods, 0)).every(
+    Object.values(sliceEvoMethods(firstStageEvoMethods, {minLevel: true})).every(
       (prop) => !prop
     )
   ) {
@@ -45,7 +45,39 @@ export default function formatEvos(evolutionChain: EvolutionChain) {
 
   if (
     triggerMethod === "trade" &&
-    Object.values(sliceEvoMethods(firstStageEvoMethods, 2)).every(
+    Object.values(firstStageEvoMethods).every(
+      (prop) => !prop
+    )
+  ) {
+    return (
+      `${formatString(
+        evolutionChain.chain.species.name
+      )} evolves to ${formatString(
+        evolutionChain.chain.evolves_to[0].species.name
+      )} from being traded` || "not known"
+    );
+  }
+/*
+  if (
+    ///happiness evolution
+    triggerMethod === "level-up" &&
+    Object.values(sliceEvoMethods(firstStageEvoMethods, 3)).every(
+      (prop) => !prop
+    )
+  ) {
+    return (
+      `${formatString(
+        evolutionChain.chain.species.name
+      )} evolves to ${formatString(
+        evolutionChain.chain.evolves_to[0].species.name
+      )} from leveling up with high friendship` || "not known"
+    );
+  }
+
+  if (
+    ///move specific evolution
+    triggerMethod === "level-up" &&
+    Object.values(sliceEvoMethods(firstStageEvoMethods, 8)).every(
       (prop) => !prop
     )
   ) {
@@ -53,8 +85,28 @@ export default function formatEvos(evolutionChain: EvolutionChain) {
       evolutionChain.chain.species.name
     )} evolves to ${formatString(
       evolutionChain.chain.evolves_to[0].species.name
-    )} from being traded` || "not known";
-  }
-
+    )} from leveling up while knowing ${
+      evoShortcut.known_move?.name === undefined
+        ? "unknown move"
+        : formatString(evoShortcut.known_move?.name) || "not known"
+    }`;
+  } 
+  
+  if (
+    ///time of day evolution
+    triggerMethod === "level-up" &&
+    Object.values(sliceEvoMethods(firstStageEvoMethods, 6)).every(
+      (prop) => !prop && evoShortcut.min_level != null
+    )
+  ) {
+    return (
+      `${formatString(
+        evolutionChain.chain.species.name
+      )} evolves to ${formatString(
+        evolutionChain.chain.evolves_to[0].species.name
+      )} from leveling up during the ${evoShortcut.time_of_day}-time starting at level ${evoShortcut.min_level}` || "not known"
+    );
+  }*/
+  
   else return "";
 }
