@@ -371,7 +371,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                 </div>
                 <div className="firstStageMethod">
                   {evolutionChain?.chain.evolves_to.length === 1
-                    ? formatEvos(evolutionChain, 'first')
+                    ? formatEvos(evolutionChain, "first")
                     : null}
                 </div>
                 <div className="secondStageEvo">
@@ -382,14 +382,24 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                     alt={evolutionChain?.chain.species.name}
                   />
                   {evolutionChain?.chain.species.name !== undefined
-                    ? formatString(evolutionChain?.chain.evolves_to[0].species.name)
+                    ? formatString(
+                        evolutionChain?.chain.evolves_to[0].species.name
+                      )
                     : ""}
                 </div>
                 <div className="secondStageMethod">
                   {evolutionChain?.chain.evolves_to[0].evolves_to.length === 1
-                    ? formatEvos(evolutionChain, 'second')
+                    ? formatEvos(evolutionChain, "second")
                     : null}
                 </div>
+                {evolutionChain?.chain.evolves_to[0].evolves_to.length === 1 ? (
+                  <img
+                    src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${getIDNo(
+                      evolutionChain.chain.evolves_to[0].evolves_to[0].species.url
+                    )}.png`}
+                    alt={evolutionChain.chain.evolves_to[0].evolves_to[0].species.name}
+                  />
+                ) : null}
               </div>
             )}
           </div>
