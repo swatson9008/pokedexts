@@ -1,23 +1,23 @@
 import { EvolutionChain } from "pokenode-ts";
 import { formatString } from "./formatString";
 
-export default function formatEvos(evolutionChain: EvolutionChain, stage: string) {
+export default function formatEvos(evolutionChain: EvolutionChain, stage: string, indexValue: number) {
 
   
   let triggerMethod =
-    evolutionChain.chain.evolves_to[0].evolution_details[0].trigger.name;
+    evolutionChain.chain.evolves_to[indexValue].evolution_details[0].trigger.name;
 
-  let evoShortcut = evolutionChain.chain.evolves_to[0].evolution_details[0];
+  let evoShortcut = evolutionChain.chain.evolves_to[indexValue].evolution_details[0];
 
   let baseSpecies = evolutionChain.chain.species.name;
 
-  let secondSpecies = evolutionChain.chain.evolves_to[0].species.name;
+  let secondSpecies = evolutionChain.chain.evolves_to[indexValue].species.name;
   
   if (stage === "second") {
-    triggerMethod = evolutionChain.chain.evolves_to[0].evolves_to[0].evolution_details[0].trigger.name;
-    evoShortcut = evolutionChain.chain.evolves_to[0].evolves_to[0].evolution_details[0];
-    baseSpecies = evolutionChain.chain.evolves_to[0].species.name;
-    secondSpecies = evolutionChain.chain.evolves_to[0].evolves_to[0].species.name
+    triggerMethod = evolutionChain.chain.evolves_to[indexValue].evolves_to[indexValue].evolution_details[0].trigger.name;
+    evoShortcut = evolutionChain.chain.evolves_to[indexValue].evolves_to[indexValue].evolution_details[0];
+    baseSpecies = evolutionChain.chain.evolves_to[indexValue].species.name;
+    secondSpecies = evolutionChain.chain.evolves_to[indexValue].evolves_to[indexValue].species.name
 
   }
 
