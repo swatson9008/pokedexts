@@ -1,17 +1,27 @@
 import { EvolutionChain } from "pokenode-ts";
 import { formatString } from "./formatString";
 
-export default function formatEvos(evolutionChain: EvolutionChain) {
-  const triggerMethod =
+export default function formatEvos(evolutionChain: EvolutionChain, stage: string) {
+
+  
+  let triggerMethod =
     evolutionChain.chain.evolves_to[0].evolution_details[0].trigger.name;
 
-  const evoShortcut = evolutionChain.chain.evolves_to[0].evolution_details[0];
+  let evoShortcut = evolutionChain.chain.evolves_to[0].evolution_details[0];
 
-  const baseSpecies = evolutionChain.chain.species.name;
+  let baseSpecies = evolutionChain.chain.species.name;
 
-  const secondSpecies = evolutionChain.chain.evolves_to[0].species.name;
+  let secondSpecies = evolutionChain.chain.evolves_to[0].species.name;
+  
+  if (stage === "second") {
+    triggerMethod = evolutionChain.chain.evolves_to[0].evolves_to[0].evolution_details[0].trigger.name;
+    evoShortcut = evolutionChain.chain.evolves_to[0].evolves_to[0].evolution_details[0];
+    baseSpecies = evolutionChain.chain.evolves_to[0].species.name;
+    secondSpecies = evolutionChain.chain.evolves_to[0].evolves_to[0].species.name
 
-  const firstStageEvoMethods = {
+  }
+
+  const evoMethods = {
     minLevel: evoShortcut?.min_level,
     minAfection: evoShortcut?.min_affection,
     itemHeld: evoShortcut?.held_item,
@@ -29,7 +39,7 @@ export default function formatEvos(evolutionChain: EvolutionChain) {
   };
 
   function sliceEvoMethods(
-    obj: typeof firstStageEvoMethods,
+    obj: typeof evoMethods,
     toExclude: { [key: string]: boolean }
   ) {
     const result = Object.entries(obj)
@@ -42,17 +52,17 @@ export default function formatEvos(evolutionChain: EvolutionChain) {
   if (
     triggerMethod === "level-up" &&
     Object.values(
-      sliceEvoMethods(firstStageEvoMethods, { minLevel: true })
+      sliceEvoMethods(evoMethods, { minLevel: true })
     ).every((prop) => !prop)
   ) {
     return `${formatString(baseSpecies)} evolves to ${formatString(
       secondSpecies
-    )} at level ${firstStageEvoMethods.minLevel?.toString() || "not known"}`;
+    )} at level ${evoMethods.minLevel?.toString() || "not known"}`;
   }
 
   if (
     triggerMethod === "trade" &&
-    Object.values(firstStageEvoMethods).every((prop) => !prop)
+    Object.values(evoMethods).every((prop) => !prop)
   ) {
     return (
       `${formatString(baseSpecies)} evolves to ${formatString(
@@ -65,7 +75,7 @@ export default function formatEvos(evolutionChain: EvolutionChain) {
     //item evolution
     triggerMethod === "use-item" &&
     Object.values(
-      sliceEvoMethods(firstStageEvoMethods, { itemUsed: true })
+      sliceEvoMethods(evoMethods, { itemUsed: true })
     ).every((prop) => !prop)
   ) {
     return `${formatString(baseSpecies)} evolves to ${formatString(
@@ -81,7 +91,7 @@ export default function formatEvos(evolutionChain: EvolutionChain) {
     ///trade item evolution
     triggerMethod === "trade" &&
     Object.values(
-      sliceEvoMethods(firstStageEvoMethods, { itemHeld: true })
+      sliceEvoMethods(evoMethods, { itemHeld: true })
     ).every((prop) => !prop)
   ) {
     return (
@@ -100,7 +110,7 @@ export default function formatEvos(evolutionChain: EvolutionChain) {
     ///trade species evolution
     triggerMethod === "trade" &&
     Object.values(
-      sliceEvoMethods(firstStageEvoMethods, { tradeSpecies: true })
+      sliceEvoMethods(evoMethods, { tradeSpecies: true })
     ).every((prop) => !prop)
   ) {
     return (
@@ -119,7 +129,7 @@ export default function formatEvos(evolutionChain: EvolutionChain) {
     ///happiness evolution
     triggerMethod === "level-up" &&
     Object.values(
-      sliceEvoMethods(firstStageEvoMethods, { minHappiness: true })
+      sliceEvoMethods(evoMethods, { minHappiness: true })
     ).every((prop) => !prop)
   ) {
     return (
@@ -133,7 +143,7 @@ export default function formatEvos(evolutionChain: EvolutionChain) {
     ///move specific evolution
     triggerMethod === "level-up" &&
     Object.values(
-      sliceEvoMethods(firstStageEvoMethods, { knownMove: true })
+      sliceEvoMethods(evoMethods, { knownMove: true })
     ).every((prop) => !prop)
   ) {
     return `${formatString(baseSpecies)} evolves to ${formatString(
@@ -149,7 +159,7 @@ export default function formatEvos(evolutionChain: EvolutionChain) {
     ///time of day evolution
     triggerMethod === "level-up" &&
     Object.values(
-      sliceEvoMethods(firstStageEvoMethods, { timeOfDay: true, minLevel: true })
+      sliceEvoMethods(evoMethods, { timeOfDay: true, minLevel: true })
     ).every((prop) => !prop && evoShortcut.min_level != null)
   ) {
     return (
@@ -165,7 +175,7 @@ export default function formatEvos(evolutionChain: EvolutionChain) {
     ///time of day + item evolution
     triggerMethod === "level-up" &&
     Object.values(
-      sliceEvoMethods(firstStageEvoMethods, { timeOfDay: true, itemHeld: true })
+      sliceEvoMethods(evoMethods, { timeOfDay: true, itemHeld: true })
     ).every((prop) => !prop)
   ) {
     return (
@@ -185,7 +195,7 @@ export default function formatEvos(evolutionChain: EvolutionChain) {
     ///gender evolution
     triggerMethod === "level-up" &&
     Object.values(
-      sliceEvoMethods(firstStageEvoMethods, {
+      sliceEvoMethods(evoMethods, {
         genderCheck: true,
         minLevel: true,
       })
@@ -204,7 +214,7 @@ export default function formatEvos(evolutionChain: EvolutionChain) {
     //party species based evolution
     triggerMethod === "level-up" &&
     Object.values(
-      sliceEvoMethods(firstStageEvoMethods, { partySpecies: true })
+      sliceEvoMethods(evoMethods, { partySpecies: true })
     ).every((prop) => !prop)
   ) {
     return `${formatString(baseSpecies)} evolves to ${formatString(
@@ -220,7 +230,7 @@ export default function formatEvos(evolutionChain: EvolutionChain) {
     //party type based evolution
     triggerMethod === "level-up" &&
     Object.values(
-      sliceEvoMethods(firstStageEvoMethods, { partyType: true, minLevel: true })
+      sliceEvoMethods(evoMethods, { partyType: true, minLevel: true })
     ).every((prop) => !prop)
   ) {
     return `${formatString(baseSpecies)} evolves to ${formatString(
@@ -236,7 +246,7 @@ export default function formatEvos(evolutionChain: EvolutionChain) {
     //upside down evolution
     triggerMethod === "level-up" &&
     Object.values(
-      sliceEvoMethods(firstStageEvoMethods, {
+      sliceEvoMethods(evoMethods, {
         upsideDown: true,
         minLevel: true,
       })
@@ -253,7 +263,7 @@ export default function formatEvos(evolutionChain: EvolutionChain) {
     //stantlet evolution
     triggerMethod === "agile-style-move" &&
     Object.values(
-      sliceEvoMethods(firstStageEvoMethods, { knownMove:true })
+      sliceEvoMethods(evoMethods, { knownMove:true })
     ).every((prop) => !prop)
   ) {
     return `${formatString(baseSpecies)} evolves to ${formatString(

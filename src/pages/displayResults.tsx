@@ -371,7 +371,23 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                 </div>
                 <div className="firstStageMethod">
                   {evolutionChain?.chain.evolves_to.length === 1
-                    ? formatEvos(evolutionChain)
+                    ? formatEvos(evolutionChain, 'first')
+                    : null}
+                </div>
+                <div className="secondStageEvo">
+                  <img
+                    src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${getIDNo(
+                      evolutionChain?.chain.evolves_to[0].species.url
+                    )}.png`}
+                    alt={evolutionChain?.chain.species.name}
+                  />
+                  {evolutionChain?.chain.species.name !== undefined
+                    ? formatString(evolutionChain?.chain.evolves_to[0].species.name)
+                    : ""}
+                </div>
+                <div className="secondStageMethod">
+                  {evolutionChain?.chain.evolves_to[0].evolves_to.length === 1
+                    ? formatEvos(evolutionChain, 'second')
                     : null}
                 </div>
               </div>
