@@ -378,7 +378,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                 <div className="secondStageEvo">
                   {evolutionChain?.chain.evolves_to[0].evolves_to.length === 0 ? null :
                   
-                  evolutionChain?.chain.evolves_to.map((evolution, index) => (
+                  evolutionChain?.chain.evolves_to[0].evolves_to.map((evolution, index) => (
                     <div key={index}>
                       <img
                         src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${getIDNo(

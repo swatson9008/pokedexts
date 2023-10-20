@@ -1,26 +1,47 @@
 import { EvolutionChain } from "pokenode-ts";
 import { formatString } from "./formatString";
 
-export default function formatEvos(evolutionChain: EvolutionChain, stage: string, indexValue: number) {
+export default function formatEvos(
+  evolutionChain: EvolutionChain,
+  stage: string,
+  indexValue: number
+) {
+  let triggerMethod;
 
-  
-  let triggerMethod =
-    evolutionChain.chain.evolves_to[indexValue].evolution_details[0].trigger.name;
+  let evoShortcut;
 
-  let evoShortcut = evolutionChain.chain.evolves_to[indexValue].evolution_details[0];
+  let baseSpecies;
 
-  let baseSpecies = evolutionChain.chain.species.name;
+  let secondSpecies;
 
-  let secondSpecies = evolutionChain.chain.evolves_to[indexValue].species.name;
-  
-  if (stage === "second") {
-    triggerMethod = evolutionChain.chain.evolves_to[indexValue].evolves_to[indexValue].evolution_details[0].trigger.name;
-    evoShortcut = evolutionChain.chain.evolves_to[indexValue].evolves_to[indexValue].evolution_details[0];
-    baseSpecies = evolutionChain.chain.evolves_to[indexValue].species.name;
-    secondSpecies = evolutionChain.chain.evolves_to[indexValue].evolves_to[indexValue].species.name
+  if (stage === "first") {
+    triggerMethod =
+      evolutionChain.chain.evolves_to[indexValue].evolution_details[0].trigger
+        .name;
 
+    evoShortcut =
+      evolutionChain.chain.evolves_to[indexValue].evolution_details[0];
+
+    baseSpecies = evolutionChain.chain.species.name;
+
+    secondSpecies = evolutionChain.chain.evolves_to[indexValue].species.name;
   }
 
+  else if (stage === "second") {
+    triggerMethod =
+      evolutionChain.chain.evolves_to[0].evolves_to[indexValue]
+        .evolution_details[0].trigger.name;
+    evoShortcut =
+      evolutionChain.chain.evolves_to[0].evolves_to[indexValue]
+        .evolution_details[0];
+    baseSpecies = evolutionChain.chain.evolves_to[0].species.name;
+    secondSpecies =
+      evolutionChain.chain.evolves_to[0].evolves_to[indexValue].species
+        .name;
+  } 
+
+  else {return ""}
+  
   const evoMethods = {
     minLevel: evoShortcut?.min_level,
     minAfection: evoShortcut?.min_affection,
@@ -51,9 +72,9 @@ export default function formatEvos(evolutionChain: EvolutionChain, stage: string
 
   if (
     triggerMethod === "level-up" &&
-    Object.values(
-      sliceEvoMethods(evoMethods, { minLevel: true })
-    ).every((prop) => !prop)
+    Object.values(sliceEvoMethods(evoMethods, { minLevel: true })).every(
+      (prop) => !prop
+    )
   ) {
     return `${formatString(baseSpecies)} evolves to ${formatString(
       secondSpecies
@@ -74,9 +95,9 @@ export default function formatEvos(evolutionChain: EvolutionChain, stage: string
   if (
     //item evolution
     triggerMethod === "use-item" &&
-    Object.values(
-      sliceEvoMethods(evoMethods, { itemUsed: true })
-    ).every((prop) => !prop)
+    Object.values(sliceEvoMethods(evoMethods, { itemUsed: true })).every(
+      (prop) => !prop
+    )
   ) {
     return `${formatString(baseSpecies)} evolves to ${formatString(
       secondSpecies
@@ -90,9 +111,9 @@ export default function formatEvos(evolutionChain: EvolutionChain, stage: string
   if (
     ///trade item evolution
     triggerMethod === "trade" &&
-    Object.values(
-      sliceEvoMethods(evoMethods, { itemHeld: true })
-    ).every((prop) => !prop)
+    Object.values(sliceEvoMethods(evoMethods, { itemHeld: true })).every(
+      (prop) => !prop
+    )
   ) {
     return (
       `${formatString(baseSpecies)} evolves to ${formatString(
@@ -109,9 +130,9 @@ export default function formatEvos(evolutionChain: EvolutionChain, stage: string
   if (
     ///trade species evolution
     triggerMethod === "trade" &&
-    Object.values(
-      sliceEvoMethods(evoMethods, { tradeSpecies: true })
-    ).every((prop) => !prop)
+    Object.values(sliceEvoMethods(evoMethods, { tradeSpecies: true })).every(
+      (prop) => !prop
+    )
   ) {
     return (
       `${formatString(baseSpecies)} evolves to ${formatString(
@@ -128,9 +149,9 @@ export default function formatEvos(evolutionChain: EvolutionChain, stage: string
   if (
     ///happiness evolution
     triggerMethod === "level-up" &&
-    Object.values(
-      sliceEvoMethods(evoMethods, { minHappiness: true })
-    ).every((prop) => !prop)
+    Object.values(sliceEvoMethods(evoMethods, { minHappiness: true })).every(
+      (prop) => !prop
+    )
   ) {
     return (
       `${formatString(baseSpecies)} evolves to ${formatString(
@@ -142,9 +163,9 @@ export default function formatEvos(evolutionChain: EvolutionChain, stage: string
   if (
     ///move specific evolution
     triggerMethod === "level-up" &&
-    Object.values(
-      sliceEvoMethods(evoMethods, { knownMove: true })
-    ).every((prop) => !prop)
+    Object.values(sliceEvoMethods(evoMethods, { knownMove: true })).every(
+      (prop) => !prop
+    )
   ) {
     return `${formatString(baseSpecies)} evolves to ${formatString(
       secondSpecies
@@ -213,9 +234,9 @@ export default function formatEvos(evolutionChain: EvolutionChain, stage: string
   if (
     //party species based evolution
     triggerMethod === "level-up" &&
-    Object.values(
-      sliceEvoMethods(evoMethods, { partySpecies: true })
-    ).every((prop) => !prop)
+    Object.values(sliceEvoMethods(evoMethods, { partySpecies: true })).every(
+      (prop) => !prop
+    )
   ) {
     return `${formatString(baseSpecies)} evolves to ${formatString(
       secondSpecies
@@ -262,9 +283,9 @@ export default function formatEvos(evolutionChain: EvolutionChain, stage: string
   if (
     //stantlet evolution
     triggerMethod === "agile-style-move" &&
-    Object.values(
-      sliceEvoMethods(evoMethods, { knownMove:true })
-    ).every((prop) => !prop)
+    Object.values(sliceEvoMethods(evoMethods, { knownMove: true })).every(
+      (prop) => !prop
+    )
   ) {
     return `${formatString(baseSpecies)} evolves to ${formatString(
       secondSpecies
@@ -272,7 +293,7 @@ export default function formatEvos(evolutionChain: EvolutionChain, stage: string
       evoShortcut?.known_move?.name === undefined
         ? "unknown move"
         : formatString(evoShortcut?.known_move?.name)
-    } in agile style 20 times in Pokemon Arceus` ;
+    } in agile style 20 times in Pokemon Arceus`;
   }
 
   if (
