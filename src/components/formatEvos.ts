@@ -309,6 +309,22 @@ export default function formatEvos(
   }
 
   if (
+    //sylveon mk2 evolution
+    triggerMethod === "level-up" &&
+    Object.values(
+      sliceEvoMethods(evoMethods, { knownMoveType: true, minHappiness: true })
+    ).every((prop) => !prop)
+  ) {
+    return `${formatString(baseSpecies)} evolves to ${formatString(
+      secondSpecies
+    )} knowing a ${
+      evoShortcut?.known_move_type?.name === undefined
+        ? "unknown"
+        : evoShortcut.known_move_type.name
+    } type move at high friendship`;
+  }
+
+  if (
     //feebas evolution
     triggerMethod === "level-up" &&
     Object.values(

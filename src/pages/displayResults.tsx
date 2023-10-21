@@ -371,7 +371,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                         ? formatString(evolution.species.name)
                         : ""}
 
-                      <div>
+                      <div key={index}>
                         {evolutionChain?.chain.evolves_to[
                           index
                         ].evolution_details.map((method, methodIndex) => (
@@ -406,7 +406,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                               : ""}
                             <div>
                               {evolutionChain?.chain.evolves_to[
-                                index
+                                0
                               ].evolution_details.map((method, methodIndex) => (
                                 <div>
                                   {formatEvos(
