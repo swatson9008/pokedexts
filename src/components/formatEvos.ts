@@ -4,7 +4,8 @@ import { formatString } from "./formatString";
 export default function formatEvos(
   evolutionChain: EvolutionChain,
   stage: string,
-  indexValue: number
+  indexValue: number,
+  multipleValue: number
 ) {
   let triggerMethod;
 
@@ -16,11 +17,11 @@ export default function formatEvos(
 
   if (stage === "first") {
     triggerMethod =
-      evolutionChain.chain.evolves_to[indexValue].evolution_details[0].trigger
+      evolutionChain.chain.evolves_to[indexValue].evolution_details[multipleValue].trigger
         .name;
 
     evoShortcut =
-      evolutionChain.chain.evolves_to[indexValue].evolution_details[0];
+      evolutionChain.chain.evolves_to[indexValue].evolution_details[multipleValue];
 
     baseSpecies = evolutionChain.chain.species.name;
 
@@ -28,10 +29,10 @@ export default function formatEvos(
   } else if (stage === "second") {
     triggerMethod =
       evolutionChain.chain.evolves_to[0].evolves_to[indexValue]
-        .evolution_details[0].trigger.name;
+        .evolution_details[multipleValue].trigger.name;
     evoShortcut =
       evolutionChain.chain.evolves_to[0].evolves_to[indexValue]
-        .evolution_details[0];
+        .evolution_details[multipleValue];
     baseSpecies = evolutionChain.chain.evolves_to[0].species.name;
     secondSpecies =
       evolutionChain.chain.evolves_to[0].evolves_to[indexValue].species.name;

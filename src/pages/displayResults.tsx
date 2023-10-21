@@ -370,28 +370,57 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                       {evolution.species.name !== undefined
                         ? formatString(evolution.species.name)
                         : ""}
-                      <div>{formatEvos(evolutionChain, "first", index)}</div>
+
+                      <div>
+                        {evolutionChain?.chain.evolves_to[
+                          index
+                        ].evolution_details.map((method, methodIndex) => (
+                          <div>
+                            {formatEvos(
+                              evolutionChain,
+                              "first",
+                              index,
+                              methodIndex
+                            )}
+                          </div>
+                        ))}
+                      </div>
                     </div>
                   ))}
                 </div>
 
                 <div className="secondStageEvo">
-                  {evolutionChain?.chain.evolves_to[0].evolves_to.length === 0 ? null :
-                  
-                  evolutionChain?.chain.evolves_to[0].evolves_to.map((evolution, index) => (
-                    <div key={index}>
-                      <img
-                        src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${getIDNo(
-                          evolution.species.url
-                        )}.png`}
-                        alt={evolution.species.name}
-                      />
-                      {evolution.species.name !== undefined
-                        ? formatString(evolution.species.name)
-                        : ""}
-                      <div>{formatEvos(evolutionChain, "second", index)}</div>
-                    </div>
-                  ))}
+                  {evolutionChain?.chain.evolves_to[0].evolves_to.length === 0
+                    ? null
+                    : evolutionChain?.chain.evolves_to[0].evolves_to.map(
+                        (evolution, index) => (
+                          <div key={index}>
+                            <img
+                              src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${getIDNo(
+                                evolution.species.url
+                              )}.png`}
+                              alt={evolution.species.name}
+                            />
+                            {evolution.species.name !== undefined
+                              ? formatString(evolution.species.name)
+                              : ""}
+                            <div>
+                              {evolutionChain?.chain.evolves_to[
+                                index
+                              ].evolution_details.map((method, methodIndex) => (
+                                <div>
+                                  {formatEvos(
+                                    evolutionChain,
+                                    "second",
+                                    index,
+                                    methodIndex
+                                  )}
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )
+                      )}
                 </div>
               </div>
             )}
