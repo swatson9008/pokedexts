@@ -25,9 +25,7 @@ export default function formatEvos(
     baseSpecies = evolutionChain.chain.species.name;
 
     secondSpecies = evolutionChain.chain.evolves_to[indexValue].species.name;
-  }
-
-  else if (stage === "second") {
+  } else if (stage === "second") {
     triggerMethod =
       evolutionChain.chain.evolves_to[0].evolves_to[indexValue]
         .evolution_details[0].trigger.name;
@@ -36,27 +34,29 @@ export default function formatEvos(
         .evolution_details[0];
     baseSpecies = evolutionChain.chain.evolves_to[0].species.name;
     secondSpecies =
-      evolutionChain.chain.evolves_to[0].evolves_to[indexValue].species
-        .name;
-  } 
+      evolutionChain.chain.evolves_to[0].evolves_to[indexValue].species.name;
+  } else {
+    return "";
+  }
 
-  else {return ""}
-  
   const evoMethods = {
     minLevel: evoShortcut?.min_level,
     minAfection: evoShortcut?.min_affection,
     itemHeld: evoShortcut?.held_item,
-    itemUsed: evoShortcut.item,
+    itemUsed: evoShortcut?.item,
+    location: evoShortcut?.location,
     minHappiness: evoShortcut?.min_happiness,
+    minAffection: evoShortcut?.min_affection,
     genderCheck: evoShortcut?.gender,
     minBeauty: evoShortcut?.min_beauty,
     timeOfDay: evoShortcut?.time_of_day,
     overworldRain: evoShortcut?.needs_overworld_rain,
     knownMove: evoShortcut?.known_move,
-    partySpecies: evoShortcut.party_species,
-    partyType: evoShortcut.party_type,
-    upsideDown: evoShortcut.turn_upside_down,
-    tradeSpecies: evoShortcut.trade_species,
+    knownMoveType: evoShortcut?.known_move_type,
+    partySpecies: evoShortcut?.party_species,
+    partyType: evoShortcut?.party_type,
+    upsideDown: evoShortcut?.turn_upside_down,
+    tradeSpecies: evoShortcut?.trade_species,
   };
 
   function sliceEvoMethods(
@@ -193,6 +193,22 @@ export default function formatEvos(
   }
 
   if (
+    ///time of day friendship evolution
+    triggerMethod === "level-up" &&
+    Object.values(
+      sliceEvoMethods(evoMethods, { timeOfDay: true, minHappiness: true })
+    ).every((prop) => !prop)
+  ) {
+    return (
+      `${formatString(baseSpecies)} evolves to ${formatString(
+        secondSpecies
+      )} from leveling up during the ${
+        evoShortcut.time_of_day
+      }time at high friendship` || "not known"
+    );
+  }
+
+  if (
     ///time of day + item evolution
     triggerMethod === "level-up" &&
     Object.values(
@@ -248,6 +264,18 @@ export default function formatEvos(
   }
 
   if (
+    //location based evolution
+    triggerMethod === "level-up" &&
+    Object.values(
+      sliceEvoMethods(evoMethods, { location: true })
+    ).every((prop) => !prop)
+  ) {
+    return `${formatString(baseSpecies)} evolves to ${formatString(
+      secondSpecies
+    )} when leveling up at ${evoMethods?.location === undefined ? "unknown location" : formatString(evoMethods.location?.name)}`;
+  }
+
+  if (
     //party type based evolution
     triggerMethod === "level-up" &&
     Object.values(
@@ -261,6 +289,34 @@ export default function formatEvos(
         ? "unknown Pokemon type"
         : evoShortcut.party_type.name
     )} type Pokemon in the party`;
+  }
+
+  if (
+    //sylveon evolution
+    triggerMethod === "level-up" &&
+    Object.values(
+      sliceEvoMethods(evoMethods, { knownMoveType: true, minAffection: true })
+    ).every((prop) => !prop)
+  ) {
+    return `${formatString(baseSpecies)} evolves to ${formatString(
+      secondSpecies
+    )} knowing a ${
+      evoShortcut?.known_move_type?.name === undefined
+        ? "unknown"
+        : evoShortcut.known_move_type.name
+    } type move at high affection`;
+  }
+
+  if (
+    //feebas evolution
+    triggerMethod === "level-up" &&
+    Object.values(
+      sliceEvoMethods(evoMethods, { minBeauty: true })
+    ).every((prop) => !prop)
+  ) {
+    return `${formatString(baseSpecies)} evolves to ${formatString(
+      secondSpecies
+    )} with a high beauty stat`;
   }
 
   if (
@@ -281,7 +337,7 @@ export default function formatEvos(
   }
 
   if (
-    //stantlet evolution
+    //stantler evolution
     triggerMethod === "agile-style-move" &&
     Object.values(sliceEvoMethods(evoMethods, { knownMove: true })).every(
       (prop) => !prop
