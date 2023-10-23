@@ -157,7 +157,7 @@ export default function formatEvos(
     return (
       `${formatString(baseSpecies)} evolves to ${formatString(
         secondSpecies
-      )} from being traded holding the ${
+      )} from being traded while holding the ${
         evoShortcut?.held_item?.name === undefined
           ? "unknown item"
           : formatString(evoShortcut.held_item.name)
@@ -430,6 +430,16 @@ export default function formatEvos(
   }
 
   if (
+    //recoil evolution
+    triggerMethod === "recoil-damage" &&
+    baseSpecies === "basculin-white-striped"
+  ) {
+    return `${formatString(baseSpecies)} evolves to ${formatString(
+      secondSpecies
+    )} after losing at least 294HP from recoil damage without fainting`;
+  }
+
+  if (
     //shedninja evolution
     triggerMethod === "shed"
   ) {
@@ -503,6 +513,17 @@ export default function formatEvos(
     return `${formatString(baseSpecies)} evolves into ${formatString(
       secondSpecies
     )} starting at level 25.`;
+  }
+
+
+  if (
+    ///hardcoded gen 9 evolution
+    triggerMethod === "other" &&
+    baseSpecies === "primeape"
+  ) {
+    return `${formatString(baseSpecies)} evolves into ${formatString(
+      secondSpecies
+    )} after using Rage Fist 20 times.`;
   }
 
   if (
