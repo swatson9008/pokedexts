@@ -355,9 +355,19 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
           </div>
           <div className="pokeEvoInfo">
             {evolutionChain?.chain.evolves_to.length === 0 ? (
+              <img src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${getIDNo(
+                evolutionChain.chain.species.url
+              )}.png`} alt="" /> +
               "This Pokemon has no evolution line"
             ) : (
               <div className="pokeEvoChain">
+                <div className="baseEvo">
+                <img src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${getIDNo(
+                evolutionChain.chain.species.url
+              )}.png`} alt="" /> {evolutionChain?.chain.species.name !== undefined
+                ? formatString(evolutionChain?.chain.species.name)
+                : ""}
+                </div>
                 <div className="firstStageEvo">
                   {evolutionChain?.chain.evolves_to.map((evolution, index) => (
                     <div key={index}>
