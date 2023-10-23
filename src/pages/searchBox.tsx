@@ -9,7 +9,8 @@ export default function SearchBox() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setSearch(event.target.value.toLowerCase());
+    const searchValue = event.target.value;
+    setSearch(searchValue.toLowerCase().replace(/'/g, ''));
   };
 
   const handleSearch = async () => {
@@ -31,7 +32,6 @@ export default function SearchBox() {
           type="text"
           id="searchInput"
           placeholder="Enter a Pokemon"
-          value={pokeSearch}
           onChange={handleInputChange}
         />
         <button id="searchButton" onClick={handleSearch}>
