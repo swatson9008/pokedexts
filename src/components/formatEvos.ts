@@ -389,6 +389,15 @@ export default function formatEvos(
   }
 
   if (
+    ///hardcoded gen 8 evolution
+    triggerMethod === "tower-of-darkness" || triggerMethod === "tower-of-waters"
+  ) {
+    return `${formatString(baseSpecies)} evolves into ${formatString(
+      secondSpecies
+    )} after being exposed to the ${formatString(triggerMethod)}`;
+  }
+
+  if (
     ///hardcoded gen 9 evolution
     triggerMethod === "other" &&
     (baseSpecies === "rellor" || baseSpecies === "bramblin")
