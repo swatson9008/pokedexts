@@ -130,6 +130,24 @@ export default function formatEvos(
   }
 
   if (
+    //item gender specific evolution
+    triggerMethod === "use-item" &&
+    Object.values(sliceEvoMethods(evoMethods, { itemUsed: true, genderCheck: true })).every(
+      (prop) => !prop
+    )
+  ) {
+    return `${formatString(baseSpecies)} evolves to ${formatString(
+      secondSpecies
+    )} from using a ${
+      evoShortcut?.item?.name === undefined
+        ? "unknown item"
+        : formatString(evoShortcut.item.name)
+    } if they are ${
+      evoShortcut.gender === 1 ? "female" : "male"
+    }`;
+  }
+
+  if (
     ///trade item evolution
     triggerMethod === "trade" &&
     Object.values(sliceEvoMethods(evoMethods, { itemHeld: true })).every(
@@ -475,6 +493,16 @@ export default function formatEvos(
     return `${formatString(baseSpecies)} evolves into ${formatString(
       secondSpecies
     )} while in a Union Circle Group starting at level 38.`;
+  }
+
+  if (
+    ///hardcoded gen 9 evolution
+    triggerMethod === "other" &&
+    baseSpecies === "tandemaus"
+  ) {
+    return `${formatString(baseSpecies)} evolves into ${formatString(
+      secondSpecies
+    )} starting at level 25.`;
   }
 
   if (
