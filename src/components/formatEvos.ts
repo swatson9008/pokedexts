@@ -74,6 +74,24 @@ export default function formatEvos(
   }
 
   if (
+    // Tyrogue check
+    triggerMethod === "level-up" &&
+    Object.values(sliceEvoMethods(evoMethods, { minLevel: true })).every(
+      (prop) => !prop && baseSpecies === "tyrogue"
+    )
+  ) {
+    return `${formatString(baseSpecies)} evolves to ${formatString(
+      secondSpecies
+    )} at level ${evoMethods.minLevel?.toString()} ${
+      secondSpecies === "hitmonlee"
+        ? "if its Attack stat is greater than its Defense"
+        : secondSpecies === "hitmonchan"
+        ? "if its Defense stat is greater than its Attack"
+        : "if its Attack and Defense stats are equal"
+     || "not known"}`;
+  }
+
+  if (
     triggerMethod === "level-up" &&
     Object.values(sliceEvoMethods(evoMethods, { minLevel: true })).every(
       (prop) => !prop
@@ -374,9 +392,7 @@ export default function formatEvos(
   ) {
     return `${formatString(baseSpecies)} evolves to ${formatString(
       secondSpecies
-    )} starting at level ${
-      evoShortcut.min_level
-    } during rain or fog.`;
+    )} starting at level ${evoShortcut.min_level} during rain or fog.`;
   }
 
   if (
@@ -397,7 +413,7 @@ export default function formatEvos(
 
   if (
     //shedninja evolution
-    triggerMethod === "shed" 
+    triggerMethod === "shed"
   ) {
     return `${formatString(baseSpecies)} evolves to ${formatString(
       secondSpecies
@@ -415,7 +431,8 @@ export default function formatEvos(
 
   if (
     ///hardcoded gen 8 evolution
-    triggerMethod === "tower-of-darkness" || triggerMethod === "tower-of-waters"
+    triggerMethod === "tower-of-darkness" ||
+    triggerMethod === "tower-of-waters"
   ) {
     return `${formatString(baseSpecies)} evolves into ${formatString(
       secondSpecies
