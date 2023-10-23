@@ -449,6 +449,15 @@ export default function formatEvos(
   }
 
   if (
+    ///hardcoded gen 8 evolution
+    triggerMethod === "take-damage"
+  ) {
+    return `${formatString(baseSpecies)} evolves into ${formatString(
+      secondSpecies
+    )} after taking 49 damage and traveling under the rock arch in Dusty Bowl`;
+  }
+
+  if (
     ///hardcoded gen 9 evolution
     triggerMethod === "other" &&
     (baseSpecies === "rellor" || baseSpecies === "bramblin")
