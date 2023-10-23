@@ -2,6 +2,8 @@ function formatString(input: string) {
   if (input === "machine") {
     input = "TM/HM";
   }
+  if (input === "farfetchd"){input = "Farfetch'd"}
+  if (input === "sirfetchd"){input = "Sirfetch'd"}
   if (input.startsWith("xd")) {
     input = input.substring(0, 2).toUpperCase() + input.substring(2);
   }
