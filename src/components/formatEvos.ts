@@ -17,11 +17,14 @@ export default function formatEvos(
 
   if (stage === "first") {
     triggerMethod =
-      evolutionChain.chain.evolves_to[indexValue].evolution_details[multipleValue].trigger
-        .name;
+      evolutionChain.chain.evolves_to[indexValue].evolution_details[
+        multipleValue
+      ].trigger.name;
 
     evoShortcut =
-      evolutionChain.chain.evolves_to[indexValue].evolution_details[multipleValue];
+      evolutionChain.chain.evolves_to[indexValue].evolution_details[
+        multipleValue
+      ];
 
     baseSpecies = evolutionChain.chain.species.name;
 
@@ -219,9 +222,12 @@ export default function formatEvos(
     return (
       `${formatString(baseSpecies)} evolves to ${formatString(
         secondSpecies
-      )} from leveling up during the ${
-        evoShortcut.time_of_day
-      }time starting at level ${evoShortcut.min_level} while holding ${
+      )} from leveling up during the ${evoShortcut.time_of_day}time 
+       ${
+         evoShortcut.min_level === null
+           ? ""
+           : `starting at level ${evoShortcut.min_level}`
+       } while holding a ${
         evoShortcut.held_item?.name === undefined
           ? "unknown item "
           : formatString(evoShortcut.held_item?.name)
@@ -267,13 +273,17 @@ export default function formatEvos(
   if (
     //location based evolution
     triggerMethod === "level-up" &&
-    Object.values(
-      sliceEvoMethods(evoMethods, { location: true })
-    ).every((prop) => !prop)
+    Object.values(sliceEvoMethods(evoMethods, { location: true })).every(
+      (prop) => !prop
+    )
   ) {
     return `${formatString(baseSpecies)} evolves to ${formatString(
       secondSpecies
-    )} when leveling up at ${evoMethods?.location === undefined ? "unknown location" : formatString(evoMethods.location?.name)}`;
+    )} when leveling up at ${
+      evoMethods?.location === undefined
+        ? "unknown location"
+        : formatString(evoMethods.location?.name)
+    }`;
   }
 
   if (
@@ -327,9 +337,9 @@ export default function formatEvos(
   if (
     //feebas evolution
     triggerMethod === "level-up" &&
-    Object.values(
-      sliceEvoMethods(evoMethods, { minBeauty: true })
-    ).every((prop) => !prop)
+    Object.values(sliceEvoMethods(evoMethods, { minBeauty: true })).every(
+      (prop) => !prop
+    )
   ) {
     return `${formatString(baseSpecies)} evolves to ${formatString(
       secondSpecies

@@ -355,18 +355,28 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
           </div>
           <div className="pokeEvoInfo">
             {evolutionChain?.chain.evolves_to.length === 0 ? (
-              <img src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${getIDNo(
-                evolutionChain.chain.species.url
-              )}.png`} alt="" /> +
-              "This Pokemon has no evolution line"
+              (
+                <img
+                  src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${getIDNo(
+                    evolutionChain.chain.species.url
+                  )}.png`}
+                  alt=""
+                />
+              ) + "This Pokemon has no evolution line"
             ) : (
               <div className="pokeEvoChain">
                 <div className="baseEvo">
-                <img src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${getIDNo(
-                evolutionChain.chain.species.url
-              )}.png`} alt="" /> {evolutionChain?.chain.species.name !== undefined
-                ? formatString(evolutionChain?.chain.species.name)
-                : ""}
+                  {evolutionChain ? (
+                    <img
+                      src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${getIDNo(
+                        evolutionChain.chain.species.url
+                      )}.png`}
+                      alt=""
+                    />
+                  ) : null}
+                  {evolutionChain?.chain.species.name !== undefined
+                    ? formatString(evolutionChain?.chain.species.name)
+                    : ""}
                 </div>
                 <div className="firstStageEvo">
                   {evolutionChain?.chain.evolves_to.map((evolution, index) => (
@@ -415,18 +425,18 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                               ? formatString(evolution.species.name)
                               : ""}
                             <div>
-                              {evolutionChain?.chain.evolves_to[
-                                0
-                              ].evolution_details.map((method, methodIndex) => (
-                                <div>
-                                  {formatEvos(
-                                    evolutionChain,
-                                    "second",
-                                    index,
-                                    methodIndex
-                                  )}
-                                </div>
-                              ))}
+                              {evolutionChain?.chain.evolves_to[0].evolution_details.map(
+                                (method, methodIndex) => (
+                                  <div>
+                                    {formatEvos(
+                                      evolutionChain,
+                                      "second",
+                                      index,
+                                      methodIndex
+                                    )}
+                                  </div>
+                                )
+                              )}
                             </div>
                           </div>
                         )
