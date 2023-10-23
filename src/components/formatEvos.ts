@@ -380,6 +380,15 @@ export default function formatEvos(
   }
 
   if (
+    ///hardcoded gen 8 evolution
+    triggerMethod === "three-critical-hits"
+  ) {
+    return `${formatString(baseSpecies)} evolves into ${formatString(
+      secondSpecies
+    )} after landing three critical hits in a single battle`;
+  }
+
+  if (
     ///hardcoded gen 9 evolution
     triggerMethod === "other" &&
     (baseSpecies === "rellor" || baseSpecies === "bramblin")
