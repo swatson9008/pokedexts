@@ -398,6 +398,15 @@ export default function formatEvos(
   }
 
   if (
+    ///hardcoded gen 8 evolution
+    triggerMethod === "spin"
+  ) {
+    return `${formatString(baseSpecies)} evolves into ${formatString(
+      secondSpecies
+    )} after spinning in the overworld`;
+  }
+
+  if (
     ///hardcoded gen 9 evolution
     triggerMethod === "other" &&
     (baseSpecies === "rellor" || baseSpecies === "bramblin")

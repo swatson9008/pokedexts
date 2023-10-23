@@ -355,14 +355,20 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
           </div>
           <div className="pokeEvoInfo">
             {evolutionChain?.chain.evolves_to.length === 0 ? (
-              (
-                <img
-                  src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${getIDNo(
-                    evolutionChain.chain.species.url
-                  )}.png`}
-                  alt=""
-                />
-              ) + "This Pokemon has no evolution line"
+              pokeData.pokeSprites.sprite === null ? (
+                <>
+                  "Image not found"
+                  This Pokemon has no evolution line
+                </>
+              ) : (
+                <div>
+                  <img
+                    src={pokeData.pokeSprites.sprite}
+                    alt={pokeData.pokeName}
+                  />
+                  This Pokemon has no evolution line
+                </div>
+              )
             ) : (
               <div className="pokeEvoChain">
                 <div className="baseEvo">
