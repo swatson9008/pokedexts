@@ -45,7 +45,6 @@ export default function formatEvos(
 
   const evoMethods = {
     minLevel: evoShortcut?.min_level,
-    minAfection: evoShortcut?.min_affection,
     itemHeld: evoShortcut?.held_item,
     itemUsed: evoShortcut?.item,
     location: evoShortcut?.location,
@@ -364,6 +363,23 @@ export default function formatEvos(
   }
 
   if (
+    //rain evolution
+    triggerMethod === "level-up" &&
+    Object.values(
+      sliceEvoMethods(evoMethods, {
+        overworldRain: true,
+        minLevel: true,
+      })
+    ).every((prop) => !prop)
+  ) {
+    return `${formatString(baseSpecies)} evolves to ${formatString(
+      secondSpecies
+    )} starting at level ${
+      evoShortcut.min_level
+    } during rain or fog.`;
+  }
+
+  if (
     //stantler evolution
     triggerMethod === "agile-style-move" &&
     Object.values(sliceEvoMethods(evoMethods, { knownMove: true })).every(
@@ -377,6 +393,15 @@ export default function formatEvos(
         ? "unknown move"
         : formatString(evoShortcut?.known_move?.name)
     } in agile style 20 times in Pokemon Arceus`;
+  }
+
+  if (
+    //shedninja evolution
+    triggerMethod === "shed" 
+  ) {
+    return `${formatString(baseSpecies)} evolves to ${formatString(
+      secondSpecies
+    )} when evolving into Ninjask if there is space in the party and a Pokeball in the bag`;
   }
 
   if (
