@@ -83,6 +83,35 @@ export default async function Search(searchPoke: string) {
       }
     };
 
+    /*const fetchAlternateForms = async () => {
+      try {
+        const api = new PokemonClient();
+        const pokemonNames = new RegExp(`.*${searchPoke}.*`, 'i').toString();
+        const response = await api.getPokemonFormByName(pokemonNames);
+    
+        if (response) {
+          const formData = { forms: [response] };
+          searchedPokemonData.pokeForms = [formData];
+        }
+      } catch (error) {
+        console.error("Error fetching forms data:", error);
+      }
+    };*/
+
+    const fetchAlternateForms = async () => {
+      try {
+        const api = new PokemonClient();
+        const response = await api.getPokemonSpeciesByName(searchPoke);
+    
+        if (response) {
+          const formData = { forms: [response.varieties] };
+          searchedPokemonData.pokeForms = [formData];
+        }
+      } catch (error) {
+        console.error("Error fetching forms data:", error);
+      }
+    }
+    
     const searchedPokemonData: PokemonData = {
       pokeName: data.name,
       pokeMoves: movesByVersionAndMethod,
@@ -113,9 +142,11 @@ export default async function Search(searchPoke: string) {
       pokeSpecies: { url: data.species.url },
       pokeSprites: { sprite: data.sprites.front_default },
       pokeEvoID: "",
+      pokeForms: [{ forms: [] }],
     };
 
     await fetchAndExtractEvolutionChain();
+    await fetchAlternateForms();
 
     try {
       const response = await fetch(searchedPokemonData.pokeAbilities[0].url);

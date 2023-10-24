@@ -250,6 +250,21 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
     }
   }, [evolutionChain]);
 
+
+  /*useEffect(() => {
+    const fetchDataForVariety = async () => {
+
+    }
+    fetchDataForVariety();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (evolutionChain) {
+      console.log(evolutionChain); // Log the data here
+    }
+  }, [evolutionChain]);*/
+
   const smogonLinkGen = (pokemon: string, generation: string) => {
     return `https://www.smogon.com/dex/${generationConverter(
       generation
