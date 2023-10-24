@@ -302,22 +302,12 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                   <div key={index}>{formatString(type.name)}</div>
                 ))}
           </div>
-          {gameTitle === "red-blue" ||
-          gameTitle === "yellow" ||
-          gameTitle === "gold-silver" ||
-          gameTitle === "crystal" ? null : (
+          {(generationList.generation1.includes(gameTitle) || generationList.generation2.includes(gameTitle)) ? null : (
             <div className="pokeAbilities">
               {pokeData.pokeAbilities.map((abilities, index) => (
                 <div key={index}>
                   {abilities.is_hidden &&
-                  (gameTitle === "ruby-sapphire" ||
-                    gameTitle === "emerald" ||
-                    gameTitle === "firered-leafgreen" ||
-                    gameTitle === "colosseum" ||
-                    gameTitle === "xd" ||
-                    gameTitle === "diamond-pearl" ||
-                    gameTitle === "platinum" ||
-                    gameTitle === "heartgold-soulsilver")
+                  (generationList.generation3.includes(gameTitle) || generationList.generation4.includes(gameTitle))
                     ? null
                     : (abilities.is_hidden
                         ? "Hidden Ability: "

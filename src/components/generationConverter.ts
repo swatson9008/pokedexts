@@ -43,24 +43,5 @@ function generationConverter(generation: string) {
   return generation;
 }
 
-/*function preGen6Check(gameTitle: string): boolean {
-  return (
-    gameTitle === "red-blue" ||
-    gameTitle === "yellow" ||
-    gameTitle === "gold-silver" ||
-    gameTitle === "crystal" ||
-    gameTitle === "ruby-sapphire" ||
-    gameTitle === "emerald" ||
-    gameTitle === "firered-leafgreen" ||
-    gameTitle === "colosseum" ||
-    gameTitle === "xd" ||
-    gameTitle === "diamond-pearl" ||
-    gameTitle === "platinum" ||
-    gameTitle === "heartgold-soulsilver" ||
-    gameTitle === "black-white" ||
-    gameTitle === "black-2-white-2"
-  );
-}*/
-
 
 export {generationConverter, generationList}
