@@ -30,6 +30,7 @@ interface AbilityData {
 }
 
 export default function DisplayResults({ pokeData }: DisplayResultsProps) {
+  const { pokeAbilities, pokeStats, pokeSprites, pokeForms, pokeTypes, pastTypes, pokeEvoID, pokeName } = pokeData;
   const sortedData = sortMoves(pokeData);
   const defaultGameTitle = Object.keys(sortedData.pokeMoves).slice(-1)[0];
   const [gameTitle, setGameTitle] = useState(defaultGameTitle);
@@ -207,7 +208,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
     const fetchDataForAbilities = async () => {
       try {
         const abilityDataArray = await Promise.all(
-          pokeData.pokeAbilities.map(async (abilities) => {
+          pokeAbilities.map(async (abilities) => {
             if (abilities.url) {
               const response = await fetch(abilities.url);
               const abilityData = await response.json();
@@ -235,7 +236,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
       try {
         const api = new EvolutionClient();
         const data = await api.getEvolutionChainById(
-          parseInt(pokeData.pokeEvoID)
+          parseInt(pokeEvoID)
         );
         setEvolutionChain(data);
       } catch (error) {
@@ -264,16 +265,16 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
       <div className="displayResult">
         <div key={sortedData.pokeName}>
           <div>
-            {pokeData.pokeSprites.sprite === null ? (
+            {pokeSprites.sprite === null ? (
               "image not found"
             ) : (
-              <img src={pokeData.pokeSprites.sprite} alt={pokeData.pokeName} />
+              <img src={pokeSprites.sprite} alt={pokeName} />
             )}
           </div>
           <div className="pokeName">{formatString(sortedData.pokeName)}</div>
-          {pokeData.pokeForms[0].forms[0].length === 1
+          {pokeForms[0].forms[0].length === 1
             ? "No additional variants found"
-            : pokeData.pokeForms[0].forms[0].map((form: { pokemon: { url: string | undefined; name: string; }; is_default: boolean; }) => (
+            : pokeForms[0].forms[0].map((form: { pokemon: { url: string | undefined; name: string; }; is_default: boolean; }) => (
                 <div key={getIDNo(form.pokemon.url)}>
                   {form.is_default
                     ? "Default Variant"
@@ -282,29 +283,29 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
               ))}
           <div className="pokeTypes">
             Types:{" "}
-            {pokeData.pastTypes.length &&
+            {pastTypes.length &&
             (generationList.generation1.includes(gameTitle) ||
               generationList.generation2.includes(gameTitle) ||
               generationList.generation3.includes(gameTitle) ||
               generationList.generation4.includes(gameTitle) ||
               generationList.generation5.includes(gameTitle)) &&
-            pokeData.pastTypes[0].generation.name === "generation-v"
-              ? pokeData.pastTypes[0].types.map((type, index) => (
+            pastTypes[0].generation.name === "generation-v"
+              ? pastTypes[0].types.map((type, index) => (
                   <div key={index}>{formatString(type.type.name)}</div>
                 ))
-              : pokeData.pastTypes.length &&
+              : pastTypes.length &&
                 generationList.generation1.includes(gameTitle) &&
-                pokeData.pastTypes[0].generation.name === "generation-i"
-              ? pokeData.pastTypes[0].types.map((type, index) => (
+                pastTypes[0].generation.name === "generation-i"
+              ? pastTypes[0].types.map((type, index) => (
                   <div key={index}>{formatString(type.type.name)}</div>
                 ))
-              : pokeData.pokeTypes.map((type, index) => (
+              : pokeTypes.map((type, index) => (
                   <div key={index}>{formatString(type.name)}</div>
                 ))}
           </div>
           {(generationList.generation1.includes(gameTitle) || generationList.generation2.includes(gameTitle)) ? null : (
             <div className="pokeAbilities">
-              {pokeData.pokeAbilities.map((abilities, index) => (
+              {pokeAbilities.map((abilities, index) => (
                 <div key={index}>
                   {abilities.is_hidden &&
                   (generationList.generation3.includes(gameTitle) || generationList.generation4.includes(gameTitle))
@@ -335,26 +336,26 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
             </div>
           )}
           <div className="pokeBaseStats">
-            {pokeData.pokeStats.map((stats, index) => (
+            {pokeStats.map((stats, index) => (
               <div key={index}>
                 {formatString(stats.name) + " - " + stats.base_stat}
               </div>
             ))}
           </div>
           <div className="smogonLink">
-            <a href={smogonLinkGen(pokeData.pokeName, gameTitle)}>
+            <a href={smogonLinkGen(pokeName, gameTitle)}>
               Recommended Smogon Movesets
             </a>
           </div>
           <div className="pokeEvoInfo">
             {evolutionChain?.chain.evolves_to.length === 0 ? (
-              pokeData.pokeSprites.sprite === null ? (
+              pokeSprites.sprite === null ? (
                 <>"Image not found" This Pokemon has no evolution line</>
               ) : (
                 <div>
                   <img
-                    src={pokeData.pokeSprites.sprite}
-                    alt={pokeData.pokeName}
+                    src={pokeSprites.sprite}
+                    alt={pokeName}
                   />
                   This Pokemon has no evolution line
                 </div>
