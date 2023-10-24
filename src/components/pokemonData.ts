@@ -19,6 +19,7 @@ export interface PokemonData {
   pokeAbilities: Array<{ name: string; url: string; is_hidden: boolean }>;
   pokeStats: Array<{name: string; base_stat: string}>;
   pokeSpecies: { url: string };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   pokeForms: Array<{ forms: any[] }>;
   pokeSprites: { sprite: string | null };
   pokeEvoID: string;

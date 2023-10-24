@@ -1,4 +1,4 @@
-import { EvolutionChain } from "pokenode-ts";
+import { EvolutionChain, EvolutionDetail } from "pokenode-ts";
 import { formatString } from "./formatString";
 
 export default function formatEvos(
@@ -9,9 +9,9 @@ export default function formatEvos(
 ) {
   let triggerMethod;
 
-  let evoShortcut;
+  let evoShortcut: EvolutionDetail;
 
-  let baseSpecies;
+  let baseSpecies: string;
 
   let secondSpecies;
 
@@ -317,7 +317,7 @@ export default function formatEvos(
     )} when leveling up at ${
       evoMethods?.location === undefined
         ? "unknown location"
-        : formatString(evoMethods.location?.name)
+        : formatString(evoMethods.location?.name === undefined ? "" : evoMethods.location?.name)
     }`;
   }
 

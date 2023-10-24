@@ -8,7 +8,10 @@ import {
 import { PokemonData } from "../components/pokemonData";
 import sortMoves from "../components/sortMove";
 import { MoveClient, EvolutionClient, EvolutionChain } from "pokenode-ts";
-import {generationConverter, generationList} from "../components/generationConverter";
+import {
+  generationConverter,
+  generationList,
+} from "../components/generationConverter";
 import formatEvos from "../components/formatEvos";
 
 interface DisplayResultsProps {
@@ -270,7 +273,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
           <div className="pokeName">{formatString(sortedData.pokeName)}</div>
           {pokeData.pokeForms[0].forms[0].length === 1
             ? "No additional variants found"
-            : pokeData.pokeForms[0].forms[0].map((form) => (
+            : pokeData.pokeForms[0].forms[0].map((form: { pokemon: { url: string | undefined; name: string; }; is_default: boolean; }) => (
                 <div key={getIDNo(form.pokemon.url)}>
                   {form.is_default
                     ? "Default Variant"
@@ -280,16 +283,17 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
           <div className="pokeTypes">
             Types:{" "}
             {pokeData.pastTypes.length &&
-            (generationList.generation1.includes(gameTitle) || generationList.generation2.includes(gameTitle) ||
-            generationList.generation3.includes(gameTitle) || generationList.generation4.includes(gameTitle) ||
-            generationList.generation5.includes(gameTitle)
-            ) &&
+            (generationList.generation1.includes(gameTitle) ||
+              generationList.generation2.includes(gameTitle) ||
+              generationList.generation3.includes(gameTitle) ||
+              generationList.generation4.includes(gameTitle) ||
+              generationList.generation5.includes(gameTitle)) &&
             pokeData.pastTypes[0].generation.name === "generation-v"
               ? pokeData.pastTypes[0].types.map((type, index) => (
                   <div key={index}>{formatString(type.type.name)}</div>
                 ))
               : pokeData.pastTypes.length &&
-                (generationList.generation1.includes(gameTitle)) &&
+                generationList.generation1.includes(gameTitle) &&
                 pokeData.pastTypes[0].generation.name === "generation-i"
               ? pokeData.pastTypes[0].types.map((type, index) => (
                   <div key={index}>{formatString(type.type.name)}</div>
@@ -396,7 +400,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                       <div key={index}>
                         {evolutionChain?.chain.evolves_to[
                           index
-                        ].evolution_details.map((method, methodIndex) => (
+                        ].evolution_details.map((_method, methodIndex) => (
                           <div>
                             {formatEvos(
                               evolutionChain,
@@ -428,7 +432,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                               : ""}
                             <div>
                               {evolutionChain?.chain.evolves_to[0].evolution_details.map(
-                                (method, methodIndex) => (
+                                (_method, methodIndex) => (
                                   <div>
                                     {formatEvos(
                                       evolutionChain,
