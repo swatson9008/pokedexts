@@ -148,6 +148,8 @@ export default async function Search(searchPoke: string) {
     await fetchAndExtractEvolutionChain();
     await fetchAlternateForms();
 
+    console.log(searchedPokemonData.pokeForms[0].forms[0])
+
     try {
       const response = await fetch(searchedPokemonData.pokeAbilities[0].url);
       if (!response.ok) {

@@ -8,7 +8,7 @@ import {
 import { PokemonData } from "../components/pokemonData";
 import sortMoves from "../components/sortMove";
 import { MoveClient, EvolutionClient, EvolutionChain } from "pokenode-ts";
-import generationConverter from "../components/generationConverter";
+import {generationConverter, generationList} from "../components/generationConverter";
 import formatEvos from "../components/formatEvos";
 
 interface DisplayResultsProps {
@@ -250,21 +250,6 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
     }
   }, [evolutionChain]);
 
-
-  /*useEffect(() => {
-    const fetchDataForVariety = async () => {
-
-    }
-    fetchDataForVariety();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    if (evolutionChain) {
-      console.log(evolutionChain); // Log the data here
-    }
-  }, [evolutionChain]);*/
-
   const smogonLinkGen = (pokemon: string, generation: string) => {
     return `https://www.smogon.com/dex/${generationConverter(
       generation
@@ -283,29 +268,28 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
             )}
           </div>
           <div className="pokeName">{formatString(sortedData.pokeName)}</div>
+          {pokeData.pokeForms[0].forms[0].length === 1
+            ? "No additional variants found"
+            : pokeData.pokeForms[0].forms[0].map((form) => (
+                <div key={getIDNo(form.pokemon.url)}>
+                  {form.is_default
+                    ? "Default Variant"
+                    : formatString(form.pokemon.name)}
+                </div>
+              ))}
           <div className="pokeTypes">
             Types:{" "}
             {pokeData.pastTypes.length &&
-            (gameTitle === "red-blue" ||
-              gameTitle === "yellow" ||
-              gameTitle === "gold-silver" ||
-              gameTitle === "crystal" ||
-              gameTitle === "ruby-sapphire" ||
-              gameTitle === "emerald" ||
-              gameTitle === "firered-leafgreen" ||
-              gameTitle === "colosseum" ||
-              gameTitle === "xd" ||
-              gameTitle === "diamond-pearl" ||
-              gameTitle === "platinum" ||
-              gameTitle === "heartgold-soulsilver" ||
-              gameTitle === "black-white" ||
-              gameTitle === "black-2-white-2") &&
+            (generationList.generation1.includes(gameTitle) || generationList.generation2.includes(gameTitle) ||
+            generationList.generation3.includes(gameTitle) || generationList.generation4.includes(gameTitle) ||
+            generationList.generation5.includes(gameTitle)
+            ) &&
             pokeData.pastTypes[0].generation.name === "generation-v"
               ? pokeData.pastTypes[0].types.map((type, index) => (
                   <div key={index}>{formatString(type.type.name)}</div>
                 ))
               : pokeData.pastTypes.length &&
-                (gameTitle === "red-blue" || gameTitle === "yellow") &&
+                (generationList.generation1.includes(gameTitle)) &&
                 pokeData.pastTypes[0].generation.name === "generation-i"
               ? pokeData.pastTypes[0].types.map((type, index) => (
                   <div key={index}>{formatString(type.type.name)}</div>
@@ -371,10 +355,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
           <div className="pokeEvoInfo">
             {evolutionChain?.chain.evolves_to.length === 0 ? (
               pokeData.pokeSprites.sprite === null ? (
-                <>
-                  "Image not found"
-                  This Pokemon has no evolution line
-                </>
+                <>"Image not found" This Pokemon has no evolution line</>
               ) : (
                 <div>
                   <img

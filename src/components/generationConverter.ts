@@ -1,49 +1,66 @@
-export default function generationConverter(generation: string){
-    if (generation === "red-blue" || generation === "yellow") {
-        generation = "rb";
-      }
-      if (generation === "gold-silver" || generation === "crystal") {
-        generation = "gs";
-      }
-      if (
-        generation === "ruby-sapphire" ||
-        generation === "emerald" ||
-        generation === "firered-leafgreen" ||
-        generation === "colosseum" ||
-        generation === "xd"
-      ) {
-        generation = "rs";
-      }
-      if (
-        generation === "diamond-pearl" ||
-        generation === "platinum" ||
-        generation === "heartgold-soulsilver"
-      ) {
-        generation = "dp";
-      }
-      if (generation === "black-white" || generation === "black-2-white-2") {
-        generation = "bw";
-      }
-      if (generation === "x-y" || generation === "omega-ruby-alpha-sapphire") {
-        generation = "xy";
-      }
-      if (
-        generation === "sun-moon" ||
-        generation === "ultra-sun-ultra-moon" ||
-        generation === "lets-go-pikachu-lets-go-eevee"
-      ) {
-        generation = "sm";
-      }
-      if (
-        generation === "sword-shield" ||
-        generation === "brilliant-diamond-and-shining-pearl"
-      ) {
-        generation = "ss";
-      }
-      if (generation === "scarlet-violet") {
-        generation = "sv";
-      }
 
-      return generation
+const generationList = {
+  generation1: ['red-blue', 'yellow'],
+  generation2: ['gold-silver', 'crystal'],
+  generation3: ['ruby-sapphire', 'emerald', 'firered-leafgreen', 'colosseum', 'xd'],
+  generation4: ['diamond-pearl', 'platinum', 'heartgold-soulsilver'],
+  generation5: ['black-white', 'black-2-white-2'],
+  generation6: ['x-y','omega-ruby-alpha-sapphire'],
+  generation7: ['sun-moon', 'ultra-sun-ultra-moon', 'lets-go-pikachu-lets-go-eevee'],
+  generation8: ['sword-shield', 'brilliant-diamond-and-shining-pearl'],
+  generation9: ['scarlet-violet']
+};
 
+
+function generationConverter(generation: string) {
+  for (const key in generationList) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    if ((generationList as any)[key].includes(generation)) {
+      switch (key) {
+        case 'generation1':
+          return 'rb';
+        case 'generation2':
+          return 'gs';
+        case 'generation3':
+          return 'rs';
+        case 'generation4':
+          return 'dp';
+        case 'generation5':
+          return 'bw';
+        case 'generation6':
+          return 'xy';
+        case 'generation7':
+          return 'sm';
+        case 'generation8':
+          return 'ss';
+        case 'generation9':
+          return 'sv';
+        default:
+          return generation; 
+      }
+    }
+  }
+  return generation;
 }
+
+/*function preGen6Check(gameTitle: string): boolean {
+  return (
+    gameTitle === "red-blue" ||
+    gameTitle === "yellow" ||
+    gameTitle === "gold-silver" ||
+    gameTitle === "crystal" ||
+    gameTitle === "ruby-sapphire" ||
+    gameTitle === "emerald" ||
+    gameTitle === "firered-leafgreen" ||
+    gameTitle === "colosseum" ||
+    gameTitle === "xd" ||
+    gameTitle === "diamond-pearl" ||
+    gameTitle === "platinum" ||
+    gameTitle === "heartgold-soulsilver" ||
+    gameTitle === "black-white" ||
+    gameTitle === "black-2-white-2"
+  );
+}*/
+
+
+export {generationConverter, generationList}
