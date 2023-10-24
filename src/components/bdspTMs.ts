@@ -1,6 +1,6 @@
 export const BDSPTMs = {
     TM43: {Name: 'volt-switch', TMNo: 'tm43'},
-    TM10: {Name: 'workup', TMNo: 'tm10'},
+    TM10: {Name: 'work-up', TMNo: 'tm10'},
     TM21: {Name: 'dazzling-gleam', TMNo: 'tm21'},
     TM27: {Name: 'low-sweep', TMNo: 'tm27'},
     TM49: {Name: 'scald', TMNo: 'tm49'},

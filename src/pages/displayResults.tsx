@@ -87,7 +87,6 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
               let moveName = move.name;
               const moveData = await moveClient.getMoveByName(moveName);
               let matchingMachine = null;
-              const bdspTMFind = Object.values(BDSPTMs).find(item => item.Name === move.name) as { Name: string; TMNo: string } | null;
 
               if (gameTitle === "brilliant-diamond-and-shining-pearl") {
                 matchingMachine = moveData.machines.find(
@@ -114,11 +113,13 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                   moveTM = `tm${newNumber}`;
                 }
                 moveName = `${moveTM}-${move.name}`;
-              } else if (gameTitle === "brilliant-diamond-and-shining-pearl" && bdspTMFind) {
-                moveName = `${bdspTMFind.TMNo}-${bdspTMFind.Name}`;
-              } else {
+              } else if (gameTitle === "brilliant-diamond-and-shining-pearl") {
+                const bdspTMFind = Object.values(BDSPTMs).find(item => item.Name === move.name);
+                if (bdspTMFind) {
+                  moveName = `${bdspTMFind.TMNo}-${bdspTMFind.Name}`;
+                }  else {
                 console.log(`No machine found with version group name ${gameTitle}`);
-              }
+              }}
               
               return moveName;
             })
