@@ -13,6 +13,7 @@ import {
   generationList,
 } from "../components/generationConverter";
 import formatEvos from "../components/formatEvos";
+import { BDSPTMs } from "../components/bdspTMs";
 
 interface DisplayResultsProps {
   pokeData: PokemonData;
@@ -41,6 +42,8 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
   const [evolutionChain, setEvolutionChain] = useState<EvolutionChain | null>(
     null
   );
+
+  
 
   const moveList = useMemo(() => {
     return sortedData.pokeMoves[gameTitle][learnMethod] || [];
@@ -84,6 +87,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
               let moveName = move.name;
               const moveData = await moveClient.getMoveByName(moveName);
               let matchingMachine = null;
+              const bdspTMFind = Object.values(BDSPTMs).find(item => item.Name === move.name) as { Name: string; TMNo: string } | null;
 
               if (gameTitle === "brilliant-diamond-and-shining-pearl") {
                 matchingMachine = moveData.machines.find(
@@ -100,10 +104,9 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                 const response = await fetch(url);
                 const moveRes = await response.json();
                 let moveTM = moveRes.item.name;
-                if (
-                  gameTitle === "brilliant-diamond-and-shining-pearl" &&
-                  moveTM.startsWith("hm")
-                ) {
+                
+              
+                if (gameTitle === "brilliant-diamond-and-shining-pearl" && moveTM.startsWith("hm")) {
                   const thirdLetter = moveTM[2];
                   const fourthLetter = moveTM[3];
                   const number = parseInt(thirdLetter + fourthLetter, 10);
@@ -111,52 +114,12 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                   moveTM = `tm${newNumber}`;
                 }
                 moveName = `${moveTM}-${move.name}`;
-              } else if (
-                gameTitle === "brilliant-diamond-and-shining-pearl" &&
-                move.name === "volt-switch"
-              ) {
-                moveName = `tm43-volt-switch`;
-              } else if (
-                gameTitle === "brilliant-diamond-and-shining-pearl" &&
-                move.name === "workup"
-              ) {
-                moveName = `tm10-workup`;
-              } else if (
-                gameTitle === "brilliant-diamond-and-shining-pearl" &&
-                move.name === "dazzling-gleam"
-              ) {
-                moveName = `tm21-dazzling-gleam`;
-              } else if (
-                gameTitle === "brilliant-diamond-and-shining-pearl" &&
-                move.name === "low-sweep"
-              ) {
-                moveName = `tm27-low-sweep`;
-              } else if (
-                gameTitle === "brilliant-diamond-and-shining-pearl" &&
-                move.name === "scald"
-              ) {
-                moveName = `tm49-scald`;
-              } else if (
-                gameTitle === "brilliant-diamond-and-shining-pearl" &&
-                move.name === "bug-buzz"
-              ) {
-                moveName = `tm62-bug-buzz`;
-              } else if (
-                gameTitle === "brilliant-diamond-and-shining-pearl" &&
-                move.name === "nasty-plot"
-              ) {
-                moveName = `tm63-nasty-plot`;
-              } else if (
-                gameTitle === "brilliant-diamond-and-shining-pearl" &&
-                move.name === "bulldoze"
-              ) {
-                moveName = `tm83-bulldoze`;
+              } else if (gameTitle === "brilliant-diamond-and-shining-pearl" && bdspTMFind) {
+                moveName = `${bdspTMFind.TMNo}-${bdspTMFind.Name}`;
               } else {
-                console.log(
-                  `No machine found with version group name ${gameTitle}`
-                );
+                console.log(`No machine found with version group name ${gameTitle}`);
               }
-
+              
               return moveName;
             })
           );
