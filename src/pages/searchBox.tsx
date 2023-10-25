@@ -2,11 +2,15 @@ import { useState, ChangeEvent } from "react";
 import Search from "../components/search";
 import DisplayResults from "./displayResults";
 import { PokemonData } from "../components/pokemonData";
+import { useNavigate } from "react-router-dom";
+import { usePokemonData } from "./pokemonContext";
 
 export default function SearchBox() {
   const [pokeSearch, setSearch] = useState<string>("");
   const [searchResult, setSearchResult] = useState<PokemonData | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { storePokemonData } = usePokemonData();
+  const navigate = useNavigate();
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const searchValue = event.target.value;
@@ -17,13 +21,17 @@ export default function SearchBox() {
     setIsLoading(true);
     try {
       const result = await Search(pokeSearch);
-      setSearchResult(result);
+      if (result) {
+        storePokemonData(result); // Store the result in the context
+        navigate(`/pokemon/${result.pokeName}`);
+      }
     } catch (error) {
       console.error(error);
     } finally {
       setIsLoading(false);
     }
-  };
+  }
+  
 
   return (
     <div className="searchMain">
