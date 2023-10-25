@@ -314,7 +314,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                 </div>
                 <div className={"firstStageEvo"}>
                   {evolutionChain?.chain.evolves_to.map((evolution, index) => (
-                    <div key={getIDNo(evolution.evolves_to[0 + index].species.url)}>
+                    <div key={index}>
                       <img
                         src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${getIDNo(
                           evolution.species.url
@@ -348,7 +348,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                     ? null
                     : evolutionChain?.chain.evolves_to[0].evolves_to.map(
                         (evolution, index) => (
-                          <div key={getIDNo(evolution.species.url)}>
+                          <div key={index}>
                             <img
                               src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${getIDNo(
                                 evolution.species.url

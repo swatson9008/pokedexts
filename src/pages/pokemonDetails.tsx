@@ -10,7 +10,6 @@ export default function PokemonDetails() {
   const { pokemonData } = usePokemonData();
 
   useEffect(() => {
-    // Check if pokemonData is null, and if so, trigger the search
     if (pokemonData === null) {
       searchPokemonByName(name);
     }
@@ -23,11 +22,10 @@ export default function PokemonDetails() {
       if (result) {
         setPokemonDetails(result);
       } else {
-        // Handle the case when the search result is null
+        console.error(Error)
       }
     } catch (error) {
       console.error(error);
-      // Handle any errors that occur during the search
     }
   };
 
