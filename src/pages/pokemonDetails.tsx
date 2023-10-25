@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import DisplayResults from "./displayResults";
 import { usePokemonData } from "./pokemonContext";
+import SearchBox from "./searchBox";
 import Search from "../components/search";
 import { PokemonData } from "../components/pokemonData";
 
@@ -15,7 +16,7 @@ export default function PokemonDetails() {
       searchPokemonByName(name);
     } 
     else if (pokemonData !== null) {
-      setPokemonDetails(pokemonData);
+        setPokemonDetails(pokemonData as PokemonData);
     }
   }, [name, pokemonData]);
 
@@ -34,6 +35,7 @@ export default function PokemonDetails() {
 
   return (
     <div>
+      <SearchBox />
       {pokemonDetails ? (
         <DisplayResults pokeData={pokemonDetails} />
       ) : (

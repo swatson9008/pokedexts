@@ -1,7 +1,5 @@
 import { useState, ChangeEvent } from "react";
 import Search from "../components/search";
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { PokemonData } from "../components/pokemonData";
 import { useNavigate } from "react-router-dom";
 import { usePokemonData } from "./pokemonContext";
 
@@ -19,7 +17,7 @@ export default function SearchBox() {
     try {
       const result = await Search(pokeSearch);
       if (result) {
-        storePokemonData(result); // Store the result in the context
+        storePokemonData(result); 
         navigate(`/pokemon/${result.pokeName}`);
       }
     } catch (error) {
