@@ -3,17 +3,20 @@ import { useEffect, useState } from "react";
 import DisplayResults from "./displayResults";
 import { usePokemonData } from "./pokemonContext";
 import Search from "../components/search";
+import { PokemonData } from "../components/pokemonData";
 
 export default function PokemonDetails() {
-  const { name } = useParams();
-  const [pokemonDetails, setPokemonDetails] = useState(null);
+  const { name } = useParams<{ name: string }>() ?? { name: '' };
+  const [pokemonDetails, setPokemonDetails] = useState<PokemonData | null>(null);
   const { pokemonData } = usePokemonData();
 
   useEffect(() => {
-    if (pokemonData === null) {
+    if (pokemonData === null && name !== undefined) {
       searchPokemonByName(name);
+    } 
+    else if (pokemonData !== null) {
+      setPokemonDetails(pokemonData);
     }
-    else {setPokemonDetails(pokemonData)}
   }, [name, pokemonData]);
 
   const searchPokemonByName = async (name: string) => {
@@ -22,7 +25,7 @@ export default function PokemonDetails() {
       if (result) {
         setPokemonDetails(result);
       } else {
-        console.error(Error)
+        console.error(Error);
       }
     } catch (error) {
       console.error(error);

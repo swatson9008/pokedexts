@@ -1,14 +1,12 @@
 import { useState, ChangeEvent } from "react";
 import Search from "../components/search";
-import DisplayResults from "./displayResults";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { PokemonData } from "../components/pokemonData";
 import { useNavigate } from "react-router-dom";
 import { usePokemonData } from "./pokemonContext";
 
 export default function SearchBox() {
   const [pokeSearch, setSearch] = useState<string>("");
-  const [searchResult, setSearchResult] = useState<PokemonData | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const { storePokemonData } = usePokemonData();
   const navigate = useNavigate();
 
@@ -18,7 +16,6 @@ export default function SearchBox() {
   };
 
   const handleSearch = async () => {
-    setIsLoading(true);
     try {
       const result = await Search(pokeSearch);
       if (result) {
@@ -27,9 +24,7 @@ export default function SearchBox() {
       }
     } catch (error) {
       console.error(error);
-    } finally {
-      setIsLoading(false);
-    }
+    } 
   }
   
 
@@ -46,11 +41,6 @@ export default function SearchBox() {
           Search
         </button>
       </div>
-      {isLoading ? (
-        <p>Loading...</p>
-      ) : (
-        searchResult !== null && <DisplayResults pokeData={searchResult} />
-      )}
     </div>
   );
 }
