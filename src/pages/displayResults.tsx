@@ -209,7 +209,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
             )}
           </div>
           <div className="pokeName">{formatString(sortedData.pokeName)}</div>
-          {pokeForms[0].forms[0].length === 1
+          <div className="pokeVarieties">{pokeForms[0].forms[0].length === 1
             ? "No additional variants found"
             : pokeForms[0].forms[0].map((form: { pokemon: { url: string | undefined; name: string; }; is_default: boolean; }) => (
                 <div key={getIDNo(form.pokemon.url)}>
@@ -217,7 +217,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                     ? "Default Variant"
                     : formatString(form.pokemon.name)}
                 </div>
-              ))}
+              ))}</div>
           <div className="pokeTypes">
             Types:{" "}
             {pastTypes.length &&
