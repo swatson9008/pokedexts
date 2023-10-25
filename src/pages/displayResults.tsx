@@ -14,6 +14,7 @@ import {
 } from "../components/generationConverter";
 import formatEvos from "../components/formatEvos";
 import { BDSPTMs } from "../components/bdspTMs";
+import customSort from "../components/sortTMs";
 
 interface DisplayResultsProps {
   pokeData: PokemonData;
@@ -124,34 +125,6 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
               return moveName;
             })
           );
-
-          const customSort = (a: string, b: string) => {
-            const isTmA = a.startsWith("TM");
-            const isTmB = b.startsWith("TM");
-
-            if (isTmA && !isTmB) {
-              return 1;
-            } else if (!isTmA && isTmB) {
-              return -1;
-            } else if (isTmA && isTmB) {
-              const tmNumberA = parseInt(a.slice(2));
-              const tmNumberB = parseInt(b.slice(2));
-              return tmNumberA - tmNumberB;
-            } else {
-              const firstTwoLettersA = a.slice(0, 2);
-              const firstTwoLettersB = b.slice(0, 2);
-
-              if (firstTwoLettersA === firstTwoLettersB) {
-                return parseInt(a.slice(2)) - parseInt(b.slice(2));
-              } else {
-                return firstTwoLettersB.localeCompare(
-                  firstTwoLettersA,
-                  undefined,
-                  { numeric: true }
-                );
-              }
-            }
-          };
 
           moveDataArray.sort(customSort);
 
@@ -339,9 +312,9 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                     ? formatString(evolutionChain?.chain.species.name)
                     : ""}
                 </div>
-                <div className="firstStageEvo">
+                <div className={"firstStageEvo"}>
                   {evolutionChain?.chain.evolves_to.map((evolution, index) => (
-                    <div key={index}>
+                    <div key={getIDNo(evolution.evolves_to[0 + index].species.url)}>
                       <img
                         src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${getIDNo(
                           evolution.species.url
@@ -375,7 +348,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                     ? null
                     : evolutionChain?.chain.evolves_to[0].evolves_to.map(
                         (evolution, index) => (
-                          <div key={index}>
+                          <div key={getIDNo(evolution.species.url)}>
                             <img
                               src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${getIDNo(
                                 evolution.species.url
