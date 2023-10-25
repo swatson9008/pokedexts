@@ -5,7 +5,6 @@ export default function MainPage() {
   return (
     <main>
       <Global />
-      testing
       <Outlet />
     </main>
   );

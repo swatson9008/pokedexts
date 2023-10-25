@@ -8,6 +8,7 @@ const Global = createGlobalStyle`
     flex-direction: column;
     background-color: #5cdbbc;
     height: 100%;
+    align-items: center;
   }
 
   a {

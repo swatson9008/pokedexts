@@ -9,9 +9,10 @@ function App() {
     <BrowserRouter>
       <PokemonDataProvider>
         <Routes>
-          <Route path="/" element={<MainPage />} />
+        <Route element={<MainPage />}>
           <Route index element={<IntroPage />} />
           <Route path="/pokemon/:name" element={<PokemonDetails />} />
+        </Route>
         </Routes>
       </PokemonDataProvider>
     </BrowserRouter>
