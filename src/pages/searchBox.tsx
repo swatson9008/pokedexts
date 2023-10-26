@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { usePokemonData } from "./pokemonContext";
 import { ButtonContainer } from "../styles/normalButtons";
 import { SearchBoxStyle } from "../styles/searchBox";
+import { SearchContainer } from "../styles/searchContainer";
 
 export default function SearchBox() {
   const [pokeSearch, setSearch] = useState<string>("");
@@ -29,15 +30,19 @@ export default function SearchBox() {
 
   return (
     <div className="searchMain">
-      <div className="searchContainer">
+      <SearchContainer>
         <SearchBoxStyle
           type="text"
           id="searchInput"
           placeholder="Enter a Pokemon"
           onChange={handleInputChange}
         />
-        <ButtonContainer onClick={handleSearch}>Search</ButtonContainer>
-      </div>
+        <div>
+          <ButtonContainer onClick={handleSearch}>Search</ButtonContainer>
+          <ButtonContainer>List</ButtonContainer>
+          <ButtonContainer>Random</ButtonContainer>
+        </div>
+      </SearchContainer>
     </div>
   );
 }
