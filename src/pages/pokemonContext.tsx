@@ -1,10 +1,9 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, ReactNode } from "react";
 
 interface PokemonData {
-  // Define the structure of your PokemonData here
+
 }
 
-// Create a type for the context
 interface PokemonDataContextType {
   pokemonData: PokemonData | null;
   storePokemonData: (data: PokemonData | null) => void;
@@ -20,7 +19,11 @@ export const usePokemonData = () => {
   return context;
 };
 
-export const PokemonDataProvider = ({ children }) => {
+type PokemonDataProviderProps = {
+  children: ReactNode;
+};
+
+export const PokemonDataProvider = ({ children }: PokemonDataProviderProps) => {
   const [pokemonData, setPokemonData] = useState<PokemonData | null>(null);
 
   const storePokemonData = (data: PokemonData | null) => {
