@@ -47,8 +47,17 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
   
 
   const moveList = useMemo(() => {
-    return sortedData.pokeMoves[gameTitle][learnMethod] || [];
-  }, [sortedData, gameTitle, learnMethod]);
+    if (sortedData.pokeMoves && sortedData.pokeMoves[gameTitle]) {
+      if (!sortedData.pokeMoves[gameTitle][learnMethod]) {
+        setLearnMethod("level-up");
+      }
+      return sortedData.pokeMoves[gameTitle][learnMethod] || [];
+    }
+    return [];
+  }, [sortedData, gameTitle, learnMethod, pokeData]);
+  
+  
+
 
   const customLearnMethodOrder = [
     "level-up",
@@ -77,6 +86,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
   const handleLearnMethod = (method: string) => {
     setLearnMethod(method);
   };
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -168,6 +178,8 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  
+
   useEffect(() => {
     const fetchDataForEvos = async () => {
       try {
@@ -183,11 +195,11 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
 
     fetchDataForEvos();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [pokeData]);
 
   useEffect(() => {
     if (evolutionChain) {
-      console.log(evolutionChain); // Log the data here
+      console.log(evolutionChain); 
     }
   }, [evolutionChain]);
 
