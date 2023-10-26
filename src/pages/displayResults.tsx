@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import {
   formatString,
   otherFormatString,
@@ -54,9 +54,17 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
       return sortedData.pokeMoves[gameTitle][learnMethod] || [];
     }
     return [];
-  }, [sortedData, gameTitle, learnMethod, pokeData]);
+  }, [pokeData]);
   
-  
+  const refreshDefaultGameTitle = useCallback(() => {
+    const sortedData = sortMoves(pokeData);
+    const newDefaultGameTitle = Object.keys(sortedData.pokeMoves).slice(-1)[0];
+    setGameTitle(newDefaultGameTitle);
+  }, [pokeData]);
+
+  useEffect(() => {
+    refreshDefaultGameTitle();
+  }, [refreshDefaultGameTitle]);
 
 
   const customLearnMethodOrder = [
@@ -139,7 +147,10 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
           moveDataArray.sort(customSort);
 
           console.log(moveDataArray);
-          setTmHm(moveDataArray);
+          setTmHm((prevTmHm) => {
+            const updatedDataArray = [...prevTmHm, ...moveDataArray];
+            return updatedDataArray.sort(customSort);
+          });
           console.log(sortedData);
         }
       } catch (error) {
