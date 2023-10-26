@@ -6,7 +6,7 @@ const Global = createGlobalStyle`
     padding: 0;
     display: flex;
     flex-direction: column;
-    background-color: #5cdbbc;
+    background-color: rgb(164 234 123);
     height: 100%;
     align-items: center;
   }

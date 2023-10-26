@@ -1,10 +1,11 @@
 import SearchBox from "./searchBox"
+import { HomeContainer } from "../styles/homePageMain"
 
 export default function IntroPage(){
     return(
-     <div>
+     <HomeContainer>
         Enter a Pokemon's name
         <SearchBox />
-     </div>   
+     </HomeContainer>   
     )
 }
