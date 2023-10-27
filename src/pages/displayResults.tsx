@@ -64,7 +64,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
     refreshDefaultGameTitle();
   }, [refreshDefaultGameTitle]);
 
-  const refreshMoveList = useCallback(() => {
+const refreshMoveList = useCallback(() => {
     if (sortedData.pokeMoves && sortedData.pokeMoves[gameTitle]) {
       if (!sortedData.pokeMoves[gameTitle][learnMethod]) {
         setLearnMethod("level-up");
@@ -155,13 +155,12 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
           );
 
           moveDataArray.sort(customSort);
+          setTmHm(moveDataArray);
 
           console.log(moveDataArray);
-          setTmHm((prevTmHm) => {
-            const updatedDataArray = [...prevTmHm, ...moveDataArray];
-            return updatedDataArray.sort(customSort);
-          });
+        
           console.log(sortedData);
+
         }
       } catch (error) {
         console.error("Error fetching data:", error);

@@ -2,6 +2,7 @@ import { PokemonClient } from "pokenode-ts";
 import { PokemonData } from "./pokemonData";
 
 export default async function Search(searchPoke: string) {
+  if (searchPoke === "shaymin"){searchPoke = "shaymin-land"}
   try {
     const api = new PokemonClient();
     const data = await api.getPokemonByName(searchPoke);
