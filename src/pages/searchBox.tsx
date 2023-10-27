@@ -13,8 +13,8 @@ export default function SearchBox() {
   const navigate = useNavigate();
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const searchValue = event.target.value;
-    setSearch(searchValue.toLowerCase().replace(/'/g, ""));
+    const searchValue = event.target.value.toLowerCase().replace(/'/g, "").replace(/\s+/g, "-");
+    setSearch(searchValue);
   };
 
   const handleSearch = async () => {
