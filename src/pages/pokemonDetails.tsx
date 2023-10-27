@@ -1,7 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import DisplayResults from "./displayResults";
-import { usePokemonData } from "./pokemonContext";
 import SearchBox from "./searchBox";
 import Search from "../components/search";
 import { PokemonData } from "../components/pokemonData";
@@ -9,16 +8,12 @@ import { PokemonData } from "../components/pokemonData";
 export default function PokemonDetails() {
   const { name } = useParams<{ name: string }>() ?? { name: '' };
   const [pokemonDetails, setPokemonDetails] = useState<PokemonData | null>(null);
-  const { pokemonData } = usePokemonData();
 
   useEffect(() => {
-    if (pokemonData === null && name !== undefined) {
+    if (name !== undefined) {
       searchPokemonByName(name);
     } 
-    else if (pokemonData !== null) {
-        setPokemonDetails(pokemonData as PokemonData);
-    }
-  }, [name, pokemonData]);
+  }, [name]);
 
   const searchPokemonByName = async (name: string) => {
     try {

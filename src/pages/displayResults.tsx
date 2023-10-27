@@ -44,9 +44,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
     null
   );
 
-  
-
-  const moveList = useMemo(() => {
+   const moveList = useMemo(() => {
     if (sortedData.pokeMoves && sortedData.pokeMoves[gameTitle]) {
       if (!sortedData.pokeMoves[gameTitle][learnMethod]) {
         setLearnMethod("level-up");
@@ -55,7 +53,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
     }
     return [];
   }, [pokeData]);
-  
+
   const refreshDefaultGameTitle = useCallback(() => {
     const sortedData = sortMoves(pokeData);
     const newDefaultGameTitle = Object.keys(sortedData.pokeMoves).slice(-1)[0];
@@ -65,6 +63,18 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
   useEffect(() => {
     refreshDefaultGameTitle();
   }, [refreshDefaultGameTitle]);
+
+  const refreshMoveList = useCallback(() => {
+    if (sortedData.pokeMoves && sortedData.pokeMoves[gameTitle]) {
+      if (!sortedData.pokeMoves[gameTitle][learnMethod]) {
+        setLearnMethod("level-up");
+      }
+    }
+  }, [sortedData, gameTitle, learnMethod]);
+
+  useEffect(() => {
+    refreshMoveList();
+  }, [refreshMoveList]);
 
 
   const customLearnMethodOrder = [
@@ -187,7 +197,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
 
     fetchDataForAbilities();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [pokeAbilities]);
 
   
 
