@@ -44,7 +44,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
     null
   );
 
-   const moveList = useMemo(() => {
+  const moveList = useMemo(() => {
     if (sortedData.pokeMoves && sortedData.pokeMoves[gameTitle]) {
       if (!sortedData.pokeMoves[gameTitle][learnMethod]) {
         setLearnMethod("level-up");
@@ -52,7 +52,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
       return sortedData.pokeMoves[gameTitle][learnMethod] || [];
     }
     return [];
-  }, [pokeData]);
+  }, [sortedData.pokeMoves, gameTitle, learnMethod]);
 
   const refreshDefaultGameTitle = useCallback(() => {
     const sortedData = sortMoves(pokeData);
