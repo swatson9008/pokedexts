@@ -30,7 +30,7 @@ export default function SearchBox() {
   };
 
   const randomizer = async () => {
-    const randomNumber = Math.floor(Math.random() * (1021 - 1 + 1) + 1);
+    const randomNumber = Math.floor(Math.random() * (1017 - 1 + 1) + 1);
     try {
       const api = new PokemonClient();
       const data = await api.getPokemonById(randomNumber);
