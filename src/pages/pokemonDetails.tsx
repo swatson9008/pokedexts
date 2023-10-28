@@ -4,10 +4,13 @@ import DisplayResults from "./displayResults";
 import SearchBox from "./searchBox";
 import Search from "../components/search";
 import { PokemonData } from "../components/pokemonData";
+import { getIDNo } from "../components/formatString";
 
 export default function PokemonDetails() {
   const { name } = useParams<{ name: string }>() ?? { name: '' };
   const [pokemonDetails, setPokemonDetails] = useState<PokemonData | null>(null);
+  const [keyValue, setKV] = useState<number>(0);
+
 
   useEffect(() => {
     if (name !== undefined) {
@@ -19,6 +22,7 @@ export default function PokemonDetails() {
     try {
       const result = await Search(name);
       if (result) {
+        setKV(parseInt(getIDNo(pokemonDetails?.pokeSpecies.url)))
         setPokemonDetails(result);
       } else {
         console.error(Error);
@@ -32,7 +36,7 @@ export default function PokemonDetails() {
     <div>
       <SearchBox />
       {pokemonDetails ? (
-        <DisplayResults pokeData={pokemonDetails} />
+        <DisplayResults pokeData={pokemonDetails} key={keyValue}/>
       ) : (
         <p>Loading...</p>
       )}

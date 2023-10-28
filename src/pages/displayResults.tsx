@@ -54,27 +54,6 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
     return [];
   }, [sortedData.pokeMoves, gameTitle, learnMethod]);
 
-  const refreshDefaultGameTitle = useCallback(() => {
-    const sortedData = sortMoves(pokeData);
-    const newDefaultGameTitle = Object.keys(sortedData.pokeMoves).slice(-1)[0];
-    setGameTitle(newDefaultGameTitle);
-  }, [pokeData]);
-
-  useEffect(() => {
-    refreshDefaultGameTitle();
-  }, [refreshDefaultGameTitle]);
-
-const refreshMoveList = useCallback(() => {
-    if (sortedData.pokeMoves && sortedData.pokeMoves[gameTitle]) {
-      if (!sortedData.pokeMoves[gameTitle][learnMethod]) {
-        setLearnMethod("level-up");
-      }
-    }
-  }, [sortedData, gameTitle, learnMethod]);
-
-  useEffect(() => {
-    refreshMoveList();
-  }, [refreshMoveList]);
 
 
   const customLearnMethodOrder = [
@@ -155,12 +134,10 @@ const refreshMoveList = useCallback(() => {
           );
 
           moveDataArray.sort(customSort);
-          setTmHm(moveDataArray);
 
           console.log(moveDataArray);
-        
+          setTmHm(moveDataArray);
           console.log(sortedData);
-
         }
       } catch (error) {
         console.error("Error fetching data:", error);
