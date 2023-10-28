@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { useState, useEffect, useMemo, useCallback } from "react";
+import { useState, useEffect, useMemo } from "react";
 import {
   formatString,
   otherFormatString,
@@ -14,6 +14,7 @@ import {
 } from "../components/generationConverter";
 import formatEvos from "../components/formatEvos";
 import { BDSPTMs } from "../components/bdspTMs";
+import { gen9TMs } from "../components/gen9TMs";
 import customSort from "../components/sortTMs";
 
 interface DisplayResultsProps {
@@ -32,7 +33,16 @@ interface AbilityData {
 }
 
 export default function DisplayResults({ pokeData }: DisplayResultsProps) {
-  const { pokeAbilities, pokeStats, pokeSprites, pokeForms, pokeTypes, pastTypes, pokeEvoID, pokeName } = pokeData;
+  const {
+    pokeAbilities,
+    pokeStats,
+    pokeSprites,
+    pokeForms,
+    pokeTypes,
+    pastTypes,
+    pokeEvoID,
+    pokeName,
+  } = pokeData;
   const sortedData = sortMoves(pokeData);
   const defaultGameTitle = Object.keys(sortedData.pokeMoves).slice(-1)[0];
   const [gameTitle, setGameTitle] = useState(defaultGameTitle);
@@ -53,8 +63,6 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
     }
     return [];
   }, [sortedData.pokeMoves, gameTitle, learnMethod]);
-
-
 
   const customLearnMethodOrder = [
     "level-up",
@@ -84,7 +92,6 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
     setLearnMethod(method);
   };
 
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -106,14 +113,18 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                 );
               }
 
-              if (matchingMachine) {
+              if (matchingMachine && gameTitle !== 'scarlet-violet') {
                 const url = matchingMachine.machine.url;
                 const response = await fetch(url);
                 const moveRes = await response.json();
                 let moveTM = moveRes.item.name;
                 
-              
-                if (gameTitle === "brilliant-diamond-and-shining-pearl" && moveTM.startsWith("hm")) {
+                
+
+                if (
+                  gameTitle === "brilliant-diamond-and-shining-pearl" &&
+                  moveTM.startsWith("hm")
+                ) {
                   const thirdLetter = moveTM[2];
                   const fourthLetter = moveTM[3];
                   const number = parseInt(thirdLetter + fourthLetter, 10);
@@ -122,13 +133,31 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                 }
                 moveName = `${moveTM}-${move.name}`;
               } else if (gameTitle === "brilliant-diamond-and-shining-pearl") {
-                const bdspTMFind = Object.values(BDSPTMs).find(item => item.Name === move.name);
+                const bdspTMFind = Object.values(BDSPTMs).find(
+                  (item) => item.Name === move.name
+                );
                 if (bdspTMFind) {
                   moveName = `${bdspTMFind.TMNo}-${bdspTMFind.Name}`;
-                }  else {
-                console.log(`No machine found with version group name ${gameTitle}`);
-              }}
+                } else {
+                  console.log(
+                    `No machine found with version group name ${gameTitle}`
+                  );
+                }
+              }
               
+              else if (moveName && gameTitle === "scarlet-violet") {              
+                const gen9Find = Object.entries(gen9TMs).find(
+                  ([value]) => value === moveName
+                );
+              
+                if (gen9Find) {
+                  moveName = gen9Find[1];
+                } else {
+                  console.log(`No machine found with version group name ${gameTitle}`);
+                }
+              }
+              
+
               return moveName;
             })
           );
@@ -175,15 +204,11 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pokeAbilities]);
 
-  
-
   useEffect(() => {
     const fetchDataForEvos = async () => {
       try {
         const api = new EvolutionClient();
-        const data = await api.getEvolutionChainById(
-          parseInt(pokeEvoID)
-        );
+        const data = await api.getEvolutionChainById(parseInt(pokeEvoID));
         setEvolutionChain(data);
       } catch (error) {
         console.error(error);
@@ -196,7 +221,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
 
   useEffect(() => {
     if (evolutionChain) {
-      console.log(evolutionChain); 
+      console.log(evolutionChain);
     }
   }, [evolutionChain]);
 
@@ -218,15 +243,22 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
             )}
           </div>
           <div className="pokeName">{formatString(sortedData.pokeName)}</div>
-          <div className="pokeVarieties">{pokeForms[0].forms[0].length === 1
-            ? "No additional variants found"
-            : pokeForms[0].forms[0].map((form: { pokemon: { url: string | undefined; name: string; }; is_default: boolean; }) => (
-                <div key={getIDNo(form.pokemon.url)}>
-                  {form.is_default
-                    ? "Default Variant"
-                    : formatString(form.pokemon.name)}
-                </div>
-              ))}</div>
+          <div className="pokeVarieties">
+            {pokeForms[0].forms[0].length === 1
+              ? "No additional variants found"
+              : pokeForms[0].forms[0].map(
+                  (form: {
+                    pokemon: { url: string | undefined; name: string };
+                    is_default: boolean;
+                  }) => (
+                    <div key={getIDNo(form.pokemon.url)}>
+                      {form.is_default
+                        ? "Default Variant"
+                        : formatString(form.pokemon.name)}
+                    </div>
+                  )
+                )}
+          </div>
           <div className="pokeTypes">
             Types:{" "}
             {pastTypes.length &&
@@ -249,12 +281,14 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                   <div key={index}>{formatString(type.name)}</div>
                 ))}
           </div>
-          {(generationList.generation1.includes(gameTitle) || generationList.generation2.includes(gameTitle)) ? null : (
+          {generationList.generation1.includes(gameTitle) ||
+          generationList.generation2.includes(gameTitle) ? null : (
             <div className="pokeAbilities">
               {pokeAbilities.map((abilities, index) => (
                 <div key={index}>
                   {abilities.is_hidden &&
-                  (generationList.generation3.includes(gameTitle) || generationList.generation4.includes(gameTitle))
+                  (generationList.generation3.includes(gameTitle) ||
+                    generationList.generation4.includes(gameTitle))
                     ? null
                     : (abilities.is_hidden
                         ? "Hidden Ability: "
@@ -299,10 +333,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                 <>"Image not found" This Pokemon has no evolution line</>
               ) : (
                 <div>
-                  <img
-                    src={pokeSprites.sprite}
-                    alt={pokeName}
-                  />
+                  <img src={pokeSprites.sprite} alt={pokeName} />
                   This Pokemon has no evolution line
                 </div>
               )
