@@ -26,6 +26,7 @@ export default function SearchBox() {
       }
     } catch (error) {
       console.error(error);
+      alert("Please enter a proper name for a Pokemon species")
     }
   };
 
