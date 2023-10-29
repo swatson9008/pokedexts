@@ -8,6 +8,7 @@ gap: 10px;
 
 > div {
     display: flex;
+    width: 300px;
     gap: 10px;
     align-items: center;
     justify-content: center;

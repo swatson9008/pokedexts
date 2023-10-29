@@ -4,7 +4,7 @@ export const SearchBoxStyle = styled.input`
 
 border-radius: 10px;
 height: 3vh;
-width: 30vw;
+width: 300px;
 text-align: center;
 font-size: 15px;
 
