@@ -7,4 +7,5 @@ display: flex;
 width: 90vw;
 margin-top: 50px;
 justify-content: center;
+text-align: center;
 `
