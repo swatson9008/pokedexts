@@ -247,7 +247,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
   };
 
   return (
-    <div className="searchMain">
+    <div className="displayDetails">
       <div className="displayResult">
         <div key={sortedData.pokeName}>
           <div>

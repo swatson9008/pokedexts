@@ -5,6 +5,7 @@ import SearchBox from "./searchBox";
 import Search from "../components/search";
 import { PokemonData } from "../components/pokemonData";
 import { getIDNo } from "../components/formatString";
+import { DetailsPage } from "../styles/detailsStyle";
 
 export default function PokemonDetails() {
   const { name } = useParams<{ name: string }>() ?? { name: '' };
@@ -36,13 +37,13 @@ export default function PokemonDetails() {
   
 
   return (
-    <div>
+    <DetailsPage>
       <SearchBox />
       {pokemonDetails ? (
         <DisplayResults pokeData={pokemonDetails} key={keyValue}/>
       ) : (
         <p>Loading...</p>
       )}
-    </div>
+    </DetailsPage>
   );
 }
