@@ -163,7 +163,7 @@ const gen9TMs = {
     "bug-buzz": "tm162-bug-buzz",
     "hyper-beam": "tm163-hyper-beam",
     "brave-bird": "tm164-brave-bird",
-    "tm165-flare-blitz": "tm165-flare-blitz",
+    "flare-blitz": "tm165-flare-blitz",
     "thunder": "tm166-thunder",
     "close-combat": "tm167-close-combat",
     "solar-beam": "tm168-solar-beam",
