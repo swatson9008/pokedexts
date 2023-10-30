@@ -56,7 +56,6 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
   const [evolutionChain, setEvolutionChain] = useState<EvolutionChain | null>(
     null
   );
-  
 
   const moveList = useMemo(() => {
     if (sortedData.pokeMoves && sortedData.pokeMoves[gameTitle]) {
@@ -117,13 +116,11 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                 );
               }
 
-              if (matchingMachine && gameTitle !== 'scarlet-violet') {
+              if (matchingMachine && gameTitle !== "scarlet-violet") {
                 const url = matchingMachine.machine.url;
                 const response = await fetch(url);
                 const moveRes = await response.json();
                 let moveTM = moveRes.item.name;
-                
-                
 
                 if (
                   gameTitle === "brilliant-diamond-and-shining-pearl" &&
@@ -147,20 +144,19 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                     `No machine found with version group name ${gameTitle}`
                   );
                 }
-              }
-              
-              else if (moveName && gameTitle === "scarlet-violet") {              
+              } else if (moveName && gameTitle === "scarlet-violet") {
                 const gen9Find = Object.entries(gen9TMs).find(
                   ([value]) => value === moveName
                 );
-              
+
                 if (gen9Find) {
                   moveName = gen9Find[1];
                 } else {
-                  console.log(`No machine found with version group name ${gameTitle}`);
+                  console.log(
+                    `No machine found with version group name ${gameTitle}`
+                  );
                 }
               }
-              
 
               return moveName;
             })
@@ -245,7 +241,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
       }
     } catch (error) {
       console.error(error);
-      alert(error)
+      alert(error);
     }
   };
 
@@ -269,7 +265,10 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                     pokemon: { url: string | undefined; name: string };
                     is_default: boolean;
                   }) => (
-                    <div key={getIDNo(form.pokemon.url)} onClick={() => handleMonChange(getIDNo(form.pokemon.url))}>
+                    <div
+                      key={getIDNo(form.pokemon.url)}
+                      onClick={() => handleMonChange(getIDNo(form.pokemon.url))}
+                    >
                       {form.is_default
                         ? "Default Variant"
                         : formatString(form.pokemon.name)}
@@ -351,13 +350,27 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                 <>"Image not found" This Pokemon has no evolution line</>
               ) : (
                 <div>
-                  <img src={pokeSprites.sprite} alt={pokeName} />
+                  <img
+                    src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${getIDNo(
+                      evolutionChain.chain.species.url
+                    )}.png`}
+                    alt=""
+                    onClick={() =>
+                      handleMonChange(evolutionChain.chain.species.name)
+                    }
+                  />
                   This Pokemon has no evolution line
                 </div>
               )
             ) : (
               <div className="pokeEvoChain">
-                <div className="baseEvo">
+                <div
+                  className="baseEvo"
+                  onClick={() =>
+                    evolutionChain?.chain.species.name &&
+                    handleMonChange(evolutionChain.chain.species.name)
+                  }
+                >
                   {evolutionChain ? (
                     <img
                       src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${getIDNo(
@@ -372,7 +385,10 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                 </div>
                 <div className={"firstStageEvo"}>
                   {evolutionChain?.chain.evolves_to.map((evolution, index) => (
-                    <div key={index} onClick={() => handleMonChange(evolution.species.name)}>
+                    <div
+                      key={index}
+                      onClick={() => handleMonChange(evolution.species.name)}
+                    >
                       <img
                         src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${getIDNo(
                           evolution.species.url
@@ -406,7 +422,12 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                     ? null
                     : evolutionChain?.chain.evolves_to[0].evolves_to.map(
                         (evolution, index) => (
-                          <div key={index} onClick={() => handleMonChange(evolution.species.name)}>
+                          <div
+                            key={index}
+                            onClick={() =>
+                              handleMonChange(evolution.species.name)
+                            }
+                          >
                             <img
                               src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${getIDNo(
                                 evolution.species.url
