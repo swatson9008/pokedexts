@@ -15,6 +15,7 @@ import {
 import formatEvos from "../components/formatEvos";
 import { BDSPTMs } from "../components/bdspTMs";
 import { gen9TMs } from "../components/gen9TMs";
+import { gen89Abilities } from "../components/gen89abilities";
 import customSort from "../components/sortTMs";
 import Search from "../components/search";
 import { usePokemonData } from "./pokemonContext";
@@ -314,10 +315,10 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                       " - " +
                       (abilityDataArray[index]
                         ? abilityDataArray[index].generation.name ===
-                            "generation-ix" ||
+                            "generation-ix" 
+                          ? "" : 
                           abilityDataArray[index].generation.name ===
-                            "generation-viii"
-                          ? ""
+                            "generation-viii" ? gen89Abilities[abilities.name]
                           : abilityDataArray[index].generation.name ===
                             "generation-vii"
                           ? abilityDataArray[index].effect_entries[0]
