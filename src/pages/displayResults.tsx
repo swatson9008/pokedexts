@@ -314,11 +314,10 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                       formatString(abilities.name) +
                       " - " +
                       (abilityDataArray[index]
-                        ? abilityDataArray[index].generation.name ===
-                            "generation-ix" 
-                          ? "" : 
+                        ? 
                           abilityDataArray[index].generation.name ===
-                            "generation-viii" ? gen89Abilities[abilities.name]
+                            "generation-viii" || abilityDataArray[index].generation.name ===
+                            "generation-ix" ? gen89Abilities[abilities.name]
                           : abilityDataArray[index].generation.name ===
                             "generation-vii"
                           ? abilityDataArray[index].effect_entries[0]
