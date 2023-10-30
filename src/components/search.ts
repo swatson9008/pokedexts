@@ -2,7 +2,9 @@ import { PokemonClient } from "pokenode-ts";
 import { PokemonData } from "./pokemonData";
 
 export default async function Search(searchPoke: string) {
-  if (searchPoke === "shaymin"){searchPoke = "shaymin-land"}
+  if (searchPoke === "shaymin") {
+    searchPoke = "shaymin-land";
+  }
   try {
     const api = new PokemonClient();
     const data = await api.getPokemonByName(searchPoke);
@@ -103,7 +105,7 @@ export default async function Search(searchPoke: string) {
       try {
         const api = new PokemonClient();
         const response = await api.getPokemonSpeciesByName(searchPoke);
-    
+
         if (response) {
           const formData = { forms: [response.varieties] };
           searchedPokemonData.pokeForms = [formData];
@@ -111,8 +113,8 @@ export default async function Search(searchPoke: string) {
       } catch (error) {
         console.error("Error fetching forms data:", error);
       }
-    }
-    
+    };
+
     const searchedPokemonData: PokemonData = {
       pokeName: data.name,
       pokeMoves: movesByVersionAndMethod,
@@ -149,7 +151,7 @@ export default async function Search(searchPoke: string) {
     await fetchAndExtractEvolutionChain();
     await fetchAlternateForms();
 
-    console.log(searchedPokemonData.pokeForms[0].forms[0])
+    console.log(searchedPokemonData.pokeForms[0].forms[0]);
 
     try {
       const response = await fetch(searchedPokemonData.pokeAbilities[0].url);

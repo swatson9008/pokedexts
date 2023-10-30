@@ -16,6 +16,7 @@ export default function PokemonDetails() {
     if (name !== undefined) {
       searchPokemonByName(name);
     } 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [name]);
 
   const searchPokemonByName = async (name: string) => {
@@ -31,6 +32,8 @@ export default function PokemonDetails() {
       console.error(error);
     }
   };
+
+  
 
   return (
     <div>

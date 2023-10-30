@@ -10,8 +10,4 @@ width: 100%;
 justify-content: center;
 gap: 15px;
 
- > div.spriteRow {
-    display: flex;
- }
-
 `

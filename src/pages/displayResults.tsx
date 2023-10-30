@@ -16,6 +16,9 @@ import formatEvos from "../components/formatEvos";
 import { BDSPTMs } from "../components/bdspTMs";
 import { gen9TMs } from "../components/gen9TMs";
 import customSort from "../components/sortTMs";
+import Search from "../components/search";
+import { usePokemonData } from "./pokemonContext";
+import { useNavigate } from "react-router-dom";
 
 interface DisplayResultsProps {
   pokeData: PokemonData;
@@ -53,6 +56,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
   const [evolutionChain, setEvolutionChain] = useState<EvolutionChain | null>(
     null
   );
+  
 
   const moveList = useMemo(() => {
     if (sortedData.pokeMoves && sortedData.pokeMoves[gameTitle]) {
@@ -230,6 +234,20 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
       generation
     )}/pokemon/${pokemon}/`;
   };
+  const { storePokemonData } = usePokemonData();
+  const navigate = useNavigate();
+  const handleMonChange = async (pokemon: string) => {
+    try {
+      const result = await Search(pokemon);
+      if (result) {
+        storePokemonData(result);
+        navigate(`/pokemon/${result.pokeName}`);
+      }
+    } catch (error) {
+      console.error(error);
+      alert(error)
+    }
+  };
 
   return (
     <div className="searchMain">
@@ -251,7 +269,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                     pokemon: { url: string | undefined; name: string };
                     is_default: boolean;
                   }) => (
-                    <div key={getIDNo(form.pokemon.url)}>
+                    <div key={getIDNo(form.pokemon.url)} onClick={() => handleMonChange(getIDNo(form.pokemon.url))}>
                       {form.is_default
                         ? "Default Variant"
                         : formatString(form.pokemon.name)}
@@ -354,7 +372,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                 </div>
                 <div className={"firstStageEvo"}>
                   {evolutionChain?.chain.evolves_to.map((evolution, index) => (
-                    <div key={index}>
+                    <div key={index} onClick={() => handleMonChange(evolution.species.name)}>
                       <img
                         src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${getIDNo(
                           evolution.species.url
