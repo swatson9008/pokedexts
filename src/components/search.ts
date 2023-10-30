@@ -104,7 +104,7 @@ export default async function Search(searchPoke: string) {
     const fetchAlternateForms = async () => {
       try {
         const api = new PokemonClient();
-        const response = await api.getPokemonSpeciesByName(searchPoke);
+        const response = await api.getPokemonSpeciesByName(data.species.name);
 
         if (response) {
           const formData = { forms: [response.varieties] };
