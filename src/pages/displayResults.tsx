@@ -406,7 +406,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                     ? null
                     : evolutionChain?.chain.evolves_to[0].evolves_to.map(
                         (evolution, index) => (
-                          <div key={index}>
+                          <div key={index} onClick={() => handleMonChange(evolution.species.name)}>
                             <img
                               src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${getIDNo(
                                 evolution.species.url
