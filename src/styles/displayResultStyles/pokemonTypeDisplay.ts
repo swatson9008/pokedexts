@@ -6,8 +6,10 @@ interface PokeTypeDisplayProps {
 
 export const PokeTypeDisplay = styled.div<PokeTypeDisplayProps>`
   font-size: 18px;
+  font-weight: bold;
   text-align: center;
   border: 2px solid black;
+  width: 72px;
   padding: 3px;
   border-radius: 10px;
   color: white;
@@ -49,6 +51,8 @@ export const PokeTypeDisplay = styled.div<PokeTypeDisplayProps>`
         return "hsl(45.47deg 40.77% 54.31%)";
       case "steel":
         return "hsl(243.75deg 11.43% 72.55%)";
+      case "electric":
+        return "#fab917";
       case "???":
         return "hsl(141.23deg 55.89% 57.16%)";
       default:

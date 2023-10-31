@@ -11,6 +11,7 @@ interface PokemonDataContextType {
 
 const PokemonDataContext = createContext<PokemonDataContextType | null>(null);
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const usePokemonData = () => {
   const context = useContext(PokemonDataContext);
   if (context === null) {

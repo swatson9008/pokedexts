@@ -7,6 +7,7 @@ display: flex;
 flex-direction: column;
 width: 90vw;
 margin-top: 50px;
+margin-bottom: 15px;
 justify-content: center;
 text-align: center;
 font-size: 13px;

@@ -23,6 +23,8 @@ import { useNavigate } from "react-router-dom";
 import { EntireDetailPage } from "../styles/displayResultStyles/entirePage";
 import { TopAreaStyle } from "../styles/displayResultStyles/topArea";
 import { PokeTypeDisplay } from "../styles/displayResultStyles/pokemonTypeDisplay";
+import { PokeVarieties } from "../styles/displayResultStyles/pokeVarieties";
+import { VarietyLabels } from "../styles/displayResultStyles/varietyLabels";
 
 interface DisplayResultsProps {
   pokeData: PokemonData;
@@ -253,58 +255,64 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
     <div className="displayDetails">
       <div className="displayResult">
         <EntireDetailPage key={sortedData.pokeName}>
-          <TopAreaStyle>
-          <div className="mainPicture">
-            {pokeSprites.sprite === null ? (
-              "image not found"
-            ) : (
-              <img src={pokeSprites.sprite} alt={pokeName} />
-            )}
-          </div>
-          <div className="topInfoBox">
-          <div className="pokeName">{formatString(sortedData.pokeName)}</div>
-          <div className="pokeTypes">    
-            {" "}
-            {pastTypes.length &&
-            (generationList.generation1.includes(gameTitle) ||
-              generationList.generation2.includes(gameTitle) ||
-              generationList.generation3.includes(gameTitle) ||
-              generationList.generation4.includes(gameTitle) ||
-              generationList.generation5.includes(gameTitle)) &&
-            pastTypes[0].generation.name === "generation-v"
-              ? pastTypes[0].types.map((type, index) => (
-                  <div key={index}>{formatString(type.type.name)}</div>
-                ))
-              : pastTypes.length &&
-                generationList.generation1.includes(gameTitle) &&
-                pastTypes[0].generation.name === "generation-i"
-              ? pastTypes[0].types.map((type, index) => (
-                  <div key={index}>{formatString(type.type.name)}</div>
-                ))
-              : pokeTypes.map((type, index) => (
-                  <PokeTypeDisplay key={index} type={type.name}>{formatString(type.name)}</PokeTypeDisplay>
-                ))}
-          </div></div>
-          </TopAreaStyle>
-          <div className="pokeVarieties">
+          <PokeVarieties>
             {pokeForms[0].forms[0].length === 1
-              ? "No additional variants found"
+              ? ""
               : pokeForms[0].forms[0].map(
                   (form: {
                     pokemon: { url: string | undefined; name: string };
                     is_default: boolean;
                   }) => (
-                    <div
+                    <VarietyLabels
                       key={getIDNo(form.pokemon.url)}
                       onClick={() => handleMonChange(getIDNo(form.pokemon.url))}
+                      isCurrentForm={sortedData.pokeName === form.pokemon.name ? true : false}
                     >
                       {form.is_default
-                        ? "Default Variant"
+                        ? "Default Form"
                         : formatString(form.pokemon.name)}
-                    </div>
+                    </VarietyLabels>
                   )
                 )}
-          </div>
+          </PokeVarieties>
+          <TopAreaStyle>
+            <div className="mainPicture">
+              {pokeSprites.sprite === null ? (
+                "image not found"
+              ) : (
+                <img src={pokeSprites.sprite} alt={pokeName} />
+              )}
+            </div>
+            <div className="topInfoBox">
+              <div className="pokeName">
+                {formatString(sortedData.pokeName)}
+              </div>
+              <div className="pokeTypes">
+                {" "}
+                {pastTypes.length &&
+                (generationList.generation1.includes(gameTitle) ||
+                  generationList.generation2.includes(gameTitle) ||
+                  generationList.generation3.includes(gameTitle) ||
+                  generationList.generation4.includes(gameTitle) ||
+                  generationList.generation5.includes(gameTitle)) &&
+                pastTypes[0].generation.name === "generation-v"
+                  ? pastTypes[0].types.map((type, index) => (
+                      <div key={index}>{formatString(type.type.name)}</div>
+                    ))
+                  : pastTypes.length &&
+                    generationList.generation1.includes(gameTitle) &&
+                    pastTypes[0].generation.name === "generation-i"
+                  ? pastTypes[0].types.map((type, index) => (
+                      <div key={index}>{formatString(type.type.name)}</div>
+                    ))
+                  : pokeTypes.map((type, index) => (
+                      <PokeTypeDisplay key={index} type={type.name}>
+                        {formatString(type.name)}
+                      </PokeTypeDisplay>
+                    ))}
+              </div>
+            </div>
+          </TopAreaStyle>
           {generationList.generation1.includes(gameTitle) ||
           generationList.generation2.includes(gameTitle) ? null : (
             <div className="pokeAbilities">
@@ -320,10 +328,11 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                       formatString(abilities.name) +
                       " - " +
                       (abilityDataArray[index]
-                        ? 
+                        ? abilityDataArray[index].generation.name ===
+                            "generation-viii" ||
                           abilityDataArray[index].generation.name ===
-                            "generation-viii" || abilityDataArray[index].generation.name ===
-                            "generation-ix" ? gen89Abilities[abilities.name]
+                            "generation-ix"
+                          ? gen89Abilities[abilities.name]
                           : abilityDataArray[index].generation.name ===
                             "generation-vii"
                           ? abilityDataArray[index].effect_entries[0]

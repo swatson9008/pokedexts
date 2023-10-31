@@ -7,6 +7,7 @@ width: 80vw;
 flex-direction: column;
 margin-top: 20px;
 
+
 > div.searchMain > div {
     display: flex;
     justify-content: center;
