@@ -17,4 +17,10 @@ align-items: center;
 
 }
 
+> div.topInfoBox > div {
+    display: flex;
+    gap: 5px;
+
+}
+
 `
