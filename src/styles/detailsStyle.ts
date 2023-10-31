@@ -11,6 +11,6 @@ margin-top: 20px;
     display: flex;
     justify-content: center;
     flex-direction: row;
-    align-items: center;
+    align-items: flex-end;
 }
 `

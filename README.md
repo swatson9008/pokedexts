@@ -9,6 +9,8 @@ PokeApi - https://pokeapi.co/
 
 Favicon - https://icons8.com/
 
+Pokenode-ts - https://pokenode-ts.vercel.app/
+
 
 
 sprite credits
