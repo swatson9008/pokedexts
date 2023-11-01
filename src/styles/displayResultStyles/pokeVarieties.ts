@@ -8,7 +8,7 @@ align-items: center;
 gap: 15px;
 flex-wrap: wrap;
 justify-content: center;
-background-color: #d1d1d1;
+background-color: #f2b3e7;
 padding: 10px;
 border-radius: 10px;
 `

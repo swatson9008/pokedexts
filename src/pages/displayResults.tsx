@@ -25,6 +25,7 @@ import { TopAreaStyle } from "../styles/displayResultStyles/topArea";
 import { PokeTypeDisplay } from "../styles/displayResultStyles/pokemonTypeDisplay";
 import { PokeVarieties } from "../styles/displayResultStyles/pokeVarieties";
 import { VarietyLabels } from "../styles/displayResultStyles/varietyLabels";
+import { BaseStatStyles } from "../styles/displayResultStyles/baseStatStyle";
 
 interface DisplayResultsProps {
   pokeData: PokemonData;
@@ -266,7 +267,9 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                     <VarietyLabels
                       key={getIDNo(form.pokemon.url)}
                       onClick={() => handleMonChange(getIDNo(form.pokemon.url))}
-                      isCurrentForm={sortedData.pokeName === form.pokemon.name ? true : false}
+                      isCurrentForm={
+                        sortedData.pokeName === form.pokemon.name ? true : false
+                      }
                     >
                       {form.is_default
                         ? "Default Form"
@@ -312,6 +315,20 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                     ))}
               </div>
             </div>
+            <BaseStatStyles>
+              {pokeStats.map((stats, index) => (
+                <div key={index}>
+                  {formatString(stats.name) + " - " + stats.base_stat}
+                </div>
+              ))}
+              <div className="BST">
+                Total: {pokeData.pokeStats.reduce(
+                  (sum: number, stat: { base_stat: string }) =>
+                    sum + parseInt(stat.base_stat),
+                  0
+                )}
+              </div>
+            </BaseStatStyles>
           </TopAreaStyle>
           {generationList.generation1.includes(gameTitle) ||
           generationList.generation2.includes(gameTitle) ? null : (
@@ -347,13 +364,6 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
               ))}
             </div>
           )}
-          <div className="pokeBaseStats">
-            {pokeStats.map((stats, index) => (
-              <div key={index}>
-                {formatString(stats.name) + " - " + stats.base_stat}
-              </div>
-            ))}
-          </div>
           <div className="smogonLink">
             <a href={smogonLinkGen(pokeName, gameTitle)}>
               Recommended Smogon Movesets
