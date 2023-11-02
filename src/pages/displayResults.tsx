@@ -257,9 +257,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
       <div className="displayResult">
         <EntireDetailPage key={sortedData.pokeName}>
           <PokeVarieties hasForms={pokeForms[0].forms[0].length > 1 ? true : false}>
-            {pokeForms[0].forms[0].length === 1
-              ? ""
-              : pokeForms[0].forms[0].map(
+            {pokeForms[0].forms[0].map(
                   (form: {
                     pokemon: { url: string | undefined; name: string };
                     is_default: boolean;

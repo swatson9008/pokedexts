@@ -8,6 +8,7 @@ interface PokeStat {
   base_stat: string;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const options: any = {
   indexAxis: "y" as const,
   elements: {
@@ -15,6 +16,7 @@ export const options: any = {
       borderWidth: 2,
     },
   },
+
   title: {
     display: true,
     text: "Base Stats",
