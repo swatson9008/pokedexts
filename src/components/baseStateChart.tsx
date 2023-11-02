@@ -15,7 +15,7 @@ interface PokeStat {
 }
 
 export const options = {
-  indexAxis: "y" as const, // Indicate that the main axis is the y-axis
+  indexAxis: "y" as const,
   elements: {
     bar: {
       borderWidth: 2,
@@ -31,8 +31,8 @@ export const options = {
     x: {
       type: "linear",
       grid: { display: false },
-      min: 0, // Set the minimum value for the x-axis
-      max: 255, // Set the maximum value for the x-axis
+      min: 0,
+      max: 255, 
     },
   },
 };
@@ -61,5 +61,5 @@ export function baseStatBarChart(pokeStats: PokeStat[]) {
   data.datasets[0].data = pokeStats.map((stat: { base_stat: string }) =>
     parseInt(stat.base_stat)
   );
-  return <Bar options={options} data={data} />;
+  return <Bar type="bar" options={options} data={data} />;
 }
