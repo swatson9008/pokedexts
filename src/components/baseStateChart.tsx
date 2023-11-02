@@ -12,9 +12,9 @@ interface PokeStat {
 export const options: any = {
   plugins: {
     datalabels: {
-      display: true, 
-      anchor: "end", 
-      align: "right", 
+      display: true,
+      anchor: "end",
+      align: "right",
       font: {
         weight: "bold",
       },
@@ -26,7 +26,6 @@ export const options: any = {
       borderWidth: 2,
     },
   },
-
   title: {
     display: true,
     text: "Base Stats",
@@ -39,7 +38,7 @@ export const options: any = {
       suggestedMax: 150,
       beginAtZero: true,
     },
-    y: {grid: {display: false}}
+    y: { grid: { display: false } }
   },
 };
 
@@ -52,20 +51,43 @@ const labels = [
   "Speed",
 ];
 
-export const data = {
-  labels,
-  datasets: [
-    {
-      data: labels.map((data) => parseInt(data)),
-      borderColor: "rgb(255, 99, 132)",
-      backgroundColor: "rgba(255, 99, 132, 0.5)",
-    },
-  ],
-};
-
 export function baseStatBarChart(pokeStats: PokeStat[]) {
-  data.datasets[0].data = pokeStats.map((stat: { base_stat: string }) =>
+  const dataValues = pokeStats.map((stat: { base_stat: string }) =>
     parseInt(stat.base_stat)
   );
+
+  // Define background colors based on data values
+  const backgroundColor = dataValues.map((value) => {
+    if (value < 35) {
+      return '#b50b19';
+    } else if (value >= 35 && value <= 50) {
+      return '#b84d0b';
+    } else if (value >= 51 && value <= 75){
+      return '#e6f169'
+    } else if (value >= 76 && value <= 99){
+      return '#b0eb7c'
+    } else if (value >= 100 && value <= 125){
+      return '#4ced51'
+    } else if (value < 126){
+      return '#4cedbf'
+    }
+    
+    
+    else {
+      return 'rgba(255, 99, 132, 0.5)'; // Default color
+    }
+  });
+
+  const data = {
+    labels,
+    datasets: [
+      {
+        data: dataValues,
+        borderColor: "none",
+        backgroundColor,
+      },
+    ],
+  };
+
   return <Bar options={options} data={data} />;
 }
