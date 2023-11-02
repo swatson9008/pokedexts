@@ -4,20 +4,20 @@ import {
   LinearScale,
   BarElement,
   Title,
-  Tooltip,
-  Legend,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
-import { PokemonData } from "./pokemonData";
 
 ChartJS.register(
   CategoryScale,
   LinearScale,
   BarElement,
   Title,
-  Tooltip,
-  Legend
 );
+
+interface PokeStat {
+  name: string;
+  base_stat: string;
+}
 
 export const options = {
   indexAxis: 'y' as const,
@@ -26,38 +26,44 @@ export const options = {
       borderWidth: 2,
     },
   },
-  responsive: true,
   plugins: {
-    legend: {
-      position: 'right' as const,
-    },
     title: {
       display: true,
-      text: 'Chart.js Horizontal Bar Chart',
+      text: 'Base Stats',
     },
+    
   },
+
+  scales: {
+    y1: {
+      grid: {display: false},
+      ticks: {
+        beginAtZero: false,
+        min: 0,
+        max: 255,
+        stepSize: 2,
+
+      }
+    }
+  }
+  
 };
 
-const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+const labels = ['HP', 'Attack', 'Defense', 'Special Attack', 'Special Defense', 'Speed'];
 
 export const data = {
   labels,
   datasets: [
     {
-      label: 'Dataset 1',
-      data: labels.map(() => faker.datatype.number({ min: -1000, max: 1000 })),
+      data: labels.map((data) => parseInt(data)),
       borderColor: 'rgb(255, 99, 132)',
       backgroundColor: 'rgba(255, 99, 132, 0.5)',
-    },
-    {
-      label: 'Dataset 2',
-      data: labels.map(() => faker.datatype.number({ min: -1000, max: 1000 })),
-      borderColor: 'rgb(53, 162, 235)',
-      backgroundColor: 'rgba(53, 162, 235, 0.5)',
+      yAxisID: 'y1'
     },
   ],
 };
 
-export function baseStatBarChart() {
+export function baseStatBarChart(pokeStats: PokeStat[]) {
+  data.datasets[0].data = pokeStats.map((stat: { base_stat: string }) => parseInt(stat.base_stat));
   return <Bar options={options} data={data} />;
 }

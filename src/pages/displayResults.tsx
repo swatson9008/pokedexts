@@ -26,6 +26,7 @@ import { PokeTypeDisplay } from "../styles/displayResultStyles/pokemonTypeDispla
 import { PokeVarieties } from "../styles/displayResultStyles/pokeVarieties";
 import { VarietyLabels } from "../styles/displayResultStyles/varietyLabels";
 import { BaseStatStyles } from "../styles/displayResultStyles/baseStatStyle";
+import { baseStatBarChart } from "../components/baseStateChart";
 
 interface DisplayResultsProps {
   pokeData: PokemonData;
@@ -316,11 +317,12 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
               </div>
             </div>
             <BaseStatStyles>
-              {pokeStats.map((stats, index) => (
+              {/*pokeStats.map((stats, index) => (
                 <div key={index}>
                   {formatString(stats.name) + " - " + stats.base_stat}
                 </div>
-              ))}
+              ))*/}
+              <div className="baseChart">{baseStatBarChart(pokeData.pokeStats)}</div>
               <div className="BST">
                 Total: {pokeData.pokeStats.reduce(
                   (sum: number, stat: { base_stat: string }) =>
