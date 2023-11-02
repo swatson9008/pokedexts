@@ -1,15 +1,25 @@
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title } from "chart.js";
 import { Bar } from "react-chartjs-2";
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title);
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, ChartDataLabels);
 
 interface PokeStat {
   name: string;
   base_stat: string;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const options: any = {
+  plugins: {
+    datalabels: {
+      display: true, 
+      anchor: "end", 
+      align: "right", 
+      font: {
+        weight: "bold",
+      },
+    },
+  },
   indexAxis: "y" as const,
   elements: {
     bar: {
@@ -23,11 +33,13 @@ export const options: any = {
   },
   scales: {
     x: {
+      display: false,
       type: 'linear',
       grid: { display: false },
       suggestedMax: 150,
       beginAtZero: true,
     },
+    y: {grid: {display: false}}
   },
 };
 
