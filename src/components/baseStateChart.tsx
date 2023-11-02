@@ -1,10 +1,4 @@
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-} from "chart.js";
+import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title } from "chart.js";
 import { Bar } from "react-chartjs-2";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title);
@@ -14,25 +8,23 @@ interface PokeStat {
   base_stat: string;
 }
 
-export const options = {
+export const options: any = {
   indexAxis: "y" as const,
   elements: {
     bar: {
       borderWidth: 2,
     },
   },
-  plugins: {
-    title: {
-      display: true,
-      text: "Base Stats",
-    },
+  title: {
+    display: true,
+    text: "Base Stats",
   },
   scales: {
     x: {
-      type: "linear",
+      type: 'linear',
       grid: { display: false },
-      min: 0,
-      max: 255, 
+      suggestedMax: 150,
+      beginAtZero: true,
     },
   },
 };
@@ -61,5 +53,5 @@ export function baseStatBarChart(pokeStats: PokeStat[]) {
   data.datasets[0].data = pokeStats.map((stat: { base_stat: string }) =>
     parseInt(stat.base_stat)
   );
-  return <Bar type="bar" options={options} data={data} />;
+  return <Bar options={options} data={data} />;
 }

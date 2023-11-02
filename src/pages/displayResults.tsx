@@ -46,7 +46,6 @@ interface AbilityData {
 export default function DisplayResults({ pokeData }: DisplayResultsProps) {
   const {
     pokeAbilities,
-    pokeStats,
     pokeSprites,
     pokeForms,
     pokeTypes,
@@ -257,7 +256,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
     <div className="displayDetails">
       <div className="displayResult">
         <EntireDetailPage key={sortedData.pokeName}>
-          <PokeVarieties>
+          <PokeVarieties hasForms={pokeForms[0].forms[0].length > 1 ? true : false}>
             {pokeForms[0].forms[0].length === 1
               ? ""
               : pokeForms[0].forms[0].map(
