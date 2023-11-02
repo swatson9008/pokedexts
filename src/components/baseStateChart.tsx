@@ -7,12 +7,7 @@ import {
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-);
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title);
 
 interface PokeStat {
   name: string;
@@ -20,7 +15,7 @@ interface PokeStat {
 }
 
 export const options = {
-  indexAxis: 'y' as const,
+  indexAxis: "y" as const, // Indicate that the main axis is the y-axis
   elements: {
     bar: {
       borderWidth: 2,
@@ -29,41 +24,42 @@ export const options = {
   plugins: {
     title: {
       display: true,
-      text: 'Base Stats',
+      text: "Base Stats",
     },
-    
   },
-
   scales: {
-    y1: {
-      grid: {display: false},
-      ticks: {
-        beginAtZero: false,
-        min: 0,
-        max: 255,
-        stepSize: 2,
-
-      }
-    }
-  }
-  
+    x: {
+      type: "linear",
+      grid: { display: false },
+      min: 0, // Set the minimum value for the x-axis
+      max: 255, // Set the maximum value for the x-axis
+    },
+  },
 };
 
-const labels = ['HP', 'Attack', 'Defense', 'Special Attack', 'Special Defense', 'Speed'];
+const labels = [
+  "HP",
+  "Attack",
+  "Defense",
+  "Special Attack",
+  "Special Defense",
+  "Speed",
+];
 
 export const data = {
   labels,
   datasets: [
     {
       data: labels.map((data) => parseInt(data)),
-      borderColor: 'rgb(255, 99, 132)',
-      backgroundColor: 'rgba(255, 99, 132, 0.5)',
-      yAxisID: 'y1'
+      borderColor: "rgb(255, 99, 132)",
+      backgroundColor: "rgba(255, 99, 132, 0.5)",
     },
   ],
 };
 
 export function baseStatBarChart(pokeStats: PokeStat[]) {
-  data.datasets[0].data = pokeStats.map((stat: { base_stat: string }) => parseInt(stat.base_stat));
+  data.datasets[0].data = pokeStats.map((stat: { base_stat: string }) =>
+    parseInt(stat.base_stat)
+  );
   return <Bar options={options} data={data} />;
 }
