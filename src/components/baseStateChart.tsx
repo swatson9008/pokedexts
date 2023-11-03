@@ -68,7 +68,7 @@ export function baseStatBarChart(pokeStats: PokeStat[]) {
       return '#b0eb7c'
     } else if (value >= 100 && value <= 125){
       return '#4ced51'
-    } else if (value < 126){
+    } else if (value > 126){
       return '#4cedbf'
     }
     
