@@ -256,25 +256,27 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
     <div className="displayDetails">
       <div className="displayResult">
         <EntireDetailPage key={sortedData.pokeName}>
-          <PokeVarieties hasForms={pokeForms[0].forms[0].length > 1 ? true : false}>
+          <PokeVarieties
+            hasForms={pokeForms[0].forms[0].length > 1 ? true : false}
+          >
             {pokeForms[0].forms[0].map(
-                  (form: {
-                    pokemon: { url: string | undefined; name: string };
-                    is_default: boolean;
-                  }) => (
-                    <VarietyLabels
-                      key={getIDNo(form.pokemon.url)}
-                      onClick={() => handleMonChange(getIDNo(form.pokemon.url))}
-                      isCurrentForm={
-                        sortedData.pokeName === form.pokemon.name ? true : false
-                      }
-                    >
-                      {form.is_default
-                        ? "Default Form"
-                        : formatString(form.pokemon.name)}
-                    </VarietyLabels>
-                  )
-                )}
+              (form: {
+                pokemon: { url: string | undefined; name: string };
+                is_default: boolean;
+              }) => (
+                <VarietyLabels
+                  key={getIDNo(form.pokemon.url)}
+                  onClick={() => handleMonChange(getIDNo(form.pokemon.url))}
+                  isCurrentForm={
+                    sortedData.pokeName === form.pokemon.name ? true : false
+                  }
+                >
+                  {form.is_default
+                    ? "Default Form"
+                    : formatString(form.pokemon.name)}
+                </VarietyLabels>
+              )
+            )}
           </PokeVarieties>
           <TopAreaStyle>
             <div className="mainPicture">
@@ -319,9 +321,12 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                   {formatString(stats.name) + " - " + stats.base_stat}
                 </div>
               ))*/}
-              <div className="baseChart">{baseStatBarChart(pokeData.pokeStats)}</div>
+              <div className="baseChart">
+                {baseStatBarChart(pokeData.pokeStats)}
+              </div>
               <div className="BST">
-                Total: {pokeData.pokeStats.reduce(
+                Total:{" "}
+                {pokeData.pokeStats.reduce(
                   (sum: number, stat: { base_stat: string }) =>
                     sum + parseInt(stat.base_stat),
                   0
@@ -423,7 +428,11 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                         ? formatString(evolution.species.name)
                         : ""}
 
-                      <div key={evolutionChain.chain.evolves_to[index].species.name}>
+                      <div
+                        key={
+                          evolutionChain.chain.evolves_to[index].species.name
+                        }
+                      >
                         {evolutionChain?.chain.evolves_to[
                           index
                         ].evolution_details.map((_method, methodIndex) => (
