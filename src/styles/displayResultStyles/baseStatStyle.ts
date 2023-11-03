@@ -6,15 +6,22 @@ export const BaseStatStyles = styled.div<BaseStatColors>`
   margin-left: 20px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   width: 30vw;
 
   > div.baseChart {
     display: flex;
-    flex: 1; /* Allow the chart to grow and stretch */
+    flex: 1;
   }
 
+  > div.BST {
+    width: 100%;
+    display: flex;
+
+    justify-content: center;
+  }
   canvas {
-    width: 100%; /* Make the canvas take 100% of the available width */
+    width: 100%; 
+    height: 100%;
   }
 `;
