@@ -5,13 +5,14 @@ export const AbilitiesStyle = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 29vw;
+  width: 30vw;
 
   > div {
     background-color: #f2b3e7;
     padding: 25px;
     border-radius: 25px;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border: 1px solid #a6799e;
+
 
     > div {
       span {

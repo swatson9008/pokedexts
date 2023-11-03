@@ -29,6 +29,7 @@ export const options: any = {
       align: "right",
       font: {
         weight: "bold",
+        size: 16, 
       },
     },
   },
@@ -38,9 +39,19 @@ export const options: any = {
       borderWidth: 2,
     },
   },
+  layout: {
+    padding: {
+      left: 20, 
+      right: 20, 
+    },
+  },
   title: {
     display: true,
     text: "Base Stats",
+    font: {
+      size: 18, 
+      weight: "bold",
+    },
   },
   scales: {
     x: {
@@ -55,12 +66,13 @@ export const options: any = {
       ticks: {
         color: "black",
         font: {
-          //weight: "bold", 
+          size: 14, // Increase the font size of the Y-axis labels
         },
       },
     },
   },
 };
+
 
 
 

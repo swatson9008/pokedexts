@@ -3,9 +3,10 @@ import styled from "styled-components";
 export const TopAreaStyle = styled.div`
 
 display: grid;
-grid-template-columns: auto auto auto; /* Create 3 equal-width columns */
-  grid-gap: 20px; /* Add some gap between items */
-  width: 80vw;
+grid-template-columns: auto auto auto;
+  grid-gap: 20px; 
+  width: 90vw;
+  margin-bottom: 40px;
 
 > div.mainPicture {
     padding: 25px;
@@ -17,7 +18,8 @@ grid-template-columns: auto auto auto; /* Create 3 equal-width columns */
    gap: 10px;
    justify-content: center;
    align-items: center;
-   width: 20vw;
+   width: 30vw;
+   margin: auto; 
 
 }
 

@@ -12,6 +12,7 @@ export const PokeVarieties = styled.div <PokeVarietyDisplay>`
   flex-wrap: wrap;
   justify-content: center;
   background-color: #f2b3e7;
+  border: 1px solid #a6799e;
   padding: 10px;
   border-radius: 10px;
 `;
