@@ -78,6 +78,8 @@ export function baseStatBarChart(pokeStats: PokeStat[]) {
     }
   });
 
+  const borderRadius = dataValues.map(() => 25);
+
   const data = {
     labels,
     datasets: [
@@ -85,6 +87,7 @@ export function baseStatBarChart(pokeStats: PokeStat[]) {
         data: dataValues,
         borderColor: "none",
         backgroundColor,
+        borderRadius,
       },
     ],
   };
