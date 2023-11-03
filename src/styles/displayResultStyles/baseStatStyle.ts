@@ -9,7 +9,7 @@ export const BaseStatStyles = styled.div<BaseStatColors>`
   align-items: center;
 
   > div.baseChart canvas {
-    width: 500px;
+    width: 30vw;
     
   }
 `;

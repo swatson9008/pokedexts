@@ -27,6 +27,7 @@ import { PokeVarieties } from "../styles/displayResultStyles/pokeVarieties";
 import { VarietyLabels } from "../styles/displayResultStyles/varietyLabels";
 import { BaseStatStyles } from "../styles/displayResultStyles/baseStatStyle";
 import { baseStatBarChart } from "../components/baseStateChart";
+import { AbilitiesStyle } from "../styles/displayResultStyles/abilitiesStyle";
 
 interface DisplayResultsProps {
   pokeData: PokemonData;
@@ -279,14 +280,55 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
             )}
           </PokeVarieties>
           <TopAreaStyle>
-            <div className="mainPicture">
-              {pokeSprites.sprite === null ? (
-                "image not found"
-              ) : (
-                <img src={pokeSprites.sprite} alt={pokeName} />
+            <AbilitiesStyle>
+              {generationList.generation1.includes(gameTitle) ||
+              generationList.generation2.includes(gameTitle) ? null : (
+                <div className="pokeAbilities">
+                  {pokeAbilities.map((abilities, index) => (
+                    <div key={index}>
+                      {abilities.is_hidden &&
+                      (generationList.generation3.includes(gameTitle) ||
+                        generationList.generation4.includes(
+                          gameTitle
+                        )) ? null : (
+                        <span>
+                          {abilities.is_hidden ? (
+                            <span className="abilityClass">Hidden Ability: </span>
+                          ) : (
+                            <span className="abilityClass">Regular Ability: </span>
+                          )}
+                          <span>{formatString(abilities.name)}</span> -{" "}
+                          {abilityDataArray[index]
+                            ? abilityDataArray[index].generation.name ===
+                                "generation-viii" ||
+                              abilityDataArray[index].generation.name ===
+                                "generation-ix"
+                              ? gen89Abilities[abilities.name]
+                              : abilityDataArray[index].generation.name ===
+                                "generation-vii"
+                              ? abilityDataArray[index].effect_entries[0]
+                                  .short_effect
+                              : (
+                                  abilityDataArray[index].effect_entries.find(
+                                    (entry) => entry.language.name === "en"
+                                  ) || {}
+                                ).short_effect || ""
+                            : ""}
+                        </span>
+                      )}
+                    </div>
+                  ))}
+                </div>
               )}
-            </div>
+            </AbilitiesStyle>
             <div className="topInfoBox">
+              <div className="mainPicture">
+                {pokeSprites.sprite === null ? (
+                  "image not found"
+                ) : (
+                  <img src={pokeSprites.sprite} alt={pokeName} />
+                )}
+              </div>
               <div className="pokeName">
                 {formatString(sortedData.pokeName)}
               </div>
@@ -316,11 +358,6 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
               </div>
             </div>
             <BaseStatStyles>
-              {/*pokeStats.map((stats, index) => (
-                <div key={index}>
-                  {formatString(stats.name) + " - " + stats.base_stat}
-                </div>
-              ))*/}
               <div className="baseChart">
                 {baseStatBarChart(pokeData.pokeStats)}
               </div>
@@ -334,40 +371,6 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
               </div>
             </BaseStatStyles>
           </TopAreaStyle>
-          {generationList.generation1.includes(gameTitle) ||
-          generationList.generation2.includes(gameTitle) ? null : (
-            <div className="pokeAbilities">
-              {pokeAbilities.map((abilities, index) => (
-                <div key={index}>
-                  {abilities.is_hidden &&
-                  (generationList.generation3.includes(gameTitle) ||
-                    generationList.generation4.includes(gameTitle))
-                    ? null
-                    : (abilities.is_hidden
-                        ? "Hidden Ability: "
-                        : "Regular Ability: ") +
-                      formatString(abilities.name) +
-                      " - " +
-                      (abilityDataArray[index]
-                        ? abilityDataArray[index].generation.name ===
-                            "generation-viii" ||
-                          abilityDataArray[index].generation.name ===
-                            "generation-ix"
-                          ? gen89Abilities[abilities.name]
-                          : abilityDataArray[index].generation.name ===
-                            "generation-vii"
-                          ? abilityDataArray[index].effect_entries[0]
-                              .short_effect
-                          : (
-                              abilityDataArray[index].effect_entries.find(
-                                (entry) => entry.language.name === "en"
-                              ) || {}
-                            ).short_effect || ""
-                        : "")}
-                </div>
-              ))}
-            </div>
-          )}
           <div className="smogonLink">
             <a href={smogonLinkGen(pokeName, gameTitle)}>
               Recommended Smogon Movesets

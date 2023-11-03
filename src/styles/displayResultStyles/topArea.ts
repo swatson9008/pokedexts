@@ -2,18 +2,22 @@ import styled from "styled-components";
 
 export const TopAreaStyle = styled.div`
 
-display: flex;
-justify-items: center;
-align-items: center;
+display: grid;
+grid-template-columns: auto auto auto; /* Create 3 equal-width columns */
+  grid-gap: 20px; /* Add some gap between items */
+  width: 80vw;
 
 > div.mainPicture {
-    padding: 20px;
+    padding: 25px;
 }
 
 > div.topInfoBox {
    display: flex;
    flex-direction: column;
    gap: 10px;
+   justify-content: center;
+   align-items: center;
+   width: 20vw;
 
 }
 

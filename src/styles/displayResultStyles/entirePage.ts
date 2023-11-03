@@ -7,7 +7,7 @@ flex-direction: column;
 align-items: center;
 margin-top: 25px;
 background-color: rgba(255, 255, 255, 0.4);
-padding: 20px;
+padding: 1vw;
 border-radius: 20px;
 
 `
