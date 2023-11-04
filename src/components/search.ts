@@ -1,5 +1,6 @@
 import { PokemonClient } from "pokenode-ts";
 import { PokemonData } from "./pokemonData";
+import { EvolutionClient } from "pokenode-ts";
 
 export default async function Search(searchPoke: string) {
   if (searchPoke === "shaymin") {
@@ -59,6 +60,77 @@ export default async function Search(searchPoke: string) {
       }
     });
 
+    ///pokeapi doesn't include egg moves for evolutions, lets fix that
+    const findEggMoves = async (pokeName: string) => {
+      try {
+        const api = new EvolutionClient();
+        const res = await api.getEvolutionChainById(
+          parseInt(searchedPokemonData.pokeEvoID)
+        );
+    
+        if (pokeName !== res?.chain.species.name) {
+          const eggMovesByVersionGroup: Record<
+            string,
+            Record<string, { name: string }[]>
+          > = {};
+    
+          const newApi = new PokemonClient();
+          const baseData = await newApi.getPokemonByName(
+            res.chain.species.name
+          );
+    
+          baseData.moves.forEach((move) => {
+            move.version_group_details.forEach((groupDetail) => {
+              const versionGroupName = groupDetail.version_group.name;
+              const moveLearnMethod = groupDetail.move_learn_method.name;
+    
+              if (moveLearnMethod === "egg") {
+                if (!eggMovesByVersionGroup[versionGroupName]) {
+                  eggMovesByVersionGroup[versionGroupName] = { egg: [] };
+                }
+    
+                eggMovesByVersionGroup[versionGroupName].egg.push({
+                  name: move.move.name,
+                });
+              }
+            });
+          });
+    
+          const formattedEggMoves = Object.entries(eggMovesByVersionGroup).map(
+            ([versionGroup, methods]) => {
+              const formattedMethods = Object.entries(methods).map(
+                ([method, moves]) => {
+                  return {
+                    [method]: moves,
+                  };
+                }
+              );
+              return {
+                versionGroup: versionGroup,
+                ...Object.assign({}, ...formattedMethods),
+              };
+            }
+          );
+    
+          // Iterate over the formattedEggMoves and update searchedPokemonData.pokeMoves
+          formattedEggMoves.forEach(({ versionGroup, egg }) => {
+            if (searchedPokemonData.pokeMoves[versionGroup]) {
+              // Create the "egg" group if it doesn't exist
+              if (!searchedPokemonData.pokeMoves[versionGroup]["egg"]) {
+                searchedPokemonData.pokeMoves[versionGroup]["egg"] = [];
+              }
+              // Populate the "egg" group with moves and names
+              searchedPokemonData.pokeMoves[versionGroup]["egg"] = egg;
+            }
+          });
+    
+          console.log(searchedPokemonData.pokeMoves);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    
     const fetchAndExtractEvolutionChain = async () => {
       try {
         const response = await fetch(searchedPokemonData.pokeSpecies.url);
@@ -85,21 +157,6 @@ export default async function Search(searchPoke: string) {
         console.error("Error fetching species data:", error);
       }
     };
-
-    /*const fetchAlternateForms = async () => {
-      try {
-        const api = new PokemonClient();
-        const pokemonNames = new RegExp(`.*${searchPoke}.*`, 'i').toString();
-        const response = await api.getPokemonFormByName(pokemonNames);
-    
-        if (response) {
-          const formData = { forms: [response] };
-          searchedPokemonData.pokeForms = [formData];
-        }
-      } catch (error) {
-        console.error("Error fetching forms data:", error);
-      }
-    };*/
 
     const fetchAlternateForms = async () => {
       try {
@@ -151,7 +208,7 @@ export default async function Search(searchPoke: string) {
     await fetchAndExtractEvolutionChain();
     await fetchAlternateForms();
 
-    console.log(searchedPokemonData.pokeForms[0].forms[0]);
+    await findEggMoves(searchedPokemonData.pokeName);
 
     try {
       const response = await fetch(searchedPokemonData.pokeAbilities[0].url);

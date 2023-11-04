@@ -13,15 +13,23 @@ export const LearnMethodStyle = styled.div`
       padding: 10px;
       cursor: pointer;
       background-color: rgb(164 234 123);
+      opacity: 50%;
     }
 
     .selected {
       background-color: transparent;
+      opacity: 100%;
     }
   }
 
   .moveList {
     display: flex;
     flex-direction: column;
+    margin-top: 5px;
+  }
+
+  .pokeMove {
+    border-top: 1px solid black;
+    padding: 5px;
   }
 `;

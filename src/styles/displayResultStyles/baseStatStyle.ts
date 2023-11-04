@@ -1,8 +1,6 @@
 import styled from "styled-components";
 
-interface BaseStatColors {}
-
-export const BaseStatStyles = styled.div<BaseStatColors>`
+export const BaseStatStyles = styled.div`
   margin-left: 20px;
   display: flex;
   flex-direction: column;
@@ -12,16 +10,12 @@ export const BaseStatStyles = styled.div<BaseStatColors>`
   > div.baseChart {
     display: flex;
     flex: 1;
-  }
-
-  > div.BST {
-    width: 100%;
-    display: flex;
-
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    width: 100%; 
   }
   canvas {
     width: 100%; 
-    height: 100%;
+    height: 100%; 
   }
 `;

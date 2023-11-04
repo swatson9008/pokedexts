@@ -7,7 +7,12 @@ import {
 } from "../components/formatString";
 import { PokemonData } from "../components/pokemonData";
 import sortMoves from "../components/sortMove";
-import { MoveClient, EvolutionClient, EvolutionChain } from "pokenode-ts";
+import {
+  MoveClient,
+  EvolutionClient,
+  EvolutionChain,
+  PokemonClient,
+} from "pokenode-ts";
 import {
   generationConverter,
   generationList,
@@ -103,6 +108,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
   const handleLearnMethod = (method: string) => {
     setLearnMethod(method);
   };
+  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -254,8 +260,20 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
     }
   };
 
-  
+  /*const formatMoveType = async (moveName: string) => {
+    try {
+      const api = new MoveClient();
+      const res = await api.getMoveByName(moveName);
+      const type = res.type.name.toString();
+      return type;
+    } catch (error) {
+      console.error(error);
+      return "unknown";
+    }
+  };*/
 
+  
+  
   return (
     <div className="displayDetails">
       <div className="displayResult">
@@ -296,9 +314,13 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                         )) ? null : (
                         <span>
                           {abilities.is_hidden ? (
-                            <span className="abilityClass">Hidden Ability: </span>
+                            <span className="abilityClass">
+                              Hidden Ability:{" "}
+                            </span>
                           ) : (
-                            <span className="abilityClass">Regular Ability: </span>
+                            <span className="abilityClass">
+                              Regular Ability:{" "}
+                            </span>
                           )}
                           <span>{formatString(abilities.name)}</span> -{" "}
                           {abilityDataArray[index]
@@ -363,14 +385,14 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
             <BaseStatStyles>
               <div className="baseChart">
                 {baseStatBarChart(pokeData.pokeStats)}
-              </div>
-              <div className="BST">
-                Total:{" "}
-                {pokeData.pokeStats.reduce(
-                  (sum: number, stat: { base_stat: string }) =>
-                    sum + parseInt(stat.base_stat),
-                  0
-                )}
+                <div className="BST">
+                  Total:{" "}
+                  {pokeData.pokeStats.reduce(
+                    (sum: number, stat: { base_stat: string }) =>
+                      sum + parseInt(stat.base_stat),
+                    0
+                  )}
+                </div>
               </div>
             </BaseStatStyles>
           </TopAreaStyle>
@@ -513,32 +535,40 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
             </PokeVarieties>
             <div className="gameTitle">{/*formatString(gameTitle)*/}</div>
             <LearnMethodStyle>
-              <div className="learnMethodList">{learnMethodList.map((method, index) => (
-                <div
-                  key={`${method}-${index}`}
-                  className={method === learnMethod ? "selected" : ""}
-                  onClick={() => handleLearnMethod(method)}
-                >
-                  {formatString(method)}
-                </div>
-              ))}</div>
-            <div className="moveList">
-              {learnMethod === "machine"
-                ? tmHM.map((move, index) => (
-                    <div key={index} className="pokeMove">
-                      {otherFormatString(move)}{" "}
-                    </div>
-                  ))
-                : moveList.map((move, index) => (
-                    <div key={index} className="pokeMove">
-                      {move.level &&
-                        `Level ${
-                          move.level === "0" || move.level === "1" ? (move.level = "-") : move.level
-                        } `}
-                      {formatString(move.name)}{" "}
-                    </div>
-                  ))}
-            </div>
+              <div className="learnMethodList">
+                {learnMethodList.map((method, index) => (
+                  <div
+                    key={`${method}-${index}`}
+                    className={method === learnMethod ? "selected" : ""}
+                    onClick={() => handleLearnMethod(method)}
+                  >
+                    {formatString(method)}
+                  </div>
+                ))}
+              </div>
+              <div className="moveList">
+                {learnMethod === "machine"
+                  ? tmHM.map((move, index) => (
+                      <div key={index} className="pokeMove">
+                        <div className="moveName">
+                          {otherFormatString(move)}{" "}
+                        </div>
+                      </div>
+                    ))
+                  : moveList.map((move, index) => (
+                      <div key={index} className="pokeMove">
+                        <div className="moveName">
+                          {move.level &&
+                            `Level ${
+                              move.level === "0" || move.level === "1"
+                                ? (move.level = "-")
+                                : move.level
+                            } `}
+                          {formatString(move.name)}{" "}
+                        </div>
+                      </div>
+                    ))}
+              </div>
             </LearnMethodStyle>
           </div>
         </EntireDetailPage>
