@@ -12,5 +12,6 @@ border-radius: 20px;
 
 .pokeMoves {
     margin-top: 30px;
+    width: 60%;
 }
 `

@@ -11,7 +11,6 @@ import {
   MoveClient,
   EvolutionClient,
   EvolutionChain,
-  PokemonClient,
 } from "pokenode-ts";
 import {
   generationConverter,

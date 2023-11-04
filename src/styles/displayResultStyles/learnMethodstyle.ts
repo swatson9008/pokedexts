@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const LearnMethodStyle = styled.div`
+
   .learnMethodList {
     display: flex;
     justify-content: space-around;
