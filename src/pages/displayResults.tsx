@@ -28,6 +28,7 @@ import { VarietyLabels } from "../styles/displayResultStyles/varietyLabels";
 import { BaseStatStyles } from "../styles/displayResultStyles/baseStatStyle";
 import { baseStatBarChart } from "../components/baseStateChart";
 import { AbilitiesStyle } from "../styles/displayResultStyles/abilitiesStyle";
+import { LearnMethodStyle } from "../styles/displayResultStyles/learnMethodstyle";
 
 interface DisplayResultsProps {
   pokeData: PokemonData;
@@ -511,8 +512,8 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
               ))}
             </PokeVarieties>
             <div className="gameTitle">{/*formatString(gameTitle)*/}</div>
-            <div className="learnMethodList">
-              {learnMethodList.map((method, index) => (
+            <LearnMethodStyle>
+              <div className="learnMethodList">{learnMethodList.map((method, index) => (
                 <div
                   key={`${method}-${index}`}
                   className={method === learnMethod ? "selected" : ""}
@@ -520,8 +521,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                 >
                   {formatString(method)}
                 </div>
-              ))}
-            </div>
+              ))}</div>
             <div className="moveList">
               {learnMethod === "machine"
                 ? tmHM.map((move, index) => (
@@ -532,13 +532,14 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                 : moveList.map((move, index) => (
                     <div key={index} className="pokeMove">
                       {move.level &&
-                        `Level: ${
-                          move.level === "0" ? (move.level = "-") : move.level
+                        `Level ${
+                          move.level === "0" || move.level === "1" ? (move.level = "-") : move.level
                         } `}
                       {formatString(move.name)}{" "}
                     </div>
                   ))}
             </div>
+            </LearnMethodStyle>
           </div>
         </EntireDetailPage>
       </div>
