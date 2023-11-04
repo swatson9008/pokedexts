@@ -253,6 +253,8 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
     }
   };
 
+  
+
   return (
     <div className="displayDetails">
       <div className="displayResult">
@@ -496,18 +498,19 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
           </div>
 
           <div className="pokeMoves">
-            <div className="pokeTitleList">
+            <PokeVarieties hasForms={true}>
               {Object.keys(sortedData.pokeMoves).map((title, index) => (
-                <div
+                <VarietyLabels
                   key={index}
+                  isCurrentForm={gameTitle === title ? true : false}
                   className={index.toString()}
                   onClick={() => handleTitle(title)}
                 >
                   {formatString(title)}
-                </div>
+                </VarietyLabels>
               ))}
-            </div>
-            <div className="gameTitle">{formatString(gameTitle)}</div>
+            </PokeVarieties>
+            <div className="gameTitle">{/*formatString(gameTitle)*/}</div>
             <div className="learnMethodList">
               {learnMethodList.map((method, index) => (
                 <div

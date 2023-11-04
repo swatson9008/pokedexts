@@ -10,4 +10,7 @@ background-color: rgba(255, 255, 255, 0.4);
 padding: 1vw;
 border-radius: 20px;
 
+.pokeMoves {
+    margin-top: 30px;
+}
 `
