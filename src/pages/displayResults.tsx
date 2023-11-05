@@ -60,7 +60,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
     pokeName,
   } = pokeData;
   const sortedData = sortMoves(pokeData);
-  const defaultGameTitle = Object.keys(sortedData.pokeMoves).slice(-1)[0];
+  const [defaultGameTitle, setDefaultGameTitle] = useState("");
   const [gameTitle, setGameTitle] = useState(defaultGameTitle);
   const [learnMethod, setLearnMethod] = useState("level-up");
   const learnMethodList = Object.keys(sortedData.pokeMoves[gameTitle] || {});
@@ -79,6 +79,16 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
     }
     return [];
   }, [sortedData.pokeMoves, gameTitle, learnMethod]);
+
+  useEffect(() => {
+    const keys = Object.keys(sortedData.pokeMoves);
+    const newDefaultGameTitle = keys.length > 0 ? keys[keys.length - 1] : "";
+    setDefaultGameTitle(newDefaultGameTitle);
+  
+    setGameTitle(newDefaultGameTitle);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pokeData]);
+
 
   const customLearnMethodOrder = [
     "level-up",
@@ -258,18 +268,6 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
       alert(error);
     }
   };
-
-  /*const formatMoveType = async (moveName: string) => {
-    try {
-      const api = new MoveClient();
-      const res = await api.getMoveByName(moveName);
-      const type = res.type.name.toString();
-      return type;
-    } catch (error) {
-      console.error(error);
-      return "unknown";
-    }
-  };*/
 
   
   
