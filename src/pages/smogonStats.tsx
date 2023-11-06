@@ -41,11 +41,12 @@ const SmogonSets = ({ pokeName, gen }: { pokeName: string; gen: string | number 
   const fetchAndDisplaySets = async () => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const sets = await fetchSmogonSets(pokeName, gen);
+    console.log(sets)
   };
 
   fetchAndDisplaySets();
 
-  return <div>{/* Your JSX here */}</div>;
+  return <div>{}</div>;
 };
 
 export default SmogonSets;
