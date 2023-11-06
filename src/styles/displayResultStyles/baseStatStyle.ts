@@ -18,4 +18,12 @@ export const BaseStatStyles = styled.div`
     width: 100%; 
     height: 100%; 
   }
+
+  @media only screen and (max-device-width: 768px) and (orientation: portrait) {
+    width: 100vw;
+  }
+
+  @media only screen and (min-device-width: 769px) {
+    width: 35vw;
+  }
 `;

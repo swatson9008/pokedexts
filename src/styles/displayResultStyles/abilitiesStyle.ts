@@ -5,7 +5,6 @@ export const AbilitiesStyle = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 35vw;
 
   > div {
     background-color: #f2b3e7;
@@ -21,5 +20,14 @@ export const AbilitiesStyle = styled.div`
         }
       }
     }
+  }
+
+  @media only screen and (max-device-width: 768px) and (orientation: portrait) {
+    width: 100vw;
+    margin-top: 20px;
+  }
+
+  @media only screen and (min-device-width: 769px) {
+    width: 35vw;
   }
 `;
