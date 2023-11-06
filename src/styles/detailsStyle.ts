@@ -10,7 +10,7 @@ margin-top: 20px;
 > div.searchMain > div {
     display: flex;
     justify-content: center;
-    align-items: flex-end;
+    align-items: center;
 }
 
 
