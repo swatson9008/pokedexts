@@ -21,4 +21,9 @@ display: flex;
 
 
 }
+
+> div.pokeTypes {
+    display: flex;
+    gap: 10px;
+}
 `
