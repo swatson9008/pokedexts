@@ -56,6 +56,7 @@ export default function MoveInfoDisplay({
 
   return (
     <>
+      {moveData && <div>{formatString(moveData.type.name|| "")}</div>}
       {moveData && <div>{formatString(moveData.damage_class?.name || "")}</div>}
       {moveData?.power === null ? "" : <div>Power: {moveData?.power}</div>}
       {moveData?.accuracy === null ? (
