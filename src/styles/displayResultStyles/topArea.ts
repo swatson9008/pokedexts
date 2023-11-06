@@ -12,7 +12,7 @@ export const TopAreaStyle = styled.div`
   align-items: center;
 
   @media only screen and (max-device-width: 768px) and (orientation: portrait) {
-    
+    flex-direction: column;
   }
 
   @media only screen and (min-device-width: 769px) {

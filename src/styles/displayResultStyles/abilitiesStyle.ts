@@ -26,7 +26,6 @@ export const AbilitiesStyle = styled.div<DoAbilitiesExist>`
   }
 
   @media only screen and (max-device-width: 768px) and (orientation: portrait) {
-    width: 100vw;
     margin-top: 20px;
   }
 
