@@ -7,11 +7,7 @@ import {
 } from "../components/formatString";
 import { PokemonData } from "../components/pokemonData";
 import sortMoves from "../components/sortMove";
-import {
-  MoveClient,
-  EvolutionClient,
-  EvolutionChain,
-} from "pokenode-ts";
+import { MoveClient, EvolutionClient, EvolutionChain } from "pokenode-ts";
 import {
   generationConverter,
   generationList,
@@ -33,6 +29,8 @@ import { BaseStatStyles } from "../styles/displayResultStyles/baseStatStyle";
 import { baseStatBarChart } from "../components/baseStateChart";
 import { AbilitiesStyle } from "../styles/displayResultStyles/abilitiesStyle";
 import { LearnMethodStyle } from "../styles/displayResultStyles/learnMethodstyle";
+import MoveInfoDisplay from "./moveInfoDisplay";
+
 
 interface DisplayResultsProps {
   pokeData: PokemonData;
@@ -69,6 +67,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
   const [evolutionChain, setEvolutionChain] = useState<EvolutionChain | null>(
     null
   );
+  const [moveDisplayStates, setMoveDisplayStates] = useState(new Map());
 
   const moveList = useMemo(() => {
     if (sortedData.pokeMoves && sortedData.pokeMoves[gameTitle]) {
@@ -84,11 +83,10 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
     const keys = Object.keys(sortedData.pokeMoves);
     const newDefaultGameTitle = keys.length > 0 ? keys[keys.length - 1] : "";
     setDefaultGameTitle(newDefaultGameTitle);
-  
-    setGameTitle(newDefaultGameTitle);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pokeData]);
 
+    setGameTitle(newDefaultGameTitle);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pokeData]);
 
   const customLearnMethodOrder = [
     "level-up",
@@ -117,7 +115,6 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
   const handleLearnMethod = (method: string) => {
     setLearnMethod(method);
   };
-  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -269,8 +266,12 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
     }
   };
 
-  
-  
+  const toggleMoveInfoDisplay = (moveName: string) => {
+    const newDisplayStates = new Map(moveDisplayStates);
+    newDisplayStates.set(moveName, !newDisplayStates.get(moveName));
+    setMoveDisplayStates(newDisplayStates);
+  };
+
   return (
     <div className="displayDetails">
       <div className="displayResult">
@@ -547,14 +548,23 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                 {learnMethod === "machine"
                   ? tmHM.map((move, index) => (
                       <div key={index} className="pokeMove">
-                        <div className="moveName">
+                        <div
+                          className="moveName"
+                          onClick={() => toggleMoveInfoDisplay(move)}
+                        >
                           {otherFormatString(move)}{" "}
+                          {moveDisplayStates.get(move) && (
+                            <MoveInfoDisplay moveString={move} isMachine={true} />
+                          )}
                         </div>
                       </div>
                     ))
                   : moveList.map((move, index) => (
                       <div key={index} className="pokeMove">
-                        <div className="moveName">
+                        <div
+                          className="moveName"
+                          onClick={() => toggleMoveInfoDisplay(move.name)}
+                        >
                           {move.level &&
                             `Level ${
                               move.level === "0" || move.level === "1"
@@ -562,6 +572,9 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                                 : move.level
                             } `}
                           {formatString(move.name)}{" "}
+                          {moveDisplayStates.get(move.name) && (
+                            <MoveInfoDisplay moveString={move.name} isMachine={false} />
+                          )}
                         </div>
                       </div>
                     ))}

@@ -15,6 +15,10 @@ export const LearnMethodStyle = styled.div`
       cursor: pointer;
       background-color: rgb(164 234 123);
       opacity: 50%;
+
+      &:hover { 
+        opacity:80%;
+      }
     }
 
     .selected {
@@ -32,5 +36,6 @@ export const LearnMethodStyle = styled.div`
   .pokeMove {
     border-top: 1px solid black;
     padding: 5px;
+    cursor: pointer;
   }
 `;

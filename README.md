@@ -11,6 +11,13 @@ Favicon - https://icons8.com/
 
 Pokenode-ts - https://pokenode-ts.vercel.app/
 
+unofficial smogon api - https://github.com/pkmn/smogon
+
+react chart js - https://react-chartjs-2.js.org/
+
+chart js - https://www.chartjs.org/
+
+
 
 
 sprite credits
