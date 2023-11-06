@@ -8,12 +8,17 @@ const Global = createGlobalStyle`
     flex-direction: column;
     background-color: rgb(164 234 123);
     height: 100%;
-    align-items: center;
   }
 
   a {
     text-decoration: none;
     color: inherit;
+  }
+
+  @media only screen and (min-device-width: 769px) {
+    body {
+      align-items: center;
+    }
   }
 `;
 
