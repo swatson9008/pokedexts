@@ -336,7 +336,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
               </div>
             </TopInfoStyle>
           <TopAreaStyle>
-            <AbilitiesStyle>
+            <AbilitiesStyle abilitiesExist={generationList.generation1.includes(gameTitle) || generationList.generation2.includes(gameTitle) ? false : true}>
               {generationList.generation1.includes(gameTitle) ||
               generationList.generation2.includes(gameTitle) ? null : (
                 <div className="pokeAbilities">

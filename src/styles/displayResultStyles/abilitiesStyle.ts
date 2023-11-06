@@ -1,7 +1,11 @@
 import styled from "styled-components";
 
-export const AbilitiesStyle = styled.div`
-  display: flex;
+interface DoAbilitiesExist {
+  abilitiesExist: boolean;
+}
+
+export const AbilitiesStyle = styled.div<DoAbilitiesExist>`
+  display: ${({ abilitiesExist }) => (abilitiesExist ? "flex" : "none")};
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -11,7 +15,6 @@ export const AbilitiesStyle = styled.div`
     padding: 25px;
     border-radius: 25px;
     border: 1px solid #a6799e;
-
 
     > div {
       span {
