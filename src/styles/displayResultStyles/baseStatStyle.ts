@@ -5,7 +5,7 @@ export const BaseStatStyles = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  width: 30vw;
+  width: 35vw;
 
   > div.baseChart {
     display: flex;

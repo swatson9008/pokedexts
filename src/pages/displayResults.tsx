@@ -29,6 +29,7 @@ import { BaseStatStyles } from "../styles/displayResultStyles/baseStatStyle";
 import { baseStatBarChart } from "../components/baseStateChart";
 import { AbilitiesStyle } from "../styles/displayResultStyles/abilitiesStyle";
 import { LearnMethodStyle } from "../styles/displayResultStyles/learnMethodstyle";
+import { TopInfoStyle } from "../styles/displayResultStyles/topInfoBox";
 import MoveInfoDisplay from "./moveInfoDisplay";
 
 
@@ -298,6 +299,42 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
               )
             )}
           </PokeVarieties>
+          <TopInfoStyle>
+              <div className="mainPicture">
+                {pokeSprites.sprite === null ? (
+                  "image not found"
+                ) : (
+                  <img src={pokeSprites.sprite} alt={pokeName} />
+                )}
+              </div>
+              <div className="pokeName">
+                {formatString(sortedData.pokeName)}
+              </div>
+              <div className="pokeTypes">
+                {" "}
+                {pastTypes.length &&
+                (generationList.generation1.includes(gameTitle) ||
+                  generationList.generation2.includes(gameTitle) ||
+                  generationList.generation3.includes(gameTitle) ||
+                  generationList.generation4.includes(gameTitle) ||
+                  generationList.generation5.includes(gameTitle)) &&
+                pastTypes[0].generation.name === "generation-v"
+                  ? pastTypes[0].types.map((type, index) => (
+                      <div key={index}>{formatString(type.type.name)}</div>
+                    ))
+                  : pastTypes.length &&
+                    generationList.generation1.includes(gameTitle) &&
+                    pastTypes[0].generation.name === "generation-i"
+                  ? pastTypes[0].types.map((type, index) => (
+                      <div key={index}>{formatString(type.type.name)}</div>
+                    ))
+                  : pokeTypes.map((type, index) => (
+                      <PokeTypeDisplay key={index} type={type.name}>
+                        {formatString(type.name)}
+                      </PokeTypeDisplay>
+                    ))}
+              </div>
+            </TopInfoStyle>
           <TopAreaStyle>
             <AbilitiesStyle>
               {generationList.generation1.includes(gameTitle) ||
@@ -344,42 +381,6 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                 </div>
               )}
             </AbilitiesStyle>
-            <div className="topInfoBox">
-              <div className="mainPicture">
-                {pokeSprites.sprite === null ? (
-                  "image not found"
-                ) : (
-                  <img src={pokeSprites.sprite} alt={pokeName} />
-                )}
-              </div>
-              <div className="pokeName">
-                {formatString(sortedData.pokeName)}
-              </div>
-              <div className="pokeTypes">
-                {" "}
-                {pastTypes.length &&
-                (generationList.generation1.includes(gameTitle) ||
-                  generationList.generation2.includes(gameTitle) ||
-                  generationList.generation3.includes(gameTitle) ||
-                  generationList.generation4.includes(gameTitle) ||
-                  generationList.generation5.includes(gameTitle)) &&
-                pastTypes[0].generation.name === "generation-v"
-                  ? pastTypes[0].types.map((type, index) => (
-                      <div key={index}>{formatString(type.type.name)}</div>
-                    ))
-                  : pastTypes.length &&
-                    generationList.generation1.includes(gameTitle) &&
-                    pastTypes[0].generation.name === "generation-i"
-                  ? pastTypes[0].types.map((type, index) => (
-                      <div key={index}>{formatString(type.type.name)}</div>
-                    ))
-                  : pokeTypes.map((type, index) => (
-                      <PokeTypeDisplay key={index} type={type.name}>
-                        {formatString(type.name)}
-                      </PokeTypeDisplay>
-                    ))}
-              </div>
-            </div>
             <BaseStatStyles>
               <div className="baseChart">
                 {baseStatBarChart(pokeData.pokeStats)}
