@@ -28,9 +28,13 @@ export default function MoveInfoDisplay({
 
   const effectChance = (moveDescrip: string | undefined) => {
     const regex = /\$effect_chance%/g;
-    return moveDescrip ? moveDescrip.replace(regex, `${moveData?.effect_chance?.toString()}%` || "") : "";
-  }
-  
+    return moveDescrip
+      ? moveDescrip.replace(
+          regex,
+          `${moveData?.effect_chance?.toString()}%` || ""
+        )
+      : "";
+  };
 
   useEffect(() => {
     const fetchMoveData = async () => {
@@ -61,7 +65,12 @@ export default function MoveInfoDisplay({
       )}
       <div>PP: {moveData?.pp}</div>
       <div>Target: {formatString(moveData?.target?.name || "")}</div>
-      <div>{effectChance(moveData?.effect_entries?.[0]?.short_effect)}</div>
+      <div>
+        {moveData?.effect_entries[0]?.short_effect === undefined
+          ? moveData?.flavor_text_entries?.[7]?.flavor_text ??
+            "No description available"
+          : effectChance(moveData?.effect_entries?.[0]?.short_effect)}
+      </div>
     </>
   );
 }
