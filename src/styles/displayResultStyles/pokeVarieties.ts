@@ -20,4 +20,8 @@ export const PokeVarieties = styled.div <PokeVarietyDisplay>`
   @media only screen and (min-device-width: 769px) {
     max-width: 60vw;
   }
+
+  @media only screen and (max-device-width: 768px) and (orientation: portrait) {
+    width: 90vw;
+  }
 `;
