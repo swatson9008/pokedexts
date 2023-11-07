@@ -13,6 +13,10 @@ margin-top: 20px;
     align-items: center;
 }
 
+> div.searchMain > div > input {
+    width: 250px;
+}
+
 
   @media only screen and (min-device-width: 769px) {
     > div.searchMain > div {

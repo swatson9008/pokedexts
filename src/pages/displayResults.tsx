@@ -33,7 +33,6 @@ import { TopInfoStyle } from "../styles/displayResultStyles/topInfoBox";
 import MoveInfoDisplay from "./moveInfoDisplay";
 import { PokeEvoStyle } from "../styles/displayResultStyles/pokeEvoStyle";
 
-
 interface DisplayResultsProps {
   pokeData: PokemonData;
 }
@@ -301,43 +300,48 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
             )}
           </PokeVarieties>
           <TopInfoStyle>
-              <div className="mainPicture">
-                {pokeSprites.sprite === null ? (
-                  "image not found"
-                ) : (
-                  <img src={pokeSprites.sprite} alt={pokeName} />
-                )}
-              </div>
-              <div className="pokeName">
-                {formatString(sortedData.pokeName)}
-              </div>
-              <div className="pokeTypes">
-                {" "}
-                {pastTypes.length &&
-                (generationList.generation1.includes(gameTitle) ||
-                  generationList.generation2.includes(gameTitle) ||
-                  generationList.generation3.includes(gameTitle) ||
-                  generationList.generation4.includes(gameTitle) ||
-                  generationList.generation5.includes(gameTitle)) &&
-                pastTypes[0].generation.name === "generation-v"
-                  ? pastTypes[0].types.map((type, index) => (
-                      <div key={index}>{formatString(type.type.name)}</div>
-                    ))
-                  : pastTypes.length &&
-                    generationList.generation1.includes(gameTitle) &&
-                    pastTypes[0].generation.name === "generation-i"
-                  ? pastTypes[0].types.map((type, index) => (
-                      <div key={index}>{formatString(type.type.name)}</div>
-                    ))
-                  : pokeTypes.map((type, index) => (
-                      <PokeTypeDisplay key={index} type={type.name}>
-                        {formatString(type.name)}
-                      </PokeTypeDisplay>
-                    ))}
-              </div>
-            </TopInfoStyle>
+            <div className="mainPicture">
+              {pokeSprites.sprite === null ? (
+                "image not found"
+              ) : (
+                <img src={pokeSprites.sprite} alt={pokeName} />
+              )}
+            </div>
+            <div className="pokeName">{formatString(sortedData.pokeName)}</div>
+            <div className="pokeTypes">
+              {" "}
+              {pastTypes.length &&
+              (generationList.generation1.includes(gameTitle) ||
+                generationList.generation2.includes(gameTitle) ||
+                generationList.generation3.includes(gameTitle) ||
+                generationList.generation4.includes(gameTitle) ||
+                generationList.generation5.includes(gameTitle)) &&
+              pastTypes[0].generation.name === "generation-v"
+                ? pastTypes[0].types.map((type, index) => (
+                    <div key={index}>{formatString(type.type.name)}</div>
+                  ))
+                : pastTypes.length &&
+                  generationList.generation1.includes(gameTitle) &&
+                  pastTypes[0].generation.name === "generation-i"
+                ? pastTypes[0].types.map((type, index) => (
+                    <div key={index}>{formatString(type.type.name)}</div>
+                  ))
+                : pokeTypes.map((type, index) => (
+                    <PokeTypeDisplay key={index} type={type.name}>
+                      {formatString(type.name)}
+                    </PokeTypeDisplay>
+                  ))}
+            </div>
+          </TopInfoStyle>
           <TopAreaStyle>
-            <AbilitiesStyle abilitiesExist={generationList.generation1.includes(gameTitle) || generationList.generation2.includes(gameTitle) ? false : true}>
+            <AbilitiesStyle
+              abilitiesExist={
+                generationList.generation1.includes(gameTitle) ||
+                generationList.generation2.includes(gameTitle)
+                  ? false
+                  : true
+              }
+            >
               {generationList.generation1.includes(gameTitle) ||
               generationList.generation2.includes(gameTitle) ? null : (
                 <div className="pokeAbilities">
@@ -401,7 +405,13 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
               Recommended Smogon Movesets
             </a>
           </div>
-          <PokeEvoStyle>
+          <PokeEvoStyle
+            stageNumber={
+              evolutionChain?.chain.evolves_to.length === 0
+                ? 1
+                : evolutionChain?.chain.evolves_to[0].evolves_to.length === 0 ? 2 : 3
+            }
+          >
             {evolutionChain?.chain.evolves_to.length === 0 ? (
               pokeSprites.sprite === null ? (
                 <>"Image not found" This Pokemon has no evolution line</>
@@ -436,9 +446,11 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                       alt=""
                     />
                   ) : null}
-                  {evolutionChain?.chain.species.name !== undefined
-                    ? formatString(evolutionChain?.chain.species.name)
-                    : ""}
+                  <div>
+                    {evolutionChain?.chain.species.name !== undefined
+                      ? formatString(evolutionChain?.chain.species.name)
+                      : ""}
+                  </div>
                 </div>
                 <div className={"firstStageEvo"}>
                   {evolutionChain?.chain.evolves_to.map((evolution, index) => (
@@ -446,17 +458,20 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                       key={index}
                       onClick={() => handleMonChange(evolution.species.name)}
                     >
-                      <img
-                        src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${getIDNo(
-                          evolution.species.url
-                        )}.png`}
-                        alt={evolution.species.name}
-                      />
-                      {evolution.species.name !== undefined
-                        ? formatString(evolution.species.name)
-                        : ""}
+                      <div className="monName">
+                        <img
+                          src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${getIDNo(
+                            evolution.species.url
+                          )}.png`}
+                          alt={evolution.species.name}
+                        />
+                        {evolution.species.name !== undefined
+                          ? formatString(evolution.species.name)
+                          : ""}
+                      </div>
 
                       <div
+                        className="evoMethod"
                         key={
                           evolutionChain.chain.evolves_to[index].species.name
                         }
@@ -489,16 +504,18 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                               handleMonChange(evolution.species.name)
                             }
                           >
-                            <img
-                              src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${getIDNo(
-                                evolution.species.url
-                              )}.png`}
-                              alt={evolution.species.name}
-                            />
-                            {evolution.species.name !== undefined
-                              ? formatString(evolution.species.name)
-                              : ""}
-                            <div>
+                            <div className="monName">
+                              <img
+                                src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${getIDNo(
+                                  evolution.species.url
+                                )}.png`}
+                                alt={evolution.species.name}
+                              />
+                              {evolution.species.name !== undefined
+                                ? formatString(evolution.species.name)
+                                : ""}
+                            </div>
+                            <div className="evoMethod">
                               {evolutionChain?.chain.evolves_to[0].evolution_details.map(
                                 (_method, methodIndex) => (
                                   <div>
@@ -556,7 +573,10 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                         >
                           {otherFormatString(move)}{" "}
                           {moveDisplayStates.get(move) && (
-                            <MoveInfoDisplay moveString={move} isMachine={true} />
+                            <MoveInfoDisplay
+                              moveString={move}
+                              isMachine={true}
+                            />
                           )}
                         </div>
                       </div>
@@ -575,7 +595,10 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                             } `}
                           {formatString(move.name)}{" "}
                           {moveDisplayStates.get(move.name) && (
-                            <MoveInfoDisplay moveString={move.name} isMachine={false} />
+                            <MoveInfoDisplay
+                              moveString={move.name}
+                              isMachine={false}
+                            />
                           )}
                         </div>
                       </div>
