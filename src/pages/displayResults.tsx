@@ -409,7 +409,9 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
             stageNumber={
               evolutionChain?.chain.evolves_to.length === 0
                 ? 1
-                : evolutionChain?.chain.evolves_to[0].evolves_to.length === 0 ? 2 : 3
+                : evolutionChain?.chain.evolves_to[0].evolves_to.length === 0
+                ? 2
+                : 3
             }
           >
             {evolutionChain?.chain.evolves_to.length === 0 ? (
@@ -452,6 +454,25 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                       : ""}
                   </div>
                 </div>
+                <div>
+                  {evolutionChain?.chain.evolves_to.map((evolution, index) => (
+                    <div className="evoMethod" key={evolution.species.name}>
+                      {evolution.evolution_details.map(
+                        (_method, methodIndex) => (
+                          <div key={methodIndex}>
+                            {formatEvos(
+                              evolutionChain,
+                              "first",
+                              index,
+                              methodIndex
+                            )}
+                          </div>
+                        )
+                      )}
+                    </div>
+                  ))}
+                </div>
+
                 <div className={"firstStageEvo"}>
                   {evolutionChain?.chain.evolves_to.map((evolution, index) => (
                     <div
@@ -469,28 +490,30 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                           ? formatString(evolution.species.name)
                           : ""}
                       </div>
-
-                      <div
-                        className="evoMethod"
-                        key={
-                          evolutionChain.chain.evolves_to[index].species.name
-                        }
-                      >
-                        {evolutionChain?.chain.evolves_to[
-                          index
-                        ].evolution_details.map((_method, methodIndex) => (
-                          <div>
-                            {formatEvos(
-                              evolutionChain,
-                              "first",
-                              index,
-                              methodIndex
-                            )}
-                          </div>
-                        ))}
-                      </div>
                     </div>
                   ))}
+                </div>
+                <div>
+                  {evolutionChain?.chain.evolves_to[0].evolves_to.length === 0
+                    ? null
+                    : evolutionChain?.chain.evolves_to[0].evolves_to.map(
+                        (evolution, index) => (
+                          <div className="evoMethod" key={index}>
+                            {evolution.evolution_details.map(
+                              (_method, methodIndex) => (
+                                <div key={methodIndex}>
+                                  {formatEvos(
+                                    evolutionChain,
+                                    "second",
+                                    index,
+                                    methodIndex
+                                  )}
+                                </div>
+                              )
+                            )}
+                          </div>
+                        )
+                      )}
                 </div>
 
                 <div className="secondStageEvo">
@@ -514,20 +537,6 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                               {evolution.species.name !== undefined
                                 ? formatString(evolution.species.name)
                                 : ""}
-                            </div>
-                            <div className="evoMethod">
-                              {evolutionChain?.chain.evolves_to[0].evolution_details.map(
-                                (_method, methodIndex) => (
-                                  <div>
-                                    {formatEvos(
-                                      evolutionChain,
-                                      "second",
-                                      index,
-                                      methodIndex
-                                    )}
-                                  </div>
-                                )
-                              )}
                             </div>
                           </div>
                         )
