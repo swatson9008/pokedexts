@@ -31,6 +31,7 @@ import { AbilitiesStyle } from "../styles/displayResultStyles/abilitiesStyle";
 import { LearnMethodStyle } from "../styles/displayResultStyles/learnMethodstyle";
 import { TopInfoStyle } from "../styles/displayResultStyles/topInfoBox";
 import MoveInfoDisplay from "./moveInfoDisplay";
+import { PokeEvoStyle } from "../styles/displayResultStyles/pokeEvoStyle";
 
 
 interface DisplayResultsProps {
@@ -400,7 +401,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
               Recommended Smogon Movesets
             </a>
           </div>
-          <div className="pokeEvoInfo">
+          <PokeEvoStyle>
             {evolutionChain?.chain.evolves_to.length === 0 ? (
               pokeSprites.sprite === null ? (
                 <>"Image not found" This Pokemon has no evolution line</>
@@ -517,7 +518,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                 </div>
               </div>
             )}
-          </div>
+          </PokeEvoStyle>
 
           <div className="pokeMoves">
             <PokeVarieties hasForms={true}>
