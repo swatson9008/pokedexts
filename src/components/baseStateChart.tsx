@@ -41,8 +41,8 @@ export const options: any = {
   },
   layout: {
     padding: {
-      left: 20, 
-      right: 20, 
+      left: 0, 
+      right: 60, 
     },
   },
   title: {

@@ -20,8 +20,10 @@ export const BaseStatStyles = styled.div`
   }
 
   @media only screen and (max-device-width: 768px) and (orientation: portrait) {
-    width: 95vw;
+    width: 85vw;
+
   }
+
 
   @media only screen and (min-device-width: 769px) {
     width: 35vw;
