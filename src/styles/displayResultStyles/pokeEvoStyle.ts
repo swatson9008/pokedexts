@@ -30,21 +30,14 @@ export const PokeEvoStyle = styled.div<numberOfStages>`
       width: 80vw;
     }
     .baseEvo {
-      display: grid;
-      width: 80%;
-      justify-content: end;
-      justify-items: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
     .firstStageEvo > div,
     .secondStageEvo > div {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      grid-template-rows: 1fr 1fr;
-      grid-auto-flow: row dense;
-      align-items: center;
-      justify-items: center;
-      padding: 10px;
+      display: flex;
     }
 
     .evoMethod {
