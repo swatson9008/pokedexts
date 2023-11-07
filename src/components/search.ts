@@ -6,6 +6,10 @@ export default async function Search(searchPoke: string) {
   if (searchPoke === "shaymin") {
     searchPoke = "shaymin-land";
   }
+
+  if (searchPoke === "meowstic") {
+    searchPoke = "meowstic-male"
+  }
   try {
     const api = new PokemonClient();
     const data = await api.getPokemonByName(searchPoke);

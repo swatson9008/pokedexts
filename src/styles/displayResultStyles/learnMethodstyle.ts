@@ -38,4 +38,5 @@ export const LearnMethodStyle = styled.div`
     padding: 5px;
     cursor: pointer;
   }
+
 `;

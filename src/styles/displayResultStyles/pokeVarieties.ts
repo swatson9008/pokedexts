@@ -6,7 +6,6 @@ interface PokeVarietyDisplay {
 
 export const PokeVarieties = styled.div <PokeVarietyDisplay>`
   display: ${props => (props.hasForms ? "flex" : "none")};
-  max-width: 60vw;
   justify-items: center;
   align-items: center;
   gap: 15px;
@@ -16,4 +15,9 @@ export const PokeVarieties = styled.div <PokeVarietyDisplay>`
   border: 1px solid #a6799e;
   padding: 10px;
   border-radius: 10px;
+
+
+  @media only screen and (min-device-width: 769px) {
+    max-width: 60vw;
+  }
 `;
