@@ -33,6 +33,8 @@ import { TopInfoStyle } from "../styles/displayResultStyles/topInfoBox";
 import MoveInfoDisplay from "./moveInfoDisplay";
 import { PokeEvoStyle } from "../styles/displayResultStyles/pokeEvoStyle";
 
+import { EvolutionDisplay } from "../styles/displayResultStyles/evolutionDisplay";
+
 interface DisplayResultsProps {
   pokeData: PokemonData;
 }
@@ -311,22 +313,22 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
             <div className="pokeTypes">
               {" "}
               {pastTypes.length &&
-              (generationList.generation1.includes(gameTitle) ||
-                generationList.generation2.includes(gameTitle) ||
-                generationList.generation3.includes(gameTitle) ||
-                generationList.generation4.includes(gameTitle) ||
-                generationList.generation5.includes(gameTitle)) &&
-              pastTypes[0].generation.name === "generation-v"
+                (generationList.generation1.includes(gameTitle) ||
+                  generationList.generation2.includes(gameTitle) ||
+                  generationList.generation3.includes(gameTitle) ||
+                  generationList.generation4.includes(gameTitle) ||
+                  generationList.generation5.includes(gameTitle)) &&
+                pastTypes[0].generation.name === "generation-v"
                 ? pastTypes[0].types.map((type, index) => (
-                    <div key={index}>{formatString(type.type.name)}</div>
-                  ))
+                  <div key={index}>{formatString(type.type.name)}</div>
+                ))
                 : pastTypes.length &&
                   generationList.generation1.includes(gameTitle) &&
                   pastTypes[0].generation.name === "generation-i"
-                ? pastTypes[0].types.map((type, index) => (
+                  ? pastTypes[0].types.map((type, index) => (
                     <div key={index}>{formatString(type.type.name)}</div>
                   ))
-                : pokeTypes.map((type, index) => (
+                  : pokeTypes.map((type, index) => (
                     <PokeTypeDisplay key={index} type={type.name}>
                       {formatString(type.name)}
                     </PokeTypeDisplay>
@@ -337,21 +339,21 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
             <AbilitiesStyle
               abilitiesExist={
                 generationList.generation1.includes(gameTitle) ||
-                generationList.generation2.includes(gameTitle)
+                  generationList.generation2.includes(gameTitle)
                   ? false
                   : true
               }
             >
               {generationList.generation1.includes(gameTitle) ||
-              generationList.generation2.includes(gameTitle) ? null : (
+                generationList.generation2.includes(gameTitle) ? null : (
                 <div className="pokeAbilities">
                   {pokeAbilities.map((abilities, index) => (
                     <div key={index}>
                       {abilities.is_hidden &&
-                      (generationList.generation3.includes(gameTitle) ||
-                        generationList.generation4.includes(
-                          gameTitle
-                        )) ? null : (
+                        (generationList.generation3.includes(gameTitle) ||
+                          generationList.generation4.includes(
+                            gameTitle
+                          )) ? null : (
                         <span>
                           {abilities.is_hidden ? (
                             <span className="abilityClass">
@@ -365,15 +367,15 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                           <span>{formatString(abilities.name)}</span> -{" "}
                           {abilityDataArray[index]
                             ? abilityDataArray[index].generation.name ===
-                                "generation-viii" ||
+                              "generation-viii" ||
                               abilityDataArray[index].generation.name ===
-                                "generation-ix"
+                              "generation-ix"
                               ? gen89Abilities[abilities.name]
                               : abilityDataArray[index].generation.name ===
                                 "generation-vii"
-                              ? abilityDataArray[index].effect_entries[0]
+                                ? abilityDataArray[index].effect_entries[0]
                                   .short_effect
-                              : (
+                                : (
                                   abilityDataArray[index].effect_entries.find(
                                     (entry) => entry.language.name === "en"
                                   ) || {}
@@ -410,8 +412,8 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
               evolutionChain?.chain.evolves_to.length === 0
                 ? 1
                 : evolutionChain?.chain.evolves_to[0].evolves_to.length === 0
-                ? 2
-                : 3
+                  ? 2
+                  : 3
             }
           >
             {evolutionChain?.chain.evolves_to.length === 0 ? (
@@ -456,24 +458,32 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                 </div>
                 <div className="evoArrows">
                   {evolutionChain?.chain.evolves_to.map((evolution, index) => (
-                    <div className="evoMethod" key={evolution.species.name}>
-                      {evolution.evolution_details.map(
-                        (_method, methodIndex) => (
-                          <div key={methodIndex}>
-                            {formatEvos(
-                              evolutionChain,
-                              "first",
-                              index,
-                              methodIndex
-                            )}
-                          </div>
-                        )
-                      )}
-                    </div>
+                    <EvolutionDisplay key={evolution.species.name}>
+                      <div className="evoMethod">
+                        {evolution.evolution_details.map(
+                          (_method, methodIndex) => (
+                            <div key={methodIndex}>
+                              {formatEvos(
+                                evolutionChain,
+                                "first",
+                                index,
+                                methodIndex
+                              )}
+                            </div>
+                          )
+                        )}
+                      </div>
+                      <img
+                        src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${getIDNo(
+                          evolution.species.url
+                        )}.png`}
+                        alt={evolution.species.name}
+                      />
+                    </EvolutionDisplay>
                   ))}
                 </div>
 
-                <div className={"firstStageEvo"}>
+                {/* <div className={"firstStageEvo"}>
                   {evolutionChain?.chain.evolves_to.map((evolution, index) => (
                     <div
                       key={index}
@@ -492,55 +502,55 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                       </div>
                     </div>
                   ))}
-                </div>
+                </div> */}
                 <div className="evoArrows">
                   {evolutionChain?.chain.evolves_to[0].evolves_to.length === 0
                     ? null
                     : evolutionChain?.chain.evolves_to[0].evolves_to.map(
-                        (evolution, index) => (
-                          <div className="evoMethod" key={index}>
-                            {evolution.evolution_details.map(
-                              (_method, methodIndex) => (
-                                <div key={methodIndex}>
-                                  {formatEvos(
-                                    evolutionChain,
-                                    "second",
-                                    index,
-                                    methodIndex
-                                  )}
-                                </div>
-                              )
-                            )}
-                          </div>
-                        )
-                      )}
+                      (evolution, index) => (
+                        <div className="evoMethod" key={index}>
+                          {evolution.evolution_details.map(
+                            (_method, methodIndex) => (
+                              <div key={methodIndex}>
+                                {formatEvos(
+                                  evolutionChain,
+                                  "second",
+                                  index,
+                                  methodIndex
+                                )}
+                              </div>
+                            )
+                          )}
+                        </div>
+                      )
+                    )}
                 </div>
 
                 <div className="secondStageEvo">
                   {evolutionChain?.chain.evolves_to[0].evolves_to.length === 0
                     ? null
                     : evolutionChain?.chain.evolves_to[0].evolves_to.map(
-                        (evolution, index) => (
-                          <div
-                            key={index}
-                            onClick={() =>
-                              handleMonChange(evolution.species.name)
-                            }
-                          >
-                            <div className="monName">
-                              <img
-                                src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${getIDNo(
-                                  evolution.species.url
-                                )}.png`}
-                                alt={evolution.species.name}
-                              />
-                              {evolution.species.name !== undefined
-                                ? formatString(evolution.species.name)
-                                : ""}
-                            </div>
+                      (evolution, index) => (
+                        <div
+                          key={index}
+                          onClick={() =>
+                            handleMonChange(evolution.species.name)
+                          }
+                        >
+                          <div className="monName">
+                            <img
+                              src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${getIDNo(
+                                evolution.species.url
+                              )}.png`}
+                              alt={evolution.species.name}
+                            />
+                            {evolution.species.name !== undefined
+                              ? formatString(evolution.species.name)
+                              : ""}
                           </div>
-                        )
-                      )}
+                        </div>
+                      )
+                    )}
                 </div>
               </div>
             )}
@@ -575,43 +585,42 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
               <div className="moveList">
                 {learnMethod === "machine"
                   ? tmHM.map((move, index) => (
-                      <div key={index} className="pokeMove">
-                        <div
-                          className="moveName"
-                          onClick={() => toggleMoveInfoDisplay(move)}
-                        >
-                          {otherFormatString(move)}{" "}
-                          {moveDisplayStates.get(move) && (
-                            <MoveInfoDisplay
-                              moveString={move}
-                              isMachine={true}
-                            />
-                          )}
-                        </div>
+                    <div key={index} className="pokeMove">
+                      <div
+                        className="moveName"
+                        onClick={() => toggleMoveInfoDisplay(move)}
+                      >
+                        {otherFormatString(move)}{" "}
+                        {moveDisplayStates.get(move) && (
+                          <MoveInfoDisplay
+                            moveString={move}
+                            isMachine={true}
+                          />
+                        )}
                       </div>
-                    ))
+                    </div>
+                  ))
                   : moveList.map((move, index) => (
-                      <div key={index} className="pokeMove">
-                        <div
-                          className="moveName"
-                          onClick={() => toggleMoveInfoDisplay(move.name)}
-                        >
-                          {move.level &&
-                            `Level ${
-                              move.level === "0" || move.level === "1"
-                                ? (move.level = "-")
-                                : move.level
-                            } `}
-                          {formatString(move.name)}{" "}
-                          {moveDisplayStates.get(move.name) && (
-                            <MoveInfoDisplay
-                              moveString={move.name}
-                              isMachine={false}
-                            />
-                          )}
-                        </div>
+                    <div key={index} className="pokeMove">
+                      <div
+                        className="moveName"
+                        onClick={() => toggleMoveInfoDisplay(move.name)}
+                      >
+                        {move.level &&
+                          `Level ${move.level === "0" || move.level === "1"
+                            ? (move.level = "-")
+                            : move.level
+                          } `}
+                        {formatString(move.name)}{" "}
+                        {moveDisplayStates.get(move.name) && (
+                          <MoveInfoDisplay
+                            moveString={move.name}
+                            isMachine={false}
+                          />
+                        )}
                       </div>
-                    ))}
+                    </div>
+                  ))}
               </div>
             </LearnMethodStyle>
           </div>
