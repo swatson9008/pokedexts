@@ -2,6 +2,7 @@ import { MoveClient, Move } from "pokenode-ts";
 import { useState, useEffect } from "react";
 import { formatString } from "../components/formatString";
 import { MoveInfoStyle } from "../styles/displayResultStyles/moveInfoStyling";
+import { PokeTypeDisplay } from "../styles/displayResultStyles/pokemonTypeDisplay";
 
 interface MoveInfoDisplayProps {
   moveString: string;
@@ -57,7 +58,7 @@ export default function MoveInfoDisplay({
 
   return (
     <MoveInfoStyle>
-      {moveData && <div>{formatString(moveData.type.name|| "")}</div>}
+      {moveData && <div><PokeTypeDisplay type={moveData.type.name}>{formatString(moveData.type.name)}</PokeTypeDisplay></div>}
       {moveData && <div>{formatString(moveData.damage_class?.name || "")}</div>}
       {moveData?.power === null ? "" : <div>Power: {moveData?.power}</div>}
       {moveData?.accuracy === null ? (
