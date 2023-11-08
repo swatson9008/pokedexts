@@ -488,7 +488,7 @@ export default function formatEvos(
   if (
     ///hardcoded gen 9 evolution
     triggerMethod === "other" &&
-    (baseSpecies === "rellor" || baseSpecies === "bramblin")
+    (baseSpecies === "rellor" || baseSpecies === "bramblin" || baseSpecies === "pawmo")
   ) {
     return `${formatString(baseSpecies)} evolves into ${formatString(
       secondSpecies
@@ -534,5 +534,9 @@ export default function formatEvos(
     return `${formatString(baseSpecies)} evolves into ${formatString(
       secondSpecies
     )} from leveling up after obtaining 999 Gimmighoul Coins.`;
-  } else return "";
+  } 
+
+else return "";
 }
+
+

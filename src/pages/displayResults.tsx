@@ -473,12 +473,17 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                           )
                         )}
                       </div>
+                      <div className="monInfo">
                       <img
                         src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${getIDNo(
                           evolution.species.url
                         )}.png`}
                         alt={evolution.species.name} onClick={() => handleMonChange(evolution.species.name)}
                       />
+                      {evolution.species.name !== undefined
+                              ? formatString(evolution.species.name)
+                              : ""}
+                      </div>
                     </EvolutionDisplay>
                   ))}
                 </div>
@@ -523,12 +528,17 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                             )
                           )}
                         </div>
+                        <div className="monInfo">
                         <img
                         src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${getIDNo(
                           evolution.species.url
                         )}.png`}
                         alt={evolution.species.name} onClick={() => handleMonChange(evolution.species.name)}
                       />
+                      {evolution.species.name !== undefined
+                              ? formatString(evolution.species.name)
+                              : ""}
+                      </div>
                       </EvolutionDisplay>
                       )
                     )}

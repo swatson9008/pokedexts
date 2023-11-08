@@ -43,6 +43,7 @@ export const PokeEvoStyle = styled.div<numberOfStages>`
       flex-direction: column;
     }
 
+
     .firstStageEvo > div,
     .secondStageEvo > div {
       display: flex;
@@ -63,6 +64,7 @@ export const PokeEvoStyle = styled.div<numberOfStages>`
       background: #cfd4d5;
       border: 4px solid #cbf5cd;
       padding: 20px;
+      max-width: 18vw;
 
       &::before,
       &::after {
