@@ -454,7 +454,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                       : ""}
                   </div>
                 </div>
-                <div>
+                <div className="evoArrows">
                   {evolutionChain?.chain.evolves_to.map((evolution, index) => (
                     <div className="evoMethod" key={evolution.species.name}>
                       {evolution.evolution_details.map(
@@ -493,7 +493,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                     </div>
                   ))}
                 </div>
-                <div>
+                <div className="evoArrows">
                   {evolutionChain?.chain.evolves_to[0].evolves_to.length === 0
                     ? null
                     : evolutionChain?.chain.evolves_to[0].evolves_to.map(

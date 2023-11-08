@@ -35,6 +35,12 @@ export const PokeEvoStyle = styled.div<numberOfStages>`
       align-items: center;
     }
 
+    .firstStageEvo,
+    .secondStageEvo {
+      display: flex;
+      flex-direction: column;
+    }
+
     .firstStageEvo > div,
     .secondStageEvo > div {
       display: flex;
@@ -73,6 +79,12 @@ export const PokeEvoStyle = styled.div<numberOfStages>`
         border-width: 36px;
         margin-top: -36px;
       }
+    }
+
+    .evoArrows {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
     }
 
     .monName {

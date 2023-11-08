@@ -116,14 +116,11 @@ export default async function Search(searchPoke: string) {
             }
           );
     
-          // Iterate over the formattedEggMoves and update searchedPokemonData.pokeMoves
           formattedEggMoves.forEach(({ versionGroup, egg }) => {
             if (searchedPokemonData.pokeMoves[versionGroup]) {
-              // Create the "egg" group if it doesn't exist
               if (!searchedPokemonData.pokeMoves[versionGroup]["egg"]) {
                 searchedPokemonData.pokeMoves[versionGroup]["egg"] = [];
               }
-              // Populate the "egg" group with moves and names
               searchedPokemonData.pokeMoves[versionGroup]["egg"] = egg;
             }
           });
