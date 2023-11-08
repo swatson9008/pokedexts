@@ -1,6 +1,7 @@
 import { MoveClient, Move } from "pokenode-ts";
 import { useState, useEffect } from "react";
 import { formatString } from "../components/formatString";
+import { MoveInfoStyle } from "../styles/displayResultStyles/moveInfoStyling";
 
 interface MoveInfoDisplayProps {
   moveString: string;
@@ -55,7 +56,7 @@ export default function MoveInfoDisplay({
   console.log(moveData);
 
   return (
-    <>
+    <MoveInfoStyle>
       {moveData && <div>{formatString(moveData.type.name|| "")}</div>}
       {moveData && <div>{formatString(moveData.damage_class?.name || "")}</div>}
       {moveData?.power === null ? "" : <div>Power: {moveData?.power}</div>}
@@ -72,6 +73,6 @@ export default function MoveInfoDisplay({
             "No description available"
           : effectChance(moveData?.effect_entries?.[0]?.short_effect)}
       </div>
-    </>
+    </MoveInfoStyle>
   );
 }
