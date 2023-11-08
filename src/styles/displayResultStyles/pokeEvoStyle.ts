@@ -20,9 +20,9 @@ export const PokeEvoStyle = styled.div<numberOfStages>`
         if (stageNumber === 1) {
           return "1fr";
         } else if (stageNumber === 2) {
-          return "1fr 1fr 1fr";
+          return "1fr 1fr";
         } else if (stageNumber === 3) {
-          return "1fr 1fr 1fr 1fr 1fr";
+          return "1fr 1fr 1fr 1fr";
         }
       }};
       align-items: center;

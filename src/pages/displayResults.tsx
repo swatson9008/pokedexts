@@ -477,7 +477,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                         src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${getIDNo(
                           evolution.species.url
                         )}.png`}
-                        alt={evolution.species.name}
+                        alt={evolution.species.name} onClick={() => handleMonChange(evolution.species.name)}
                       />
                     </EvolutionDisplay>
                   ))}
@@ -508,6 +508,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                     ? null
                     : evolutionChain?.chain.evolves_to[0].evolves_to.map(
                       (evolution, index) => (
+                        <EvolutionDisplay key={evolution.species.name}>
                         <div className="evoMethod" key={index}>
                           {evolution.evolution_details.map(
                             (_method, methodIndex) => (
@@ -522,33 +523,13 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                             )
                           )}
                         </div>
-                      )
-                    )}
-                </div>
-
-                <div className="secondStageEvo">
-                  {evolutionChain?.chain.evolves_to[0].evolves_to.length === 0
-                    ? null
-                    : evolutionChain?.chain.evolves_to[0].evolves_to.map(
-                      (evolution, index) => (
-                        <div
-                          key={index}
-                          onClick={() =>
-                            handleMonChange(evolution.species.name)
-                          }
-                        >
-                          <div className="monName">
-                            <img
-                              src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${getIDNo(
-                                evolution.species.url
-                              )}.png`}
-                              alt={evolution.species.name}
-                            />
-                            {evolution.species.name !== undefined
-                              ? formatString(evolution.species.name)
-                              : ""}
-                          </div>
-                        </div>
+                        <img
+                        src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${getIDNo(
+                          evolution.species.url
+                        )}.png`}
+                        alt={evolution.species.name} onClick={() => handleMonChange(evolution.species.name)}
+                      />
+                      </EvolutionDisplay>
                       )
                     )}
                 </div>
