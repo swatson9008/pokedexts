@@ -9,6 +9,8 @@ export const PokeEvoStyle = styled.div<numberOfStages>`
     image-rendering: pixelated;
   }
   margin-top: 20px;
+  display: flex;
+  justify-content: space-evenly;
 
   .pokeEvoChain {
     display: grid;
@@ -20,14 +22,14 @@ export const PokeEvoStyle = styled.div<numberOfStages>`
         if (stageNumber === 1) {
           return "1fr";
         } else if (stageNumber === 2) {
-          return "1fr 1fr";
+          return "1fr 2fr";
         } else if (stageNumber === 3) {
-          return "1fr 1fr 1fr 1fr";
+          return "1fr 2fr 2fr";
         }
       }};
       align-items: center;
       justify-items: center;
-      width: 80vw;
+      width: 80%;
     }
     .baseEvo {
       display: flex;
@@ -44,6 +46,14 @@ export const PokeEvoStyle = styled.div<numberOfStages>`
     .firstStageEvo > div,
     .secondStageEvo > div {
       display: flex;
+    }
+
+    .firstStageEvo {
+      grid-column: ${({ stageNumber }) => {
+        if (stageNumber === 3) {
+          return "";
+        }
+      }};
     }
 
     .evoMethod {
