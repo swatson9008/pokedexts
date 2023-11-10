@@ -432,11 +432,11 @@ export default function formatEvos(
   if (
     //recoil evolution
     triggerMethod === "recoil-damage" &&
-    baseSpecies === "basculin-white-striped"
+    baseSpecies === "basculin"
   ) {
     return `${formatString(baseSpecies)} evolves to ${formatString(
       secondSpecies
-    )} after losing at least 294HP from recoil damage without fainting`;
+    )} after losing at least 294HP from recoil damage without fainting and is the white stripe variant`;
   }
 
   if (

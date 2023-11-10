@@ -10,6 +10,71 @@ export default async function Search(searchPoke: string) {
   if (searchPoke === "meowstic") {
     searchPoke = "meowstic-male"
   }
+
+  if (searchPoke === "darmanitan") {
+    searchPoke = "darmanitan-standard"
+  }
+
+  if (searchPoke === "deoxys") {
+    searchPoke = "deoxys-normal"
+  }
+
+  if (searchPoke === "wormadam") {
+    searchPoke = "wormadam-plant"
+  }
+
+  if (searchPoke === "giratina") {
+    searchPoke = "giratina-altered"
+  }
+
+  if (searchPoke === "basculin") {
+    searchPoke = "basculin-red-striped"
+  }
+
+  if (searchPoke === "basculegion") {
+    searchPoke = "basculegion-male"
+  }
+
+  if (searchPoke === "tornadus") {
+    searchPoke = "tornadus-incarnate"
+  }
+
+  if (searchPoke === "thundurus") {
+    searchPoke = "thundurus-incarnate"
+  }
+
+  if (searchPoke === "landorus") {
+    searchPoke = "landorus-incarnate"
+  }
+
+  if (searchPoke === "enamorus") {
+    searchPoke = "enamorus-incarnate"
+  }
+
+  if (searchPoke === "keldeo") {
+    searchPoke = "keldeo-ordinary"
+  }
+
+  if (searchPoke === "meloetta") {
+    searchPoke = "meloetta-aria"
+  }
+
+  if (searchPoke === "aegislash") {
+    searchPoke = "aegislash-shield"
+  }
+
+  if (searchPoke === "pumpkaboo") {
+    searchPoke = "pumpkaboo-average"
+  }
+
+  if (searchPoke === "zygarde") {
+    searchPoke = "zygarde-50"
+  }
+
+  if (searchPoke === "oricorio") {
+    searchPoke = "oricorio-baile"
+  }
+
   try {
     const api = new PokemonClient();
     const data = await api.getPokemonByName(searchPoke);
