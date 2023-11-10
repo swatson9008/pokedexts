@@ -1,4 +1,4 @@
-import { useState, ChangeEvent } from "react";
+import { useState, ChangeEvent, KeyboardEvent } from "react";
 import Search from "../components/search";
 import { useNavigate } from "react-router-dom";
 import { usePokemonData } from "./pokemonContext";
@@ -26,7 +26,7 @@ export default function SearchBox() {
       }
     } catch (error) {
       console.error(error);
-      alert("Please enter a proper name for a Pokemon species")
+      alert("Please enter a proper name for a Pokemon species");
     }
   };
 
@@ -43,6 +43,12 @@ export default function SearchBox() {
     }
   };
 
+  const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      handleSearch();
+    }
+  };
+
   return (
     <div className="searchMain">
       <SearchContainer>
@@ -51,6 +57,7 @@ export default function SearchBox() {
           id="searchInput"
           placeholder="Enter a Pokemon"
           onChange={handleInputChange}
+          onKeyDown={handleKeyDown}
         />
         <div>
           <ButtonContainer onClick={handleSearch}>Search</ButtonContainer>
