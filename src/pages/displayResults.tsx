@@ -32,7 +32,7 @@ import { LearnMethodStyle } from "../styles/displayResultStyles/learnMethodstyle
 import { TopInfoStyle } from "../styles/displayResultStyles/topInfoBox";
 import MoveInfoDisplay from "./moveInfoDisplay";
 import { PokeEvoStyle } from "../styles/displayResultStyles/pokeEvoStyle";
-
+import { SingleStageOnly } from "../styles/displayResultStyles/singleStageOnly";
 import { EvolutionDisplay } from "../styles/displayResultStyles/evolutionDisplay";
 
 interface DisplayResultsProps {
@@ -420,7 +420,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
               pokeSprites.sprite === null ? (
                 <>"Image not found" This Pokemon has no evolution line</>
               ) : (
-                <div>
+                <SingleStageOnly>
                   <img
                     src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${getIDNo(
                       evolutionChain.chain.species.url
@@ -431,7 +431,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                     }
                   />
                   This Pokemon has no evolution line
-                </div>
+                </SingleStageOnly>
               )
             ) : (
               <div className="pokeEvoChain">
