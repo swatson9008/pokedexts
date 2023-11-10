@@ -46,7 +46,7 @@ const gen89Abilities: { [key: string]: string } = {
     "hadron-engine": "Turns the ground into Electric Terrain when the Pokémon enters a battle. The futuristic engine within the Pokémon also boosts its Sp. Atk stat on Electric Terrain.",
     "hospitality": "Heals up to 25% of its partner Pokémon's Maximum Hit Points when it enters battle.",
     "lingering-aroma": "Contact with the Pokémon changes the attacker's Ability to Lingering Aroma.",
-    "mind's-eye": "The Pokémon ignores changes to opponents' evasiveness, its accuracy can't be lowered, and it can hit Ghost types with Normal- and Fighting-type moves.",
+    "minds-eye": "The Pokémon ignores changes to opponents' evasiveness, its accuracy can't be lowered, and it can hit Ghost types with Normal- and Fighting-type moves.",
     "mycelium-might": "The Pokémon will always act more slowly when using status moves, but these moves will be unimpeded by the Ability of the target.",
     "opportunist": "If an opponent's stat is boosted, the Pokémon seizes the opportunity to boost the same stat for itself.",
     "orichalcum-pulse": "Turns the sunlight harsh when the Pokémon enters a battle. The ancient pulse thrumming through the Pokémon also boosts its Attack stat in harsh sunlight.",
@@ -66,7 +66,8 @@ const gen89Abilities: { [key: string]: string } = {
     "vessel-of-ruin": "The power of the Pokémon's ruinous vessel lowers the Sp. Atk stats of all Pokémon except itself.",
     "well-baked-body": "The Pokémon takes no damage when hit by Fire-type moves. Instead, its Defense stat is sharply boosted.",
     "wind-power": "The Pokémon becomes charged when it is hit by a wind move, boosting the power of the next Electric-type move the Pokémon uses.",
-    "wind-rider": "Boosts the Pokémon's Attack stat if Tailwind takes effect or if the Pokémon is hit by a wind move. The Pokémon also takes no damage from wind moves."
+    "wind-rider": "Boosts the Pokémon's Attack stat if Tailwind takes effect or if the Pokémon is hit by a wind move. The Pokémon also takes no damage from wind moves.",
+    "zero-to-hero": "The Pokémon transforms into its Hero Form when it switches out."
   };
 
   export { gen89Abilities }
