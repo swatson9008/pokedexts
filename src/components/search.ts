@@ -75,6 +75,42 @@ export default async function Search(searchPoke: string) {
     searchPoke = "oricorio-baile"
   }
 
+  if (searchPoke === "lycanroc") {
+    searchPoke = "lycanroc-midday"
+  }
+
+  if (searchPoke === "wishiwashi") {
+    searchPoke = "wishiwashi-solo"
+  }
+
+  if (searchPoke === "minior") {
+    searchPoke = "minior-red-meteor"
+  }
+
+  if (searchPoke === "mimikyu") {
+    searchPoke = "mimikyu-disguised"
+  }
+
+  if (searchPoke === "toxtricity") {
+    searchPoke = "toxtricity-amped"
+  }
+
+  if (searchPoke === "eiscue") {
+    searchPoke = "eiscue-ice"
+  }
+
+  if (searchPoke === "indeedee") {
+    searchPoke = "indeedee-male"
+  }
+
+  if (searchPoke === "morpeko") {
+    searchPoke = "morpeko-full-belly"
+  }
+
+  if (searchPoke === "urshifu") {
+    searchPoke = "urshifu-single-strike"
+  }
+
   try {
     const api = new PokemonClient();
     const data = await api.getPokemonByName(searchPoke);

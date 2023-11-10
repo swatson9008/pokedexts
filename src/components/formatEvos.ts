@@ -248,7 +248,7 @@ export default function formatEvos(
   }
 
   if (
-    ///time of day + item evolution
+    ///time of day + item held evolution
     triggerMethod === "level-up" &&
     Object.values(
       sliceEvoMethods(evoMethods, { timeOfDay: true, itemHeld: true })
@@ -266,6 +266,29 @@ export default function formatEvos(
         evoShortcut.held_item?.name === undefined
           ? "unknown item "
           : formatString(evoShortcut.held_item?.name)
+      }` || "not known"
+    );
+  }
+
+  if (
+    ///time of day + item used evolution
+    triggerMethod === "use-item" &&
+    Object.values(
+      sliceEvoMethods(evoMethods, { timeOfDay: true, itemUsed: true })
+    ).every((prop) => !prop)
+  ) {
+    return (
+      `${formatString(baseSpecies)} evolves to ${formatString(
+        secondSpecies
+      )} from leveling up during the ${evoShortcut.time_of_day}time 
+       ${
+         evoShortcut.min_level === null
+           ? ""
+           : `starting at level ${evoShortcut.min_level}`
+       } when exposed to ${
+        evoShortcut.item?.name === undefined
+          ? "unknown item "
+          : formatString(evoShortcut.item?.name) ?? "unknown item"
       }` || "not known"
     );
   }
