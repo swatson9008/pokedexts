@@ -16,6 +16,25 @@ export const PokeEvoStyle = styled.div<numberOfStages>`
     display: grid;
   }
 
+  .baseEvo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    @media only screen and (max-device-width: 768px) and (orientation: portrait) {
+      .firstStageEvo, .secondStageEvo {
+    display: grid;
+    gap: 20px;
+    padding: 10px;
+
+  }
+
+  .secondStageEvo > div {
+    flex-direction: row-reverse;
+  }
+  }
+
   @media only screen and (min-device-width: 769px) {
     .pokeEvoChain {
       grid-template-columns: ${({ stageNumber }) => {
