@@ -34,7 +34,6 @@ import MoveInfoDisplay from "./moveInfoDisplay";
 import { PokeEvoStyle } from "../styles/displayResultStyles/pokeEvoStyle";
 import { SingleStageOnly } from "../styles/displayResultStyles/singleStageOnly";
 import { EvolutionDisplay } from "../styles/displayResultStyles/evolutionDisplay";
-import SmogonSets from "./smogonStats";
 
 interface DisplayResultsProps {
   pokeData: PokemonData;
@@ -488,27 +487,6 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                     </EvolutionDisplay>
                   ))}
                 </div>
-
-                {/* <div className={"firstStageEvo"}>
-                  {evolutionChain?.chain.evolves_to.map((evolution, index) => (
-                    <div
-                      key={index}
-                      onClick={() => handleMonChange(evolution.species.name)}
-                    >
-                      <div className="monName">
-                        <img
-                          src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${getIDNo(
-                            evolution.species.url
-                          )}.png`}
-                          alt={evolution.species.name}
-                        />
-                        {evolution.species.name !== undefined
-                          ? formatString(evolution.species.name)
-                          : ""}
-                      </div>
-                    </div>
-                  ))}
-                </div> */}
                 <div className="secondStageEvo">
                   {evolutionChain?.chain.evolves_to[0].evolves_to.length === 0
                     ? null
@@ -615,7 +593,6 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
               </div>
             </LearnMethodStyle>
           </div>
-          <SmogonSets pokeName={pokeData.pokeName} gen={gameTitle} />
         </EntireDetailPage>
       </div>
     </div>

@@ -8,107 +8,107 @@ export default async function Search(searchPoke: string) {
   }
 
   if (searchPoke === "meowstic") {
-    searchPoke = "meowstic-male"
+    searchPoke = "meowstic-male";
   }
 
   if (searchPoke === "darmanitan") {
-    searchPoke = "darmanitan-standard"
+    searchPoke = "darmanitan-standard";
   }
 
   if (searchPoke === "deoxys") {
-    searchPoke = "deoxys-normal"
+    searchPoke = "deoxys-normal";
   }
 
   if (searchPoke === "wormadam") {
-    searchPoke = "wormadam-plant"
+    searchPoke = "wormadam-plant";
   }
 
   if (searchPoke === "giratina") {
-    searchPoke = "giratina-altered"
+    searchPoke = "giratina-altered";
   }
 
   if (searchPoke === "basculin") {
-    searchPoke = "basculin-red-striped"
+    searchPoke = "basculin-red-striped";
   }
 
   if (searchPoke === "basculegion") {
-    searchPoke = "basculegion-male"
+    searchPoke = "basculegion-male";
   }
 
   if (searchPoke === "tornadus") {
-    searchPoke = "tornadus-incarnate"
+    searchPoke = "tornadus-incarnate";
   }
 
   if (searchPoke === "thundurus") {
-    searchPoke = "thundurus-incarnate"
+    searchPoke = "thundurus-incarnate";
   }
 
   if (searchPoke === "landorus") {
-    searchPoke = "landorus-incarnate"
+    searchPoke = "landorus-incarnate";
   }
 
   if (searchPoke === "enamorus") {
-    searchPoke = "enamorus-incarnate"
+    searchPoke = "enamorus-incarnate";
   }
 
   if (searchPoke === "keldeo") {
-    searchPoke = "keldeo-ordinary"
+    searchPoke = "keldeo-ordinary";
   }
 
   if (searchPoke === "meloetta") {
-    searchPoke = "meloetta-aria"
+    searchPoke = "meloetta-aria";
   }
 
   if (searchPoke === "aegislash") {
-    searchPoke = "aegislash-shield"
+    searchPoke = "aegislash-shield";
   }
 
   if (searchPoke === "pumpkaboo") {
-    searchPoke = "pumpkaboo-average"
+    searchPoke = "pumpkaboo-average";
   }
 
   if (searchPoke === "zygarde") {
-    searchPoke = "zygarde-50"
+    searchPoke = "zygarde-50";
   }
 
   if (searchPoke === "oricorio") {
-    searchPoke = "oricorio-baile"
+    searchPoke = "oricorio-baile";
   }
 
   if (searchPoke === "lycanroc") {
-    searchPoke = "lycanroc-midday"
+    searchPoke = "lycanroc-midday";
   }
 
   if (searchPoke === "wishiwashi") {
-    searchPoke = "wishiwashi-solo"
+    searchPoke = "wishiwashi-solo";
   }
 
   if (searchPoke === "minior") {
-    searchPoke = "minior-red-meteor"
+    searchPoke = "minior-red-meteor";
   }
 
   if (searchPoke === "mimikyu") {
-    searchPoke = "mimikyu-disguised"
+    searchPoke = "mimikyu-disguised";
   }
 
   if (searchPoke === "toxtricity") {
-    searchPoke = "toxtricity-amped"
+    searchPoke = "toxtricity-amped";
   }
 
   if (searchPoke === "eiscue") {
-    searchPoke = "eiscue-ice"
+    searchPoke = "eiscue-ice";
   }
 
   if (searchPoke === "indeedee") {
-    searchPoke = "indeedee-male"
+    searchPoke = "indeedee-male";
   }
 
   if (searchPoke === "morpeko") {
-    searchPoke = "morpeko-full-belly"
+    searchPoke = "morpeko-full-belly";
   }
 
   if (searchPoke === "urshifu") {
-    searchPoke = "urshifu-single-strike"
+    searchPoke = "urshifu-single-strike";
   }
 
   try {
@@ -119,6 +119,10 @@ export default async function Search(searchPoke: string) {
       string,
       Record<string, Array<{ name: string; level?: string }>>
     > = {};
+
+    if (data.abilities[0].ability.name === data.abilities[1].ability.name) {
+      data.abilities.splice(1, 1);
+    }
 
     data.moves.forEach((move) => {
       move.version_group_details.forEach((groupDetail) => {
@@ -172,35 +176,35 @@ export default async function Search(searchPoke: string) {
         const res = await api.getEvolutionChainById(
           parseInt(searchedPokemonData.pokeEvoID)
         );
-    
+
         if (pokeName !== res?.chain.species.name) {
           const eggMovesByVersionGroup: Record<
             string,
             Record<string, { name: string }[]>
           > = {};
-    
+
           const newApi = new PokemonClient();
           const baseData = await newApi.getPokemonByName(
             res.chain.species.name
           );
-    
+
           baseData.moves.forEach((move) => {
             move.version_group_details.forEach((groupDetail) => {
               const versionGroupName = groupDetail.version_group.name;
               const moveLearnMethod = groupDetail.move_learn_method.name;
-    
+
               if (moveLearnMethod === "egg") {
                 if (!eggMovesByVersionGroup[versionGroupName]) {
                   eggMovesByVersionGroup[versionGroupName] = { egg: [] };
                 }
-    
+
                 eggMovesByVersionGroup[versionGroupName].egg.push({
                   name: move.move.name,
                 });
               }
             });
           });
-    
+
           const formattedEggMoves = Object.entries(eggMovesByVersionGroup).map(
             ([versionGroup, methods]) => {
               const formattedMethods = Object.entries(methods).map(
@@ -216,7 +220,7 @@ export default async function Search(searchPoke: string) {
               };
             }
           );
-    
+
           formattedEggMoves.forEach(({ versionGroup, egg }) => {
             if (searchedPokemonData.pokeMoves[versionGroup]) {
               if (!searchedPokemonData.pokeMoves[versionGroup]["egg"]) {
@@ -225,14 +229,14 @@ export default async function Search(searchPoke: string) {
               searchedPokemonData.pokeMoves[versionGroup]["egg"] = egg;
             }
           });
-    
+
           console.log(searchedPokemonData.pokeMoves);
         }
       } catch (error) {
         console.error(error);
       }
     };
-    
+
     const fetchAndExtractEvolutionChain = async () => {
       try {
         const response = await fetch(searchedPokemonData.pokeSpecies.url);
