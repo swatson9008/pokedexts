@@ -39,4 +39,8 @@ export const LearnMethodStyle = styled.div`
     cursor: pointer;
   }
 
+  @media only screen and (max-device-width: 768px) and (orientation: portrait) {
+    max-width: 96vw;
+  }
+
 `;

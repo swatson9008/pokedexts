@@ -17,22 +17,84 @@ export const PokeEvoStyle = styled.div<numberOfStages>`
   }
 
   .baseEvo {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .evoMethod {
+      position: relative;
+      background: #cfd4d5;
+      border: 4px solid #cbf5cd;
+      padding: 20px;
+      max-width: 18vw;
+
+      &::before,
+      &::after {
+        top: 50%;
+        border: solid transparent;
+        content: "";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+      }
+
+      &::after {
+        border-color: rgba(207, 212, 213, 0);
+        border-width: 30px;
+        margin-top: -30px;
+      }
+
+      &::before {
+        border-color: rgba(203, 245, 205, 0);
+        border-width: 36px;
+        margin-top: -36px;
+      }
+
     }
 
-    @media only screen and (max-device-width: 768px) and (orientation: portrait) {
-      .firstStageEvo, .secondStageEvo {
-    display: grid;
-    gap: 20px;
-    padding: 10px;
+  @media only screen and (max-device-width: 768px) and (orientation: portrait) {
+    .firstStageEvo,
+    .secondStageEvo {
+      display: grid;
+      gap: 20px;
+      padding: 10px;
+    }
 
-  }
+    .secondStageEvo > div {
+      flex-direction: row-reverse;
+    }
 
-  .secondStageEvo > div {
-    flex-direction: row-reverse;
-  }
+    .secondStageEvo > div > .evoMethod {
+      &::before,
+      &::after {
+        right: 100%;
+      }
+
+      &::before {
+        border-right-color: #cbf5cd;
+      }
+
+      &::after {
+        border-right-color: #cfd4d5;
+      }
+    }
+
+    .firstStageEvo > div > .evoMethod {
+      &::before,
+      &::after {
+        left: 100%;
+      }
+
+      &::before {
+        border-left-color: #cbf5cd;
+      }
+
+      &::after {
+        border-left-color: #cfd4d5;
+      }
+    }
   }
 
   @media only screen and (min-device-width: 769px) {
@@ -62,7 +124,6 @@ export const PokeEvoStyle = styled.div<numberOfStages>`
       flex-direction: column;
     }
 
-
     .firstStageEvo > div,
     .secondStageEvo > div {
       display: flex;
@@ -88,34 +149,21 @@ export const PokeEvoStyle = styled.div<numberOfStages>`
       &::before,
       &::after {
         left: 100%;
-        top: 50%;
-        border: solid transparent;
-        content: "";
-        height: 0;
-        width: 0;
-        position: absolute;
-        pointer-events: none;
       }
 
       &::after {
-        border-color: rgba(207, 212, 213, 0);
         border-left-color: #cfd4d5;
-        border-width: 30px;
-        margin-top: -30px;
       }
 
       &::before {
-        border-color: rgba(203, 245, 205, 0);
         border-left-color: #cbf5cd;
-        border-width: 36px;
-        margin-top: -36px;
       }
     }
 
     .evoArrows {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
     }
 
     .monName {

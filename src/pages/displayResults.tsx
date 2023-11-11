@@ -560,7 +560,6 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                 </VarietyLabels>
               ))}
             </PokeVarieties>
-            <div className="gameTitle">{/*formatString(gameTitle)*/}</div>
             <LearnMethodStyle>
               <div className="learnMethodList">
                 {learnMethodList.map((method, index) => (
