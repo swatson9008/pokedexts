@@ -4,7 +4,7 @@ import { Dex } from '@pkmn/dex';
 import { generationConverter } from '../components/generationConverter';
 import fetch from 'node-fetch';
 
-async function fetchSmogonSets(pokeName: string, gen: string | number) {
+async function fetchSmogonSets(pokeName: string, gen: string | number, fetchFunction: typeof fetch) {
   let genString = typeof gen === 'number' ? gen.toString() : gen;
 
   if (generationConverter(genString) === "rb") { genString = "1" }
@@ -19,7 +19,7 @@ async function fetchSmogonSets(pokeName: string, gen: string | number) {
 
   try {
     const gens = new Generations(Dex);
-    const smogon = new Smogon(fetch); 
+    const smogon = new Smogon(fetchFunction);
     const analyses = await smogon.analyses(gens.get(genString), pokeName);
   
     if (Array.isArray(analyses)) {
@@ -33,6 +33,7 @@ async function fetchSmogonSets(pokeName: string, gen: string | number) {
     console.error('Error fetching Smogon sets:', error);
     return null;
   }
+
 }
 
 
@@ -40,7 +41,7 @@ async function fetchSmogonSets(pokeName: string, gen: string | number) {
 const SmogonSets = ({ pokeName, gen }: { pokeName: string; gen: string | number }) => {
   const fetchAndDisplaySets = async () => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const sets = await fetchSmogonSets(pokeName, gen);
+    const sets = await fetchSmogonSets(pokeName, gen, fetch);
     console.log(sets)
   };
 

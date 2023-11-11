@@ -34,6 +34,7 @@ import MoveInfoDisplay from "./moveInfoDisplay";
 import { PokeEvoStyle } from "../styles/displayResultStyles/pokeEvoStyle";
 import { SingleStageOnly } from "../styles/displayResultStyles/singleStageOnly";
 import { EvolutionDisplay } from "../styles/displayResultStyles/evolutionDisplay";
+import SmogonSets from "./smogonStats";
 
 interface DisplayResultsProps {
   pokeData: PokemonData;
@@ -614,6 +615,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
               </div>
             </LearnMethodStyle>
           </div>
+          <SmogonSets pokeName={pokeData.pokeName} gen={gameTitle} />
         </EntireDetailPage>
       </div>
     </div>
