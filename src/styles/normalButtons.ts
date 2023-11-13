@@ -10,4 +10,5 @@ font-size: 15px;
 padding: 5px;
 text-align: center;
 margin-top: 5px;
+cursor: pointer;
 `

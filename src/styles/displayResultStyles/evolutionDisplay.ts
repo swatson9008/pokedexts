@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 export const EvolutionDisplay = styled.div`
   display: flex;
-  align-items: center;
   gap: 40px;
   img {
     height: 100px;
@@ -13,6 +12,13 @@ export const EvolutionDisplay = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
+  }
+
+  @media only screen and (max-device-width: 768px) and (orientation: portrait) {
+  }
+
+  @media only screen and (min-device-width: 769px) {
     align-items: center;
   }
 `;

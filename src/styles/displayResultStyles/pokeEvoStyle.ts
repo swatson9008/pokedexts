@@ -9,8 +9,6 @@ export const PokeEvoStyle = styled.div<numberOfStages>`
     image-rendering: pixelated;
   }
   margin-top: 20px;
-  display: flex;
-  justify-content: space-evenly;
 
   .pokeEvoChain {
     display: grid;
@@ -23,38 +21,52 @@ export const PokeEvoStyle = styled.div<numberOfStages>`
   }
 
   .evoMethod {
-      position: relative;
-      background: #cfd4d5;
-      border: 4px solid #cbf5cd;
-      padding: 20px;
-      max-width: 18vw;
+    position: relative;
+    background: #cfd4d5;
+    border: 4px solid #cbf5cd;
+    padding: 20px;
+    max-width: 18vw;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+    
 
-      &::before,
-      &::after {
-        top: 50%;
-        border: solid transparent;
-        content: "";
-        height: 0;
-        width: 0;
-        position: absolute;
-        pointer-events: none;
-      }
-
-      &::after {
-        border-color: rgba(207, 212, 213, 0);
-        border-width: 30px;
-        margin-top: -30px;
-      }
-
-      &::before {
-        border-color: rgba(203, 245, 205, 0);
-        border-width: 36px;
-        margin-top: -36px;
-      }
-
+    &::before,
+    &::after {
+      top: 50%;
+      border: solid transparent;
+      content: "";
+      height: 0;
+      width: 0;
+      position: absolute;
+      pointer-events: none;
     }
 
+    &::after {
+      border-color: rgba(207, 212, 213, 0);
+      border-width: 30px;
+      margin-top: -30px;
+    }
+
+    &::before {
+      border-color: rgba(203, 245, 205, 0);
+      border-width: 36px;
+      margin-top: -36px;
+    }
+
+    > div { 
+      background-color: rgba(255, 255, 255, 0.4);
+      border-radius: 5px;
+      padding: 5px;
+    
+    }
+  }
+
   @media only screen and (max-device-width: 768px) and (orientation: portrait) {
+    width: 100%;
+
     .firstStageEvo,
     .secondStageEvo {
       display: grid;
@@ -64,6 +76,10 @@ export const PokeEvoStyle = styled.div<numberOfStages>`
 
     .secondStageEvo > div {
       flex-direction: row-reverse;
+    }
+
+    .evoMethod {
+      max-width: fit-content;
     }
 
     .secondStageEvo > div > .evoMethod {
@@ -98,6 +114,9 @@ export const PokeEvoStyle = styled.div<numberOfStages>`
   }
 
   @media only screen and (min-device-width: 769px) {
+    display: flex;
+    justify-content: space-evenly;
+
     .pokeEvoChain {
       grid-template-columns: ${({ stageNumber }) => {
         if (stageNumber === 1) {
