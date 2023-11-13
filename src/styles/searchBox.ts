@@ -27,6 +27,7 @@ export const SearchBoxStyle = styled.div`
   .suggestions {
     position: absolute;
     cursor: pointer;
+    line-height: 1.3;
     top: 100%;
     left: 0;
     width: 300px;
@@ -42,6 +43,7 @@ export const SearchBoxStyle = styled.div`
     li {
       padding: 10px;
       cursor: pointer;
+
 
       &:hover {
         background-color: #f0f0f0;
