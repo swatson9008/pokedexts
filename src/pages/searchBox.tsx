@@ -80,6 +80,10 @@ export default function SearchBox() {
     setSuggested([]); // Close the suggestions
   };
 
+  const handleList = () => {
+    navigate('/list')
+  }
+
   return (
     <div className="searchMain">
       <SearchContainer>
@@ -106,7 +110,7 @@ export default function SearchBox() {
       </SearchBoxStyle>
         <div>
           <ButtonContainer onClick={handleSearch}>Search</ButtonContainer>
-          <ButtonContainer>List</ButtonContainer>
+          <ButtonContainer onClick={handleList}>List</ButtonContainer>
           <ButtonContainer onClick={randomizer}>Random</ButtonContainer>
         </div>
       </SearchContainer>
