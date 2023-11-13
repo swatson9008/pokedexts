@@ -31,6 +31,7 @@ export const PokeEvoStyle = styled.div<numberOfStages>`
     flex-direction: column;
     justify-content: center;
     gap: 10px;
+    line-height: 1.3;
     
 
     &::before,
