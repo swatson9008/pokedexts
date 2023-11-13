@@ -120,9 +120,7 @@ export default async function Search(searchPoke: string) {
       Record<string, Array<{ name: string; level?: string }>>
     > = {};
 
-    if (data.abilities[0].ability.name === data.abilities[1].ability.name) {
-      data.abilities.splice(1, 1);
-    }
+    
 
     data.moves.forEach((move) => {
       move.version_group_details.forEach((groupDetail) => {
