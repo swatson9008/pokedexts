@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { formatString } from "../components/formatString";
 import { MoveInfoStyle } from "../styles/displayResultStyles/moveInfoStyling";
 import { PokeTypeDisplay } from "../styles/displayResultStyles/pokemonTypeDisplay";
+import { gen9Moves } from "../components/gen9Moves";
 
 interface MoveInfoDisplayProps {
   moveString: string;
@@ -56,9 +57,20 @@ export default function MoveInfoDisplay({
 
   console.log(moveData);
 
+  const moveDescription =
+    (moveData?.name && gen9Moves[moveData.name]?.description) ||
+    moveData?.flavor_text_entries?.[7]?.flavor_text ||
+    "No description available";
+
   return (
     <MoveInfoStyle>
-      {moveData && <div><PokeTypeDisplay type={moveData.type.name}>{formatString(moveData.type.name)}</PokeTypeDisplay></div>}
+      {moveData && (
+        <div>
+          <PokeTypeDisplay type={moveData.type.name}>
+            {formatString(moveData.type.name)}
+          </PokeTypeDisplay>
+        </div>
+      )}
       {moveData && <div>{formatString(moveData.damage_class?.name || "")}</div>}
       {moveData?.power === null ? "" : <div>Power: {moveData?.power}</div>}
       {moveData?.accuracy === null ? (
@@ -70,8 +82,7 @@ export default function MoveInfoDisplay({
       <div>Target: {formatString(moveData?.target?.name || "")}</div>
       <div>
         {moveData?.effect_entries[0]?.short_effect === undefined
-          ? moveData?.flavor_text_entries?.[7]?.flavor_text ??
-            "No description available"
+          ? moveDescription
           : effectChance(moveData?.effect_entries?.[0]?.short_effect)}
       </div>
     </MoveInfoStyle>
