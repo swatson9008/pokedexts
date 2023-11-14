@@ -5,6 +5,7 @@ import Search from "../components/search";
 import { useNavigate } from "react-router-dom";
 import { usePokemonData } from "./pokemonContext";
 import { PokemonListStyle } from "../styles/listDisplayStyle";
+import ListAlgos from "./listAlgos";
 
 interface Pokemon {
   name: string;
@@ -17,6 +18,10 @@ const ListPage: React.FC = () => {
 
   const [visibleEntries, setVisibleEntries] = useState<number>(50);
   const totalEntries = listOfPokemon.results.length;
+
+  const [pokemonList, setPokemonList] = useState<Pokemon[]>(listOfPokemon.results);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [backupList, setBackupList] = useState<Pokemon[]>(listOfPokemon.results);
 
   const handleSearch = async (pokemonName: string) => {
     try {
@@ -48,21 +53,23 @@ const ListPage: React.FC = () => {
     };
   }, [visibleEntries, totalEntries, handleScroll]);
 
-  const displayedList = listOfPokemon.results
-    .slice(0, visibleEntries)
-    .map((pokemon: Pokemon) => (
-      <div key={pokemon.name} onClick={() => handleSearch(pokemon.name)}>
-        <img
-          src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${getIDNo(
-            pokemon.url
-          )}.png`}
-          alt={pokemon.name}
-        />
-        {formatString(pokemon.name)}
-      </div>
-    ));
+  const displayedList = pokemonList.slice(0, visibleEntries).map((pokemon: Pokemon) => (
+    <div key={pokemon.name} onClick={() => handleSearch(pokemon.name)}>
+      <img
+        src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${getIDNo(
+          pokemon.url
+        )}.png`}
+        alt={pokemon.name}
+      />
+      {formatString(pokemon.name)}
+    </div>
+  ));
 
-  return <PokemonListStyle>{displayedList}</PokemonListStyle>;
+  return (
+    <div>
+      <ListAlgos setList={setPokemonList} list={pokemonList} backupList={backupList} />
+      <PokemonListStyle>{displayedList}</PokemonListStyle>
+    </div>
+  );
 };
-
 export default ListPage;
