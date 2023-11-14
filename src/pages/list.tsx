@@ -20,8 +20,7 @@ const ListPage: React.FC = () => {
   const totalEntries = listOfPokemon.results.length;
 
   const [pokemonList, setPokemonList] = useState<Pokemon[]>(listOfPokemon.results);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [backupList, setBackupList] = useState<Pokemon[]>(listOfPokemon.results);
+  const backupList: Pokemon[] = listOfPokemon.results;
 
   const handleSearch = async (pokemonName: string) => {
     try {
