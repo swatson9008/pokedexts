@@ -13,7 +13,7 @@ import {
   generationList,
 } from "../components/generationConverter";
 import formatEvos from "../components/formatEvos";
-import { BDSPTMs } from "../components/bdspTMs";
+import { BDSPTMs } from "../libraries/bdspTMs";
 import { gen9TMs } from "../components/gen9TMs";
 import { gen89Abilities } from "../components/gen89abilities";
 import customSort from "../components/sortTMs";

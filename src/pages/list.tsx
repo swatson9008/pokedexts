@@ -1,17 +1,22 @@
+import React, { useState, useEffect } from "react";
 import listOfPokemon from "../libraries/pokemonlist.json";
-import { formatString } from "../components/formatString";
+import { formatString, getIDNo } from "../components/formatString";
 import Search from "../components/search";
 import { useNavigate } from "react-router-dom";
 import { usePokemonData } from "./pokemonContext";
+import { PokemonListStyle } from "../styles/listDisplayStyle";
 
 interface Pokemon {
   name: string;
   url: string;
 }
 
-export default function ListPage() {
+const ListPage: React.FC = () => {
   const navigate = useNavigate();
   const { storePokemonData } = usePokemonData();
+
+  const [visibleEntries, setVisibleEntries] = useState<number>(50);
+  const totalEntries = listOfPokemon.results.length;
 
   const handleSearch = async (pokemonName: string) => {
     try {
@@ -26,13 +31,38 @@ export default function ListPage() {
     }
   };
 
-  const initialList = listOfPokemon.results
-    .slice(0, 1017)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const handleScroll = () => {
+    const scrollPosition = window.innerHeight + window.scrollY;
+    const pageHeight = document.documentElement.scrollHeight;
+
+    if (scrollPosition >= pageHeight - 200 && visibleEntries < totalEntries) {
+      setVisibleEntries((prev) => prev + 20);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [visibleEntries, totalEntries, handleScroll]);
+
+  const displayedList = listOfPokemon.results
+    .slice(0, visibleEntries)
     .map((pokemon: Pokemon) => (
       <div key={pokemon.name} onClick={() => handleSearch(pokemon.name)}>
+        <img
+          src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${getIDNo(
+            pokemon.url
+          )}.png`}
+          alt={pokemon.name}
+        />
         {formatString(pokemon.name)}
       </div>
     ));
 
-  return <>{initialList}</>;
-}
+  return <PokemonListStyle>{displayedList}</PokemonListStyle>;
+};
+
+export default ListPage;
