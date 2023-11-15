@@ -35,5 +35,9 @@ export const PokemonListStyle = styled.div`
   }
 
   @media only screen and (max-device-width: 768px) and (orientation: portrait) {
+    > div {
+      width: 100%;
+      justify-content: space-evenly;
+    }
   }
 `;
