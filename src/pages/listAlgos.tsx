@@ -1,3 +1,4 @@
+
 interface Pokemon {
   name: string;
   url: string;
@@ -15,8 +16,10 @@ const ListAlgos: React.FC<ListAlgosProps> = ({ setList, backupList, list }) => {
     setList(sortedList);
   };
 
+  
+
   const reverseAlpha = () => {
-    const sortedList = [...backupList].sort((a, b) =>
+    const sortedList = [...list].sort((a, b) =>
       b.name.localeCompare(a.name)
     );
     setList(sortedList);
