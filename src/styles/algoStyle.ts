@@ -4,13 +4,19 @@ export const AlgoStyle = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 90vw;
 
   .typeFilters {
     display: grid;
-    width: 95vw;
+    width: 100%;
+    align-items: center;
+    justify-items: center;
     grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
     gap: 5px;
-    width: 90vw;
     margin-top: 10px;
+
+    > div {
+      cursor: pointer;
+    }
   }
 `;

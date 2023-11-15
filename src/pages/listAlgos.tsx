@@ -1,6 +1,8 @@
 import { colorTypes } from "../components/colorTypes";
 import { PokeTypeDisplay } from "../styles/displayResultStyles/pokemonTypeDisplay";
 import { AlgoStyle } from "../styles/algoStyle";
+import { PokemonClient } from "pokenode-ts";
+import { getIDNo } from "../components/formatString";
 interface Pokemon {
   name: string;
   url: string;
@@ -13,17 +15,47 @@ interface ListAlgosProps {
 }
 
 const ListAlgos: React.FC<ListAlgosProps> = ({ setList, backupList, list }) => {
+  const api = new PokemonClient();
   const sortAlpha = () => {
     const sortedList = [...list].sort((a, b) => a.name.localeCompare(b.name));
     setList(sortedList);
   };
 
-  
+  const typeSort = async (type: string) => {
+    const updatedList: Pokemon[] = [];
+
+    const promises = list.map(async (pokemon) => {
+      try {
+        const pokemonData = await api.getPokemonById(
+          parseInt(getIDNo(pokemon.url))
+        );
+        if (
+          pokemonData.types[0].type.name === type ||
+          (pokemonData.types[1] && pokemonData.types[1].type.name === type)
+        ) {
+          updatedList.push(pokemon);
+        } else {
+          return "";
+        }
+      } catch (error) {
+        console.error(
+          `Error fetching Pokemon data for ${pokemon.name}:`,
+          error
+        );
+      }
+    });
+
+    await Promise.all(promises);
+
+    const sortedList = updatedList.sort(
+      (a, b) => parseInt(getIDNo(a.url)) - parseInt(getIDNo(b.url))
+    );
+
+    setList(sortedList);
+  };
 
   const reverseAlpha = () => {
-    const sortedList = [...list].sort((a, b) =>
-      b.name.localeCompare(a.name)
-    );
+    const sortedList = [...list].sort((a, b) => b.name.localeCompare(a.name));
     setList(sortedList);
   };
 
@@ -68,9 +100,9 @@ const ListAlgos: React.FC<ListAlgosProps> = ({ setList, backupList, list }) => {
       setList(genList);
     }
     if (genNumber === 9) {
-        const genList = backupList.slice(905, 1017);
-        setList(genList);
-      }
+      const genList = backupList.slice(905, 1017);
+      setList(genList);
+    }
   };
 
   const generationOptions = Array.from({ length: 9 }, (_, index) => ({
@@ -96,13 +128,14 @@ const ListAlgos: React.FC<ListAlgosProps> = ({ setList, backupList, list }) => {
         </select>
       </div>
       <div className="typeFilters">
-      {Object.entries(colorTypes).map(([type]) => (
-          type !== "???" && (
-            <PokeTypeDisplay type={type}>
-              {type}
-            </PokeTypeDisplay>
-          )
-        ))}
+        {Object.entries(colorTypes).map(
+          ([type]) =>
+            type !== "???" && (
+              <PokeTypeDisplay type={type} onClick={() => typeSort(type)}>
+                {type}
+              </PokeTypeDisplay>
+            )
+        )}
       </div>
     </AlgoStyle>
   );
