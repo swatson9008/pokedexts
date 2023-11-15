@@ -6,7 +6,6 @@ export const PokemonListStyle = styled.div`
   align-items: center;
   margin-top: 25px;
   background-color: rgba(255, 255, 255, 0.4);
-  padding: 1vw;
 
   > div {
     display: flex;
@@ -26,7 +25,7 @@ export const PokemonListStyle = styled.div`
     width: 90vw;
     flex-direction: row;
     flex-wrap: wrap;
-
+    padding: 1vw;
     > div {
       flex-direction: column;
       padding: 5px;
@@ -35,8 +34,9 @@ export const PokemonListStyle = styled.div`
   }
 
   @media only screen and (max-device-width: 768px) and (orientation: portrait) {
+    width: 100vw;
     > div {
-      width: 100%;
+      width: 90%;
       justify-content: space-evenly;
     }
   }
