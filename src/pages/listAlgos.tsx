@@ -1,4 +1,6 @@
-
+import { colorTypes } from "../components/colorTypes";
+import { PokeTypeDisplay } from "../styles/displayResultStyles/pokemonTypeDisplay";
+import { AlgoStyle } from "../styles/algoStyle";
 interface Pokemon {
   name: string;
   url: string;
@@ -77,7 +79,7 @@ const ListAlgos: React.FC<ListAlgosProps> = ({ setList, backupList, list }) => {
   }));
 
   return (
-    <>
+    <AlgoStyle>
       <button onClick={resetAlgo}>Reset</button>
       <button onClick={sortAlpha}>Sort Alphabetically</button>
       <button onClick={reverseAlpha}>Sort Reverse Alphabetically</button>
@@ -93,7 +95,16 @@ const ListAlgos: React.FC<ListAlgosProps> = ({ setList, backupList, list }) => {
           ))}
         </select>
       </div>
-    </>
+      <div className="typeFilters">
+      {Object.entries(colorTypes).map(([type]) => (
+          type !== "???" && (
+            <PokeTypeDisplay type={type}>
+              {type}
+            </PokeTypeDisplay>
+          )
+        ))}
+      </div>
+    </AlgoStyle>
   );
 };
 
