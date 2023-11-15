@@ -6,7 +6,6 @@ export const PokemonListStyle = styled.div`
   align-items: center;
   margin-top: 25px;
   background-color: rgba(255, 255, 255, 0.4);
-  width: 90vw;
   padding: 1vw;
 
   > div {
@@ -14,12 +13,27 @@ export const PokemonListStyle = styled.div`
     align-items: center;
     padding: 10px;
     cursor: pointer;
-    height: 100px;
+    height: 130px;
+    width: 130px;
+    image-rendering: pixelated;
 
-    &:hover{
-        background-color: rgba(255, 255, 255, 0.5);
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.5);
     }
   }
 
+  @media only screen and (min-device-width: 769px) {
+    width: 90vw;
+    flex-direction: row;
+    flex-wrap: wrap;
 
+    > div {
+      flex-direction: column;
+      padding: 5px;
+      justify-content: flex-end;
+    }
+  }
+
+  @media only screen and (max-device-width: 768px) and (orientation: portrait) {
+  }
 `;
