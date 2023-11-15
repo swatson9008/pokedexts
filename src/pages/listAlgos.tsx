@@ -2,7 +2,7 @@ import { colorTypes } from "../components/colorTypes";
 import { PokeTypeDisplay } from "../styles/displayResultStyles/pokemonTypeDisplay";
 import { AlgoStyle } from "../styles/algoStyle";
 import { PokemonClient } from "pokenode-ts";
-import { getIDNo } from "../components/formatString";
+import { formatString, getIDNo } from "../components/formatString";
 interface Pokemon {
   name: string;
   url: string;
@@ -63,6 +63,17 @@ const ListAlgos: React.FC<ListAlgosProps> = ({ setList, backupList, list }) => {
     setList([...backupList]);
   };
 
+  const sortByNo = () => {
+    const sortedList = [...list].sort((a, b) => parseInt(getIDNo(a.url)) - parseInt(getIDNo(b.url)));
+    setList(sortedList);
+  }
+  
+
+  const sortByReverseNo = () => {
+    const sortedList = [...list].sort((a, b) => parseInt(getIDNo(b.url)) - parseInt(getIDNo(a.url)));
+    setList(sortedList);
+  }
+
   const sortGen = (genNumber: number | null) => {
     if (genNumber === null) {
       return;
@@ -113,6 +124,8 @@ const ListAlgos: React.FC<ListAlgosProps> = ({ setList, backupList, list }) => {
   return (
     <AlgoStyle>
       <button onClick={resetAlgo}>Reset</button>
+      <button onClick={sortByNo}>Sort By Dex Order</button>
+      <button onClick={sortByReverseNo}>Sort By Reverse Dex Order</button>
       <button onClick={sortAlpha}>Sort Alphabetically</button>
       <button onClick={reverseAlpha}>Sort Reverse Alphabetically</button>
 
@@ -132,7 +145,7 @@ const ListAlgos: React.FC<ListAlgosProps> = ({ setList, backupList, list }) => {
           ([type]) =>
             type !== "???" && (
               <PokeTypeDisplay type={type} onClick={() => typeSort(type)}>
-                {type}
+                {formatString(type)}
               </PokeTypeDisplay>
             )
         )}
