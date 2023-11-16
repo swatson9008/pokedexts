@@ -20,7 +20,6 @@ const ListPage: React.FC = () => {
 
   const [visibleEntries, setVisibleEntries] = useState<number>(50);
   const totalEntries = masterList.length;
-
   const [pokemonList, setPokemonList] = useState<Pokemon[]>(masterList);
   const backupList: Pokemon[] = masterList;
 

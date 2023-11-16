@@ -1,16 +1,13 @@
 import { useState } from "react";
 import { colorTypes } from "../components/colorTypes";
-import { PokeTypeDisplay } from "../styles/displayResultStyles/pokemonTypeDisplay";
 import { AlgoStyle } from "../styles/algoStyle";
 import { PokemonClient } from "pokenode-ts";
 import { formatString, getIDNo } from "../components/formatString";
-import { GlowFilter } from "../styles/glowFilter";
 interface Pokemon {
   name: string;
   url: string;
   types: { name: string; url: string }[];
 }
-
 
 interface ListAlgosProps {
   setList: React.Dispatch<React.SetStateAction<Pokemon[]>>;
@@ -28,7 +25,7 @@ const ListAlgos: React.FC<ListAlgosProps> = ({ setList, backupList, list }) => {
 
   const typeSort = async (type: string) => {
     if (selectedTypes.length === 2) {
-      alert('You can only select up to two types at a time.');
+      alert("You can only select up to two types at a time.");
       return;
     }
     const updatedList: Pokemon[] = [];
@@ -60,7 +57,7 @@ const ListAlgos: React.FC<ListAlgosProps> = ({ setList, backupList, list }) => {
     );
 
     setList(sortedList);
-    console.log(list)
+    console.log(list);
     setSelectedTypes((prevSelectedTypes) => [...prevSelectedTypes, type]);
   };
 
@@ -72,6 +69,7 @@ const ListAlgos: React.FC<ListAlgosProps> = ({ setList, backupList, list }) => {
   const resetAlgo = () => {
     setList([...backupList]);
     setSelectedTypes([]);
+    document.querySelectorAll('select').forEach(dropdown => dropdown.value = '');
   };
 
   const sortByNo = () => {
@@ -92,7 +90,7 @@ const ListAlgos: React.FC<ListAlgosProps> = ({ setList, backupList, list }) => {
     if (genNumber === null) {
       return;
     }
-  
+
     if (genNumber === null) {
       return;
     }
@@ -132,9 +130,7 @@ const ListAlgos: React.FC<ListAlgosProps> = ({ setList, backupList, list }) => {
       const genList = backupList.slice(905, 1017);
       setList(genList);
     }
-      
   };
-  
 
   const generationOptions = Array.from({ length: 9 }, (_, index) => ({
     value: (index + 1).toString(),
@@ -160,18 +156,34 @@ const ListAlgos: React.FC<ListAlgosProps> = ({ setList, backupList, list }) => {
           ))}
         </select>
       </div>
-      <div className="typeFilters">
-        {Object.entries(colorTypes).map(
-          ([type]) =>
-            type !== "???" && (
-              <GlowFilter isSelected={selectedTypes.includes(type)}>
-                <PokeTypeDisplay type={type} onClick={() => typeSort(type)}>
-                  {formatString(type)}
-                </PokeTypeDisplay>
-              </GlowFilter>
-            )
-        )}
+
+      <div>
+        <label htmlFor="typeDropdown">Select a Type:</label>
+        <select id="typeDropdown" onChange={(e) => typeSort(e.target.value)}>
+          <option value=""></option>
+          {Object.entries(colorTypes)
+            .filter(([type]) => type !== "???")
+            .map(([type]) => (
+              <option key={type} value={type}>
+                {formatString(type)}
+              </option>
+            ))}
+        </select>
       </div>
+      <div>
+        <label htmlFor="typeDropdown">Select a Second Type:</label>
+        <select id="typeDropdown" onChange={(e) => typeSort(e.target.value)}>
+          <option value=""></option>
+          {Object.entries(colorTypes)
+            .filter(([type]) => type !== "???")
+            .map(([type]) => (
+              <option key={type} value={type}>
+                {formatString(type)}
+              </option>
+            ))}
+        </select>
+      </div>
+
     </AlgoStyle>
   );
 };
