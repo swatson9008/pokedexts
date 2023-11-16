@@ -139,12 +139,15 @@ const ListAlgos: React.FC<ListAlgosProps> = ({ setList, backupList, list }) => {
 
   return (
     <AlgoStyle>
-      <button onClick={resetAlgo}>Reset</button>
-      <button onClick={sortByNo}>Sort By Dex Order</button>
-      <button onClick={sortByReverseNo}>Sort By Reverse Dex Order</button>
-      <button onClick={sortAlpha}>Sort Alphabetically</button>
-      <button onClick={reverseAlpha}>Sort Reverse Alphabetically</button>
-
+      <div className="sortBox">
+      <span>Sort By</span>
+      <div>
+      <button onClick={sortByNo}>Dex Order</button>
+      <button onClick={sortByReverseNo}>Reverse Dex Order</button>
+      <button onClick={sortAlpha}>Alphabetically</button>
+      <button onClick={reverseAlpha}>Reverse Alphabetically</button>
+      </div>
+      </div>
       <div>
         <label htmlFor="dropdown">Select a generation:</label>
         <select id="dropdown" onChange={(e) => sortGen(Number(e.target.value))}>
@@ -183,6 +186,7 @@ const ListAlgos: React.FC<ListAlgosProps> = ({ setList, backupList, list }) => {
             ))}
         </select>
       </div>
+      <button onClick={resetAlgo}>Reset</button>
 
     </AlgoStyle>
   );

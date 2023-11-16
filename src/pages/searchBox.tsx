@@ -9,9 +9,15 @@ import { PokemonClient } from "pokenode-ts";
 import { formatString } from "../components/formatString";
 import listOfPokemon from "../libraries/pokemonlist.json";
 
+interface Pokemon {
+  name: string;
+  url: string;
+  types: { name: string; url: string }[];
+}
+
 export default function SearchBox() {
   const [pokeSearch, setSearch] = useState<string>("");
-  const [suggestedPokes, setSuggested] = useState<string[]>([]);
+  const [suggestedPokes, setSuggested] = useState<Pokemon[]>([]);
   const { storePokemonData } = usePokemonData();
   const navigate = useNavigate();
   const inputRef = useRef<HTMLInputElement>(null);
@@ -27,12 +33,11 @@ export default function SearchBox() {
       setSearch("");
       return;
     }
-    const filteredPokes = listOfPokemon.results.filter((pokemon) =>
+    const filteredPokes = listOfPokemon.filter((pokemon) =>
       pokemon.name.toLowerCase().includes(searchValue.toLowerCase())
     );
 
-    const suggestedNames = filteredPokes.map((pokemon) => pokemon.name);
-    setSuggested(suggestedNames);
+    setSuggested(filteredPokes);
   };
 
   useEffect(() => {
@@ -75,9 +80,9 @@ export default function SearchBox() {
     }
   };
 
-  const handleSuggestionClick = (item: string) => {
-    setSearch(item);
-    setSuggested([]); // Close the suggestions
+  const handleSuggestionClick = (pokemon: Pokemon) => {
+    setSearch(pokemon.name);
+    setSuggested([]);
   };
 
   const handleList = () => {
@@ -87,27 +92,27 @@ export default function SearchBox() {
   return (
     <div className="searchMain">
       <SearchContainer>
-      <SearchBoxStyle>
-        <input
-          type="text"
-          id="searchInput"
-          placeholder="Enter a Pokemon"
-          onChange={handleInputChange}
-          onKeyDown={handleKeyDown}
-          ref={inputRef}
-          value={formatString(pokeSearch)}
-        />
-        {/* Suggestions container */}
-        {suggestedPokes.length > 0 && (
-          <div className="suggestions">
-            {suggestedPokes.map((item, index) => (
-              <div key={index} onClick={() => handleSuggestionClick(item)}>
-                {formatString(item)}
-              </div>
-            ))}
-          </div>
-        )}
-      </SearchBoxStyle>
+        <SearchBoxStyle>
+          <input
+            type="text"
+            id="searchInput"
+            placeholder="Enter a Pokemon"
+            onChange={handleInputChange}
+            onKeyDown={handleKeyDown}
+            ref={inputRef}
+            value={formatString(pokeSearch)}
+          />
+          {/* Suggestions container */}
+          {suggestedPokes.length > 0 && (
+            <div className="suggestions">
+              {suggestedPokes.map((pokemon, index) => (
+                <div key={index} onClick={() => handleSuggestionClick(pokemon)}>
+                  {formatString(pokemon.name)}
+                </div>
+              ))}
+            </div>
+          )}
+        </SearchBoxStyle>
         <div>
           <ButtonContainer onClick={handleSearch}>Search</ButtonContainer>
           <ButtonContainer onClick={handleList}>List</ButtonContainer>
