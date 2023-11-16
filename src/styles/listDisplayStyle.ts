@@ -4,6 +4,7 @@ export const PokemonListStyle = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   margin-top: 25px;
   background-color: rgba(255, 255, 255, 0.4);
 

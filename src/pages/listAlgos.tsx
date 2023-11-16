@@ -58,7 +58,6 @@ const ListAlgos: React.FC<ListAlgosProps> = ({ setList, backupList, list }) => {
     );
 
     setList(sortedList);
-    console.log(list);
     setSelectedTypes((prevSelectedTypes) => [...prevSelectedTypes, type]);
   };
 
