@@ -6,7 +6,13 @@ export const AlgoStyle = styled.div`
   flex-direction: column;
   align-items: center;
   flex-wrap: wrap;
-  width: 90vw;
+
+  position: sticky;
+  top: 0;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  z-index: 100;
+  background-color: rgb(164 234 123);
 
   .sortBox {
     display: flex;
@@ -24,7 +30,7 @@ export const AlgoStyle = styled.div`
     display: flex;
   }
 
-  .resetBox{
+  .resetBox {
     ${ButtonContainer} {
       flex: initial;
     }
