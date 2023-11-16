@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { colorTypes } from "../components/colorTypes";
-import { PokeTypeDisplay } from "../styles/displayResultStyles/pokemonTypeDisplay";
-import { AlgoStyle } from "../styles/algoStyle";
+import { colorTypes } from "../../components/colorTypes";
+import { PokeTypeDisplay } from "../../styles/displayResultStyles/pokemonTypeDisplay";
+import { AlgoStyle } from "../../styles/algoStyle";
 import { PokemonClient } from "pokenode-ts";
-import { formatString, getIDNo } from "../components/formatString";
-import { GlowFilter } from "../styles/glowFilter";
+import { formatString, getIDNo } from "../../components/formatString";
+import { GlowFilter } from "../../styles/glowFilter";
 interface Pokemon {
   name: string;
   url: string;
@@ -93,46 +93,42 @@ const ListAlgos: React.FC<ListAlgosProps> = ({ setList, backupList, list }) => {
       return;
     }
   
-    if (genNumber === null) {
-      return;
-    }
     if (genNumber === 1) {
-      const genList = backupList.slice(0, 151);
+      const genList = list.slice(0, 151);
       setList(genList);
     }
     if (genNumber === 2) {
-      const genList = backupList.slice(151, 251);
+      const genList = list.slice(151, 251);
       setList(genList);
     }
     if (genNumber === 3) {
-      const genList = backupList.slice(251, 386);
+      const genList = list.slice(251, 386);
       setList(genList);
     }
     if (genNumber === 4) {
-      const genList = backupList.slice(386, 493);
+      const genList = list.slice(386, 493);
       setList(genList);
     }
     if (genNumber === 5) {
-      const genList = backupList.slice(493, 649);
+      const genList = list.slice(493, 649);
       setList(genList);
     }
     if (genNumber === 6) {
-      const genList = backupList.slice(649, 721);
+      const genList = list.slice(649, 721);
       setList(genList);
     }
     if (genNumber === 7) {
-      const genList = backupList.slice(721, 809);
+      const genList = list.slice(721, 809);
       setList(genList);
     }
     if (genNumber === 8) {
-      const genList = backupList.slice(809, 905);
+      const genList = list.slice(809, 905);
       setList(genList);
     }
     if (genNumber === 9) {
-      const genList = backupList.slice(905, 1017);
+      const genList = list.slice(905, 1017);
       setList(genList);
     }
-    
   
     const updatedList: Pokemon[] = [];
   
@@ -166,24 +162,18 @@ const ListAlgos: React.FC<ListAlgosProps> = ({ setList, backupList, list }) => {
       );
       console.log(sortedList);
     
-      // Convert the sortedList to JSON
       const jsonString = JSON.stringify(sortedList, null, 2);
     
-      // Create a Blob containing the JSON data
       const blob = new Blob([jsonString], { type: 'application/json' });
     
-      // Create a download link
       const downloadLink = document.createElement('a');
       downloadLink.href = URL.createObjectURL(blob);
       downloadLink.download = 'sortedList.json';
     
-      // Append the link to the document
       document.body.appendChild(downloadLink);
     
-      // Trigger a click on the link to start the download
       downloadLink.click();
     
-      // Remove the link from the document
       document.body.removeChild(downloadLink);
     };
     

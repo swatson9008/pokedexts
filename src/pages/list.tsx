@@ -10,17 +10,19 @@ import ListAlgos from "./listAlgos";
 interface Pokemon {
   name: string;
   url: string;
+  types: { name: string; url: string }[];
 }
 
 const ListPage: React.FC = () => {
   const navigate = useNavigate();
   const { storePokemonData } = usePokemonData();
+  const masterList = listOfPokemon.slice(0, 1017)
 
   const [visibleEntries, setVisibleEntries] = useState<number>(50);
-  const totalEntries = listOfPokemon.results.length;
+  const totalEntries = masterList.length;
 
-  const [pokemonList, setPokemonList] = useState<Pokemon[]>(listOfPokemon.results);
-  const backupList: Pokemon[] = listOfPokemon.results;
+  const [pokemonList, setPokemonList] = useState<Pokemon[]>(masterList);
+  const backupList: Pokemon[] = masterList;
 
   const handleSearch = async (pokemonName: string) => {
     try {
