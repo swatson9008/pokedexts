@@ -4,6 +4,9 @@ import { formatString } from "../components/formatString";
 import { MoveInfoStyle } from "../styles/displayResultStyles/moveInfoStyling";
 import { PokeTypeDisplay } from "../styles/displayResultStyles/pokemonTypeDisplay";
 import { gen9Moves } from "../components/gen9Moves";
+import physicalIcon from "../assets/physical.png";
+import specialIcon from "../assets/special.png";
+import statusIcon from "../assets/status.png";
 
 interface MoveInfoDisplayProps {
   moveString: string;
@@ -71,7 +74,22 @@ export default function MoveInfoDisplay({
           </PokeTypeDisplay>
         </div>
       )}
-      {moveData && <div>{formatString(moveData.damage_class?.name || "")}</div>}
+      {moveData && (
+        <div>
+          <img
+            src={
+              moveData.damage_class?.name === "physical"
+                ? physicalIcon
+                : moveData.damage_class?.name === "special"
+                ? specialIcon
+                : moveData.damage_class?.name === "status"
+                ? statusIcon
+                : undefined
+            }
+            alt={moveData.damage_class?.name}
+          />
+        </div>
+      )}
       {moveData?.power === null ? "" : <div>Power: {moveData?.power}</div>}
       {moveData?.accuracy === null ? (
         ""

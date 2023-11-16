@@ -5,6 +5,11 @@ export const MoveInfoStyle = styled.div`
   display: flex;
   flex-direction: column;
 
+  img {
+    margin-top: 5px;
+    max-width: 60px;
+  }
+
   @media only screen and (max-device-width: 768px) and (orientation: portrait) {
     padding: 5px;
   }
