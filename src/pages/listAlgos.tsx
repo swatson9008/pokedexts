@@ -132,63 +132,7 @@ const ListAlgos: React.FC<ListAlgosProps> = ({ setList, backupList, list }) => {
       const genList = backupList.slice(905, 1017);
       setList(genList);
     }
-    
-  
-    const updatedList: Pokemon[] = [];
-  
-    const promises = list.map(async (pokemon) => {
-      try {
-        const pokemonData = await api.getPokemonById(
-          parseInt(getIDNo(pokemon.url))
-        );
-        if (pokemonData.types) {
-          updatedList.push({
-            ...pokemon,
-            types: pokemonData.types.map((type) => ({
-              name: type.type.name,
-              url: type.type.url,
-            })),
-          });
-        }
-      } catch (error) {
-        console.error(
-          `Error fetching Pokemon data for ${pokemon.name}:`,
-          error
-        );
-      }
-    });
-
-    await Promise.all(promises);
-  
-    const sortByNo = () => {
-      const sortedList = [...updatedList].sort(
-        (a, b) => parseInt(getIDNo(a.url)) - parseInt(getIDNo(b.url))
-      );
-      console.log(sortedList);
-    
-      // Convert the sortedList to JSON
-      const jsonString = JSON.stringify(sortedList, null, 2);
-    
-      // Create a Blob containing the JSON data
-      const blob = new Blob([jsonString], { type: 'application/json' });
-    
-      // Create a download link
-      const downloadLink = document.createElement('a');
-      downloadLink.href = URL.createObjectURL(blob);
-      downloadLink.download = 'sortedList.json';
-    
-      // Append the link to the document
-      document.body.appendChild(downloadLink);
-    
-      // Trigger a click on the link to start the download
-      downloadLink.click();
-    
-      // Remove the link from the document
-      document.body.removeChild(downloadLink);
-    };
-    
-    sortByNo();
-    
+      
   };
   
 
