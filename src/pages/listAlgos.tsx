@@ -3,6 +3,7 @@ import { colorTypes } from "../components/colorTypes";
 import { AlgoStyle } from "../styles/algoStyle";
 import { PokemonClient } from "pokenode-ts";
 import { formatString, getIDNo } from "../components/formatString";
+import { ButtonContainer } from "../styles/normalButtons";
 interface Pokemon {
   name: string;
   url: string;
@@ -142,10 +143,10 @@ const ListAlgos: React.FC<ListAlgosProps> = ({ setList, backupList, list }) => {
       <div className="sortBox">
       <span>Sort By</span>
       <div>
-      <button onClick={sortByNo}>Dex Order</button>
-      <button onClick={sortByReverseNo}>Reverse Dex Order</button>
-      <button onClick={sortAlpha}>Alphabetically</button>
-      <button onClick={reverseAlpha}>Reverse Alphabetically</button>
+      <ButtonContainer onClick={sortByNo}>Dex Order</ButtonContainer>
+      <ButtonContainer onClick={sortByReverseNo}>Reverse Dex Order</ButtonContainer>
+      <ButtonContainer onClick={sortAlpha}>Alphabetically</ButtonContainer>
+      <ButtonContainer onClick={reverseAlpha}>Reverse Alphabetically</ButtonContainer>
       </div>
       </div>
       <div>

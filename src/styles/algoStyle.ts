@@ -6,7 +6,20 @@ export const AlgoStyle = styled.div`
   align-items: center;
   width: 90vw;
 
-  .typeFilters {
+  .sortBox {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    height: 100px;
+    gap: 10px;
+
+    > button {
+      display: flex;
+      height: fit-content;
+    }
+  }
+
+  /*.typeFilters {
     display: grid;
     width: 100%;
     align-items: center;
@@ -18,5 +31,5 @@ export const AlgoStyle = styled.div`
     > div {
       cursor: pointer;
     }
-  }
+  }*/
 `;
