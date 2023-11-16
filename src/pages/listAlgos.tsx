@@ -140,16 +140,13 @@ const ListAlgos: React.FC<ListAlgosProps> = ({ setList, backupList, list }) => {
   return (
     <AlgoStyle>
       <div className="sortBox">
-      <span>Sort By</span>
-      <div>
       <ButtonContainer onClick={sortByNo}>Dex Order</ButtonContainer>
       <ButtonContainer onClick={sortByReverseNo}>Reverse Dex Order</ButtonContainer>
       <ButtonContainer onClick={sortAlpha}>Alphabetically</ButtonContainer>
       <ButtonContainer onClick={reverseAlpha}>Reverse Alphabetically</ButtonContainer>
       </div>
-      </div>
+      <div className="dropdownBox">
       <div>
-        <label htmlFor="dropdown">Select a generation:</label>
         <select id="dropdown" onChange={(e) => sortGen(Number(e.target.value))}>
           <option value="">Select a generation</option>
           {generationOptions.map((option) => (
@@ -161,9 +158,8 @@ const ListAlgos: React.FC<ListAlgosProps> = ({ setList, backupList, list }) => {
       </div>
 
       <div>
-        <label htmlFor="typeDropdown">Select a Type:</label>
         <select id="typeDropdown" onChange={(e) => typeSort(e.target.value)}>
-          <option value=""></option>
+          <option value="">Select a Type</option>
           {Object.entries(colorTypes)
             .filter(([type]) => type !== "???")
             .map(([type]) => (
@@ -174,9 +170,8 @@ const ListAlgos: React.FC<ListAlgosProps> = ({ setList, backupList, list }) => {
         </select>
       </div>
       <div>
-        <label htmlFor="typeDropdown">Select a Second Type:</label>
         <select id="typeDropdown" onChange={(e) => typeSort(e.target.value)}>
-          <option value=""></option>
+          <option value="">Select a Type</option>
           {Object.entries(colorTypes)
             .filter(([type]) => type !== "???")
             .map(([type]) => (
@@ -186,7 +181,8 @@ const ListAlgos: React.FC<ListAlgosProps> = ({ setList, backupList, list }) => {
             ))}
         </select>
       </div>
-      <button onClick={resetAlgo}>Reset</button>
+      </div>
+      <div className="resetBox"><ButtonContainer onClick={resetAlgo}>Reset</ButtonContainer></div>
 
     </AlgoStyle>
   );

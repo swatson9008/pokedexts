@@ -1,9 +1,11 @@
 import styled from "styled-components";
+import { ButtonContainer } from "./normalButtons";
 
 export const AlgoStyle = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  flex-wrap: wrap;
   width: 90vw;
 
   .sortBox {
@@ -12,11 +14,21 @@ export const AlgoStyle = styled.div`
     flex-direction: row;
     height: 100px;
     gap: 10px;
-
-    > button {
-      display: flex;
-      height: fit-content;
+    width: fit-content;
+    ${ButtonContainer} {
+      flex: initial;
     }
+  }
+
+  .dropdownBox {
+    display: flex;
+  }
+
+  .resetBox{
+    ${ButtonContainer} {
+      flex: initial;
+    }
+    margin-top: 10px;
   }
 
   /*.typeFilters {
