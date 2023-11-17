@@ -23,7 +23,7 @@ export default function MainPage() {
   return (
     <main>
        <LightDarkSwitch onDarkModeChange={handleDarkModeChange} darkMode={isDarkMode} />
-      <Global />
+      <Global darkMode={isDarkMode} />
       <Outlet />
       <Footer />
     </main>

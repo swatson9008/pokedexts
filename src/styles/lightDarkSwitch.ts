@@ -35,7 +35,7 @@ export const LightDarkSwitchStyle = styled.div<isDarkMode>`
   }
 
   .label {
-    background-color: ${(props) => (props.darkMode ? "#292c35" : "#d9d9d9")};
+    background-color: ${(props) => (props.darkMode ? "#14151a" : "#d9d9d9")};
     transition: background 0.2s linear;
     display: flex;
     align-items: center;
