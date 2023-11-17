@@ -4,7 +4,7 @@ const colorTypes = {
     "poison": "hsl(299.2deg 35.89% 40.98%)",
     "bug": "hsl(65.83deg 63.72% 44.31%)",
     "dark": "hsl(24.71deg 26.56% 25.1%)",
-    "dragon": "hsl(43.13deg 95.73% 54.12%)",
+    "dragon": "hsla(328, 100%, 36%, 1)",
     "fairy": "hsl(300deg 74.19% 81.76%)",
     "fighting": "hsl(13.33deg 65.56% 29.61%)",
     "fire": "hsl(13.72deg 88.84% 49.22%)",
