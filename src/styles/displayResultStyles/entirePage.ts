@@ -8,6 +8,8 @@ export const EntireDetailPage = styled.div<IsDarkMode>`
   margin-top: 25px;
   background-color: ${(props) => (props.isDarkMode ? "rgba(255, 255, 255, 0.2)" : "rgba(255, 255, 255, 0.4)")};
   padding: 1vw;
+  color: ${(props) => (props.isDarkMode ? "#fff" : "#000")};
+  transition: background-color 0.2s linear, color 0.2s linear;
 
   .pokeMoves {
     margin-top: 30px;

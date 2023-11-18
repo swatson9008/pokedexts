@@ -1,18 +1,20 @@
 import styled from "styled-components";
+import IsDarkMode from "../isDarkModeInferface";
 
 interface PokeVarietyDisplay {
     hasForms: boolean;
   }
 
-export const PokeVarieties = styled.div <PokeVarietyDisplay>`
+export const PokeVarieties = styled.div <PokeVarietyDisplay & IsDarkMode>`
   display: ${props => (props.hasForms ? "flex" : "none")};
+  background-color: ${(props) => (props.isDarkMode ? "#404258" : "#f2b3e7")};
+  border: ${(props) => (props.isDarkMode ? "1px solid #9e9b9e" : "1px solid #a6799e")};
+  transition: background-color 0.2s linear;
   justify-items: center;
   align-items: center;
   gap: 15px;
   flex-wrap: wrap;
   justify-content: center;
-  background-color: #f2b3e7;
-  border: 1px solid #a6799e;
   padding: 10px;
   border-radius: 10px;
 

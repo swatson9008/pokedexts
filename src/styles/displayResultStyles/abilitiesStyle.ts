@@ -1,20 +1,22 @@
 import styled from "styled-components";
+import IsDarkMode from "../isDarkModeInferface";
 
 interface DoAbilitiesExist {
   abilitiesExist: boolean;
 }
 
-export const AbilitiesStyle = styled.div<DoAbilitiesExist>`
+export const AbilitiesStyle = styled.div<DoAbilitiesExist & IsDarkMode>`
   display: ${({ abilitiesExist }) => (abilitiesExist ? "flex" : "none")};
   flex-direction: column;
   align-items: center;
   justify-content: center;
 
   > div {
-    background-color: #f2b3e7;
+    background-color: ${(props) => (props.isDarkMode ? "#474E68" : "#f2b3e7")};
     padding: 25px;
     border-radius: 25px;
-    border: 1px solid #a6799e;
+    border: ${(props) => (props.isDarkMode ? "1px solid #9e9b9e" : "1px solid #a6799e")};
+    transition: background-color 0.2s linear, border 0.2s linear;
 
     > div {
       span {

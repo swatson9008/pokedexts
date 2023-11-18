@@ -1,10 +1,12 @@
 import styled from "styled-components";
+import IsDarkMode from "../isDarkModeInferface";
+import pokeballbg from '../../assets/pokeballbg.png'
 
 interface numberOfStages {
   stageNumber: number;
 }
 
-export const PokeEvoStyle = styled.div<numberOfStages>`
+export const PokeEvoStyle = styled.div<numberOfStages & IsDarkMode>`
   img {
     image-rendering: pixelated;
   }
@@ -18,6 +20,32 @@ export const PokeEvoStyle = styled.div<numberOfStages>`
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 5px;    
+    
+  }
+
+  .baseEvoImg {
+    position: relative;
+    cursor: pointer;
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url(${pokeballbg}) center/cover no-repeat;
+        background-color: ${(props) => (props.isDarkMode ? "rgba(255, 255, 255, 0.4)" : "rgba(0, 0, 0, 1)")};
+        opacity: 0.20; 
+        border-radius: 50px;
+        z-index: -1;
+        transition: background-color 0.2s linear, opacity 0.2s linear;
+
+      }
+
+      &:hover::before {
+        opacity: 0.50;
+      }
   }
 
   .evoMethod {
