@@ -427,7 +427,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                 <>"Image not found" This Pokemon has no evolution line</>
               ) : (
                 <SingleStageOnly>
-                  <img
+                  <div className="baseEvoImg"><img
                     src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${getIDNo(
                       evolutionChain.chain.species.url
                     )}.png`}
@@ -435,7 +435,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                     onClick={() =>
                       handleMonChange(evolutionChain.chain.species.name)
                     }
-                  />
+                  /></div>
                   This Pokemon has no evolution line
                 </SingleStageOnly>
               )
