@@ -1,17 +1,16 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
-interface isDarkMode {
-    darkMode: boolean
+interface LightDarkSwitchStyleProps {
+  darkMode: boolean;
 }
 
-export const LightDarkSwitchStyle = styled.div<isDarkMode>`
-  
+export const LightDarkSwitchStyle = styled.div<LightDarkSwitchStyleProps>`
   margin-top: 10px;
   margin-bottom: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  
+
   * {
     box-sizing: border-box;
   }
@@ -24,8 +23,8 @@ export const LightDarkSwitchStyle = styled.div<isDarkMode>`
     height: 100vh;
     margin: 0;
     transition: background 0.2s linear;
-    background-color: ${(props) => (props.darkMode ? "#292c35" : "#fff")};
-    color: ${(props) => (props.darkMode ? "#fff" : "#000")};
+    background-color: ${(props) => (props.darkMode ? '#292c35' : '#fff')};
+    color: ${(props) => (props.darkMode ? '#fff' : '#000')};
   }
 
 

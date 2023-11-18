@@ -1,15 +1,25 @@
 import styled from "styled-components";
+import IsDarkMode from "./isDarkModeInferface";
 
-export const SearchBoxStyle = styled.div`
+export const SearchBoxStyle = styled.div<IsDarkMode>`
   position: relative;
 
   input {
-    border: 1px solid #87b5ff;
+    border: none;
+    background-color: ${(props) => (props.isDarkMode ? "#6B728E" : "#fff")};
+    color: ${(props) => (props.isDarkMode ? "#dbdbdb" : "#000")};
     border-radius: 10px;
     height: 3vh;
     width: 300px;
     text-align: center;
     font-size: 15px;
+    transition: background-color 0.2s linear, color 0.2s linear;
+
+    &::placeholder {
+      font-style: italic;
+      color: ${(props) => (props.isDarkMode ? "#dbdbdb" : "#7d7c7c")};
+      transition: color 0.2s linear;
+    }
 
     &:focus {
       outline: none;
@@ -31,7 +41,9 @@ export const SearchBoxStyle = styled.div`
     top: 100%;
     left: 0;
     width: 300px;
-    background-color: #fff;
+    background-color: ${(props) => (props.isDarkMode ? "#6B728E" : "#fff")};
+    color: ${(props) => (props.isDarkMode ? "#fff" : "#000")};
+    transition: background-color 0.2s linear, color 0.2s linear;
     border: 1px solid #87b5ff;
     border-top: none;
     border-radius: 0 0 10px 10px;
@@ -43,7 +55,6 @@ export const SearchBoxStyle = styled.div`
     li {
       padding: 10px;
       cursor: pointer;
-
 
       &:hover {
         background-color: #f0f0f0;

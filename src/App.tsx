@@ -4,10 +4,12 @@ import PokemonDetails from "./pages/pokemonDetails";
 import ListPage from "./pages/list";
 import { PokemonDataProvider } from "./pages/pokemonContext";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { DarkModeProvider } from "./pages/darkModeContext";
 
 function App() {
   return (
     <BrowserRouter>
+    <DarkModeProvider>
       <PokemonDataProvider>
         <Routes>
         <Route element={<MainPage />}>
@@ -17,6 +19,7 @@ function App() {
         </Route>
         </Routes>
       </PokemonDataProvider>
+      </DarkModeProvider>
     </BrowserRouter>
   );
 }

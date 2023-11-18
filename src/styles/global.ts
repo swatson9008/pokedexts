@@ -1,14 +1,14 @@
 import { createGlobalStyle } from "styled-components";
-import isDarkMode from "./isDarkModeInferface";
+import IsDarkMode from "./isDarkModeInferface";
 
-const Global = createGlobalStyle<isDarkMode>`
+export const Global = createGlobalStyle<IsDarkMode>`
   body {
     margin: 0;
     padding: 0;
     display: flex;
     flex-direction: column;
     transition: background 0.2s linear;
-    background-color: ${(props) => (props.darkMode ? "#292c35" : "rgb(164 234 123)")};
+    background-color: ${(props) => (props.isDarkMode ? "#404258" : "rgb(164 234 123)")};
     height: 100%;
   }
 
@@ -24,4 +24,3 @@ const Global = createGlobalStyle<isDarkMode>`
   }
 `;
 
-export default Global;

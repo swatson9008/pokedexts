@@ -8,6 +8,7 @@ import { SearchContainer } from "../styles/searchContainer";
 import { PokemonClient } from "pokenode-ts";
 import { formatString } from "../components/formatString";
 import listOfPokemon from "../libraries/pokemonlist.json";
+import { useDarkMode } from '../pages/darkModeContext';
 
 interface Pokemon {
   name: string;
@@ -16,6 +17,7 @@ interface Pokemon {
 }
 
 export default function SearchBox() {
+  const { isDarkMode } = useDarkMode();
   const [pokeSearch, setSearch] = useState<string>("");
   const [suggestedPokes, setSuggested] = useState<Pokemon[]>([]);
   const { storePokemonData } = usePokemonData();
@@ -92,7 +94,7 @@ export default function SearchBox() {
   return (
     <div className="searchMain">
       <SearchContainer>
-        <SearchBoxStyle>
+        <SearchBoxStyle isDarkMode={isDarkMode}>
           <input
             type="text"
             id="searchInput"

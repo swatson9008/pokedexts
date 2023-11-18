@@ -1,10 +1,10 @@
 import styled from "styled-components";
-import isDarkMode from "./isDarkModeInferface";
+import IsDarkMode from "./isDarkModeInferface";
 
-export const FooterBox = styled.div<isDarkMode>`
+export const FooterBox = styled.div<IsDarkMode>`
   transition: color 0.2s linear;
   color: ${(props) =>
-    props.darkMode ? "#c9c9c9" : "#5e5e5e"};
+    props.isDarkMode ? "#c9c9c9" : "#5e5e5e"};
   display: flex;
   flex-direction: column;
   margin-top: 50px;
