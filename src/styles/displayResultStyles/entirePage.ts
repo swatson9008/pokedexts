@@ -1,11 +1,12 @@
 import styled from "styled-components";
+import IsDarkMode from "../isDarkModeInferface";
 
-export const EntireDetailPage = styled.div`
+export const EntireDetailPage = styled.div<IsDarkMode>`
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-top: 25px;
-  background-color: rgba(255, 255, 255, 0.4);
+  background-color: ${(props) => (props.isDarkMode ? "rgba(255, 255, 255, 0.2)" : "rgba(255, 255, 255, 0.4)")};
   padding: 1vw;
 
   .pokeMoves {

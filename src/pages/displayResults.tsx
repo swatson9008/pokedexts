@@ -34,6 +34,7 @@ import MoveInfoDisplay from "./moveInfoDisplay";
 import { PokeEvoStyle } from "../styles/displayResultStyles/pokeEvoStyle";
 import { SingleStageOnly } from "../styles/displayResultStyles/singleStageOnly";
 import { EvolutionDisplay } from "../styles/displayResultStyles/evolutionDisplay";
+import { useDarkMode } from '../pages/darkModeContext';
 
 interface DisplayResultsProps {
   pokeData: PokemonData;
@@ -71,6 +72,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
     null
   );
   const [moveDisplayStates, setMoveDisplayStates] = useState(new Map());
+  const { isDarkMode } = useDarkMode();
 
   const moveList = useMemo(() => {
     if (sortedData.pokeMoves && sortedData.pokeMoves[gameTitle]) {
@@ -278,7 +280,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
   return (
     <div className="displayDetails">
       <div className="displayResult">
-        <EntireDetailPage key={sortedData.pokeName}>
+        <EntireDetailPage key={sortedData.pokeName} isDarkMode={isDarkMode}>
           <PokeVarieties
             hasForms={pokeForms[0].forms[0].length > 1 ? true : false}
           >
