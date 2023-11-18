@@ -116,9 +116,9 @@ export default function SearchBox() {
           )}
         </SearchBoxStyle>
         <div>
-          <ButtonContainer onClick={handleSearch}>Search</ButtonContainer>
-          <ButtonContainer onClick={handleList}>List</ButtonContainer>
-          <ButtonContainer onClick={randomizer}>Random</ButtonContainer>
+          <ButtonContainer onClick={handleSearch} isDarkMode={isDarkMode}>Search</ButtonContainer>
+          <ButtonContainer onClick={handleList} isDarkMode={isDarkMode}>List</ButtonContainer>
+          <ButtonContainer onClick={randomizer} isDarkMode={isDarkMode}>Random</ButtonContainer>
         </div>
       </SearchContainer>
     </div>
