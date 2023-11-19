@@ -86,8 +86,14 @@ export const PokeEvoStyle = styled.div<numberOfStages & IsDarkMode>`
     }
 
     > div {
-      background-color: rgba(255, 255, 255, 0.4);
+      background-color: ${(props) =>
+        props.isDarkMode ? "#50577A" : "rgba(255, 255, 255, 0.4)"};
+      text-align: center;
       border-radius: 5px;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
       padding: 5px;
     }
   }
@@ -191,7 +197,8 @@ export const PokeEvoStyle = styled.div<numberOfStages & IsDarkMode>`
       grid-column: 1;
       grid-row: 1 / span 2;
       position: relative;
-      background: #cfd4d5;
+      background: ${(props) =>
+        props.isDarkMode ? "#404258" : "rgba(255, 255, 255, 0.4)"};
       border: ${(props) =>
         props.isDarkMode ? "4px solid #6e6e6e" : "4px solid #cbf5cd"};
       padding: 20px;

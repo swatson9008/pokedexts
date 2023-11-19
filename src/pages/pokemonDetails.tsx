@@ -6,11 +6,13 @@ import Search from "../components/search";
 import { PokemonData } from "../components/pokemonData";
 import { getIDNo } from "../components/formatString";
 import { DetailsPage } from "../styles/detailsStyle";
+import { useDarkMode } from "./darkModeContext";
 
 export default function PokemonDetails() {
   const { name } = useParams<{ name: string }>() ?? { name: '' };
   const [pokemonDetails, setPokemonDetails] = useState<PokemonData | null>(null);
   const [keyValue, setKV] = useState<number>(0);
+  const { isDarkMode } = useDarkMode();
 
 
   useEffect(() => {
@@ -37,7 +39,7 @@ export default function PokemonDetails() {
   
 
   return (
-    <DetailsPage>
+    <DetailsPage isDarkMode={isDarkMode}>
       <SearchBox />
       {pokemonDetails ? (
         <DisplayResults pokeData={pokemonDetails} key={keyValue}/>
