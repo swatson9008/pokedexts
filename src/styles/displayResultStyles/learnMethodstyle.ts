@@ -1,6 +1,7 @@
 import styled from "styled-components";
+import IsDarkMode from "../isDarkModeInferface";
 
-export const LearnMethodStyle = styled.div`
+export const LearnMethodStyle = styled.div<IsDarkMode>`
 
   .learnMethodList {
     display: flex;
@@ -13,7 +14,8 @@ export const LearnMethodStyle = styled.div`
       text-align: center;
       padding: 10px;
       cursor: pointer;
-      background-color: rgb(164 234 123);
+      background-color: ${(props) => (props.isDarkMode ? "#50577A" : "rgb(164 234 123)")};
+      transition: background-color 0.2s linear;
       opacity: 50%;
 
       &:hover { 

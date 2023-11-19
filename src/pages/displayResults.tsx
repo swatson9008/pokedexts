@@ -552,7 +552,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                 </VarietyLabels>
               ))}
             </PokeVarieties>
-            <LearnMethodStyle>
+            <LearnMethodStyle isDarkMode={isDarkMode}>
               <div className="learnMethodList">
                 {learnMethodList.map((method, index) => (
                   <div

@@ -5,6 +5,7 @@ import { AlgoStyle } from "../../styles/algoStyle";
 import { PokemonClient } from "pokenode-ts";
 import { formatString, getIDNo } from "../../components/formatString";
 import { GlowFilter } from "../../styles/glowFilter";
+import { useDarkMode } from "../darkModeContext";
 interface Pokemon {
   name: string;
   url: string;
@@ -21,10 +22,12 @@ interface ListAlgosProps {
 const ListAlgos: React.FC<ListAlgosProps> = ({ setList, backupList, list }) => {
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
   const api = new PokemonClient();
+  const { isDarkMode } = useDarkMode();
   const sortAlpha = () => {
     const sortedList = [...list].sort((a, b) => a.name.localeCompare(b.name));
     setList(sortedList);
   };
+  
 
   const typeSort = async (type: string) => {
     if (selectedTypes.length === 2) {
@@ -188,7 +191,7 @@ const ListAlgos: React.FC<ListAlgosProps> = ({ setList, backupList, list }) => {
   }));
 
   return (
-    <AlgoStyle>
+    <AlgoStyle isDarkMode={isDarkMode}>
       <button onClick={resetAlgo}>Reset</button>
       <button onClick={sortByNo}>Sort By Dex Order</button>
       <button onClick={sortByReverseNo}>Sort By Reverse Dex Order</button>
