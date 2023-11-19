@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { usePokemonData } from "./pokemonContext";
 import { PokemonListStyle } from "../styles/listDisplayStyle";
 import ListAlgos from "./listAlgos";
+import { useDarkMode } from "./darkModeContext";
 
 interface Pokemon {
   name: string;
@@ -17,7 +18,7 @@ const ListPage: React.FC = () => {
   const navigate = useNavigate();
   const { storePokemonData } = usePokemonData();
   const masterList = listOfPokemon.slice(0, 1017)
-
+  const { isDarkMode } = useDarkMode();
   const [visibleEntries, setVisibleEntries] = useState<number>(50);
   const totalEntries = masterList.length;
   const [pokemonList, setPokemonList] = useState<Pokemon[]>(masterList);
@@ -68,7 +69,7 @@ const ListPage: React.FC = () => {
   return (
     <div>
       <ListAlgos setList={setPokemonList} list={pokemonList} backupList={backupList} />
-      <PokemonListStyle>{displayedList}</PokemonListStyle>
+      <PokemonListStyle isDarkMode={isDarkMode}>{displayedList}</PokemonListStyle>
     </div>
   );
 };

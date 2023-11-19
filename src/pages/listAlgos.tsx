@@ -4,6 +4,7 @@ import { AlgoStyle } from "../styles/algoStyle";
 import { PokemonClient } from "pokenode-ts";
 import { formatString, getIDNo } from "../components/formatString";
 import { ButtonContainer } from "../styles/normalButtons";
+import { useDarkMode } from "./darkModeContext";
 interface Pokemon {
   name: string;
   url: string;
@@ -19,6 +20,7 @@ interface ListAlgosProps {
 const ListAlgos: React.FC<ListAlgosProps> = ({ setList, backupList, list }) => {
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
   const api = new PokemonClient();
+  const { isDarkMode } = useDarkMode();
   const sortAlpha = () => {
     const sortedList = [...list].sort((a, b) => a.name.localeCompare(b.name));
     setList(sortedList);
@@ -138,12 +140,12 @@ const ListAlgos: React.FC<ListAlgosProps> = ({ setList, backupList, list }) => {
   }));
 
   return (
-    <AlgoStyle>
+    <AlgoStyle isDarkMode={isDarkMode}>
       <div className="sortBox">
-      <ButtonContainer onClick={sortByNo}>Dex Order</ButtonContainer>
-      <ButtonContainer onClick={sortByReverseNo}>Reverse Dex Order</ButtonContainer>
-      <ButtonContainer onClick={sortAlpha}>Alphabetically</ButtonContainer>
-      <ButtonContainer onClick={reverseAlpha}>Reverse Alphabetically</ButtonContainer>
+      <ButtonContainer isDarkMode={isDarkMode} onClick={sortByNo}>Dex Order</ButtonContainer>
+      <ButtonContainer isDarkMode={isDarkMode} onClick={sortByReverseNo}>Reverse Dex Order</ButtonContainer>
+      <ButtonContainer isDarkMode={isDarkMode} onClick={sortAlpha}>Alphabetically</ButtonContainer>
+      <ButtonContainer isDarkMode={isDarkMode} onClick={reverseAlpha}>Reverse Alphabetically</ButtonContainer>
       </div>
       <div className="dropdownBox">
       <div>
@@ -182,7 +184,7 @@ const ListAlgos: React.FC<ListAlgosProps> = ({ setList, backupList, list }) => {
         </select>
       </div>
       </div>
-      <div className="resetBox"><ButtonContainer onClick={resetAlgo}>Reset</ButtonContainer></div>
+      <div className="resetBox"><ButtonContainer isDarkMode={isDarkMode} onClick={resetAlgo}>Reset</ButtonContainer></div>
 
     </AlgoStyle>
   );

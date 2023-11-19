@@ -1,12 +1,15 @@
 import styled from "styled-components";
+import IsDarkMode from "./isDarkModeInferface";
 
-export const PokemonListStyle = styled.div`
+export const PokemonListStyle = styled.div<IsDarkMode>`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   margin-top: 25px;
-  background-color: rgba(255, 255, 255, 0.4);
+  background-color: ${(props) => (props.isDarkMode ? "rgba(255, 255, 255, 0.2)" : "rgba(255, 255, 255, 0.4)")};
+  color: ${(props) => (props.isDarkMode ? "#fff" : "#000")};
+  transition: background-color 0.2s linear, color 0.2s linear;
 
   > div {
     display: flex;
@@ -19,6 +22,7 @@ export const PokemonListStyle = styled.div`
 
     &:hover {
       background-color: rgba(255, 255, 255, 0.5);
+      color: ${(props) => (props.isDarkMode ? "#000" : "")};
     }
   }
 
