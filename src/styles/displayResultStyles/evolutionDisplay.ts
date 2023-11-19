@@ -45,7 +45,7 @@ export const EvolutionDisplay = styled.div<IsDarkMode>`
       }
 
       img {
-        /* Styles for your image inside the .monInfo container */
+       
       }
     }
 

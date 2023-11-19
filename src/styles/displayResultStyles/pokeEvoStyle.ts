@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import IsDarkMode from "../isDarkModeInferface";
-import pokeballbg from '../../assets/pokeballbg.png'
+import pokeballbg from "../../assets/pokeballbg.png";
 
 interface numberOfStages {
   stageNumber: number;
@@ -20,38 +20,39 @@ export const PokeEvoStyle = styled.div<numberOfStages & IsDarkMode>`
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 5px;    
-    
+    gap: 5px;
+    padding-bottom: 1px;
   }
 
   .baseEvoImg {
     position: relative;
     cursor: pointer;
     &::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: url(${pokeballbg}) center/cover no-repeat;
-        background-color: ${(props) => (props.isDarkMode ? "rgba(255, 255, 255, 0.4)" : "rgba(0, 0, 0, 1)")};
-        opacity: 0.20; 
-        border-radius: 50px;
-        z-index: -1;
-        transition: background-color 0.2s linear, opacity 0.2s linear;
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url(${pokeballbg}) center/cover no-repeat;
+      background-color: ${(props) =>
+        props.isDarkMode ? "rgba(255, 255, 255, 0.4)" : "rgba(0, 0, 0, 1)"};
+      opacity: 0.2;
+      border-radius: 50px;
+      z-index: -1;
+      transition: background-color 0.2s linear, opacity 0.2s linear;
+    }
 
-      }
-
-      &:hover::before {
-        opacity: 0.50;
-      }
+    &:hover::before {
+      opacity: 0.5;
+    }
   }
 
   .evoMethod {
     position: relative;
     background: #cfd4d5;
-    border: 4px solid #cbf5cd;
+    border: ${(props) =>
+      props.isDarkMode ? "4px solid #6e6e6e" : "4px solid #cbf5cd"};
     padding: 20px;
     max-width: 18vw;
     display: flex;
@@ -60,7 +61,6 @@ export const PokeEvoStyle = styled.div<numberOfStages & IsDarkMode>`
     justify-content: center;
     gap: 10px;
     line-height: 1.3;
-    
 
     &::before,
     &::after {
@@ -85,11 +85,10 @@ export const PokeEvoStyle = styled.div<numberOfStages & IsDarkMode>`
       margin-top: -36px;
     }
 
-    > div { 
+    > div {
       background-color: rgba(255, 255, 255, 0.4);
       border-radius: 5px;
       padding: 5px;
-    
     }
   }
 
@@ -115,10 +114,12 @@ export const PokeEvoStyle = styled.div<numberOfStages & IsDarkMode>`
       &::before,
       &::after {
         right: 100%;
+        top: 50%;
       }
 
       &::before {
-        border-right-color: #cbf5cd;
+        border-right-color: ${(props) =>
+          props.isDarkMode ? "#6e6e6e" : "#cbf5cd"};
       }
 
       &::after {
@@ -133,7 +134,8 @@ export const PokeEvoStyle = styled.div<numberOfStages & IsDarkMode>`
       }
 
       &::before {
-        border-left-color: #cbf5cd;
+        border-left-color: ${(props) =>
+          props.isDarkMode ? "#6e6e6e" : "#cbf5cd"};
       }
 
       &::after {
@@ -190,7 +192,8 @@ export const PokeEvoStyle = styled.div<numberOfStages & IsDarkMode>`
       grid-row: 1 / span 2;
       position: relative;
       background: #cfd4d5;
-      border: 4px solid #cbf5cd;
+      border: ${(props) =>
+        props.isDarkMode ? "4px solid #6e6e6e" : "4px solid #cbf5cd"};
       padding: 20px;
       max-width: 18vw;
 
@@ -204,7 +207,8 @@ export const PokeEvoStyle = styled.div<numberOfStages & IsDarkMode>`
       }
 
       &::before {
-        border-left-color: #cbf5cd;
+        border-left-color: ${(props) =>
+          props.isDarkMode ? "#6e6e6e" : "#cbf5cd"};
       }
     }
 
