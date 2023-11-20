@@ -1,6 +1,7 @@
 import styled from "styled-components";
+import IsDarkMode from "../isDarkModeInferface";
 
-export const BaseStatStyles = styled.div`
+export const BaseStatStyles = styled.div<IsDarkMode>`
   margin-left: 20px;
   display: flex;
   flex-direction: column;

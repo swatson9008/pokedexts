@@ -21,15 +21,15 @@ interface PokeStat {
   base_stat: string;
 }
 
-export const options: any = {
+export const options: any = (isDarkMode: boolean) => ({
   plugins: {
     datalabels: {
       display: true,
+      color: isDarkMode ? "white" : "black",
       anchor: "end",
       align: "right",
       font: {
-        weight: "bold",
-        size: 16, 
+        size: 16,
       },
     },
   },
@@ -41,15 +41,15 @@ export const options: any = {
   },
   layout: {
     padding: {
-      left: 0, 
-      right: 60, 
+      left: 0,
+      right: 60,
     },
   },
   title: {
     display: true,
     text: "Base Stats",
     font: {
-      size: 18, 
+      size: 18,
       weight: "bold",
     },
   },
@@ -64,20 +64,17 @@ export const options: any = {
     y: {
       grid: { display: false },
       ticks: {
-        color: "black",
+        color: isDarkMode ? "white" : "black",
         font: {
-          size: 14, // Increase the font size of the Y-axis labels
+          size: 14,
         },
       },
     },
   },
-};
+});
 
-
-
-
-export function baseStatBarChart(pokeStats: PokeStat[]) {
-  const labels = [ 
+export function baseStatBarChart(pokeStats: PokeStat[], isDarkMode: boolean) {
+  const labels = [
     "HP",
     "Attack",
     "Defense",
@@ -91,20 +88,32 @@ export function baseStatBarChart(pokeStats: PokeStat[]) {
   );
 
   const backgroundColor = dataValues.map((value) => {
-    if (value < 35) {
+    if (value < 35 && isDarkMode === false) {
       return "#b50b19";
-    } else if (value >= 35 && value <= 50) {
+    } else if (value < 35 && isDarkMode === true) {
+      return "#2f293b";
+    } else if (value >= 35 && value <= 50 && isDarkMode === false) {
       return "#b84d0b";
-    } else if (value >= 51 && value <= 75) {
+    } else if (value >= 35 && value <= 50 && isDarkMode === true) {
+      return "#574d6e";
+    } else if (value >= 51 && value <= 75 && isDarkMode === false) {
       return "#e6f169";
-    } else if (value >= 76 && value <= 99) {
+    } else if (value >= 51 && value <= 75 && isDarkMode === true) {
+      return "#685d83";
+    } else if (value >= 76 && value <= 99 && isDarkMode === false) {
       return "#b0eb7c";
-    } else if (value >= 100 && value <= 125) {
+    } else if (value >= 76 && value <= 99 && isDarkMode === true) {
+      return "#8172a5";
+    } else if (value >= 100 && value <= 126 && isDarkMode === false) {
       return "#4ced51";
-    } else if (value > 126) {
+    } else if (value >= 100 && value <= 126 && isDarkMode === true) {
+      return "#8b7ead";
+    } else if (value > 126 && isDarkMode === false) {
       return "#4cedbf";
+    } else if (value > 126 && isDarkMode === true) {
+      return "#b7a7e4";
     } else {
-      return "rgba(255, 99, 132, 0.5)";
+      return "rgba(255, 255, 255, 0.5)";
     }
   });
 
@@ -122,5 +131,5 @@ export function baseStatBarChart(pokeStats: PokeStat[]) {
     ],
   };
 
-  return <Bar options={options} data={data} />;
+  return <Bar options={options(isDarkMode)} data={data} />;
 }

@@ -393,9 +393,9 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                 </div>
               )}
             </AbilitiesStyle>
-            <BaseStatStyles>
+            <BaseStatStyles isDarkMode={isDarkMode}>
               <div className="baseChart">
-                {baseStatBarChart(pokeData.pokeStats)}
+                {baseStatBarChart(pokeData.pokeStats, isDarkMode)}
                 <div className="BST">
                   Total:{" "}
                   {pokeData.pokeStats.reduce(
