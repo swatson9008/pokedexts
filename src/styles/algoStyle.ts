@@ -13,23 +13,34 @@ export const AlgoStyle = styled.div<IsDarkMode>`
   padding-top: 10px;
   padding-bottom: 10px;
   z-index: 100;
-  background-color: ${(props) => (props.isDarkMode ? "#404258" : "rgb(164 234 123)")};
-  transition: background 0.2s linear;
+  background-color: ${(props) =>
+    props.isDarkMode ? "#404258" : "rgb(164 234 123)"};
+  transition: background-color 0.2s linear;
 
-  .sortBox {
-    display: flex;
-    align-items: center;
-    flex-direction: row;
-    height: 100px;
-    gap: 10px;
-    width: fit-content;
-    ${ButtonContainer} {
-      flex: initial;
-    }
+  select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    text-indent: 1px;
+    text-overflow: "";
   }
 
   .dropdownBox {
     display: flex;
+    gap: 8px;
+
+    > div > select {
+      color: ${(props) =>
+    props.isDarkMode ? "white" : "black"};
+      background-color: ${(props) =>
+        props.isDarkMode ? "#50577A" : "#e2bef7"};
+      transition: background-color 0.2s linear color 0.2s linear;
+      padding: 5px;
+
+      &:focus {
+        border-color: transparent;
+      }
+    }
   }
 
   .resetBox {
@@ -37,6 +48,29 @@ export const AlgoStyle = styled.div<IsDarkMode>`
       flex: initial;
     }
     margin-top: 10px;
+  }
+
+  @media only screen and (max-device-width: 768px) and (orientation: portrait) {
+    .sortBox {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+  }
+
+  @media only screen and (min-device-width: 769px) {
+    .sortBox {
+      display: flex;
+      align-items: center;
+      flex-direction: row;
+      height: 100px;
+      gap: 10px;
+      width: fit-content;
+      ${ButtonContainer} {
+        flex: initial;
+      }
+    }
   }
 
   /*.typeFilters {
