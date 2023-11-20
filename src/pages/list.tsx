@@ -19,7 +19,7 @@ const ListPage: React.FC = () => {
   const { storePokemonData } = usePokemonData();
   const masterList = listOfPokemon.slice(0, 1017)
   const { isDarkMode } = useDarkMode();
-  const [visibleEntries, setVisibleEntries] = useState<number>(50);
+  const [visibleEntries, setVisibleEntries] = useState<number>(75);
   const totalEntries = masterList.length;
   const [pokemonList, setPokemonList] = useState<Pokemon[]>(masterList);
   const backupList: Pokemon[] = masterList;
