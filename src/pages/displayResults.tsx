@@ -34,6 +34,7 @@ import MoveInfoDisplay from "./moveInfoDisplay";
 import { PokeEvoStyle } from "../styles/displayResultStyles/pokeEvoStyle";
 import { SingleStageOnly } from "../styles/displayResultStyles/singleStageOnly";
 import { EvolutionDisplay } from "../styles/displayResultStyles/evolutionDisplay";
+import { DropdownDisplay } from "../styles/displayResultStyles/dropdownStyle";
 import { useDarkMode } from "../pages/darkModeContext";
 
 interface DisplayResultsProps {
@@ -427,15 +428,17 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                 <>"Image not found" This Pokemon has no evolution line</>
               ) : (
                 <SingleStageOnly>
-                  <div className="baseEvoImg"><img
-                    src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${getIDNo(
-                      evolutionChain.chain.species.url
-                    )}.png`}
-                    alt=""
-                    onClick={() =>
-                      handleMonChange(evolutionChain.chain.species.name)
-                    }
-                  /></div>
+                  <div className="baseEvoImg">
+                    <img
+                      src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${getIDNo(
+                        evolutionChain.chain.species.url
+                      )}.png`}
+                      alt=""
+                      onClick={() =>
+                        handleMonChange(evolutionChain.chain.species.name)
+                      }
+                    />
+                  </div>
                   This Pokemon has no evolution line
                 </SingleStageOnly>
               )
@@ -448,14 +451,16 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                     handleMonChange(evolutionChain.chain.species.name)
                   }
                 >
-                  <div className="baseEvoImg">{evolutionChain ? (
-                    <img
-                      src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${getIDNo(
-                        evolutionChain.chain.species.url
-                      )}.png`}
-                      alt=""
-                    />
-                  ) : null}</div>
+                  <div className="baseEvoImg">
+                    {evolutionChain ? (
+                      <img
+                        src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${getIDNo(
+                          evolutionChain.chain.species.url
+                        )}.png`}
+                        alt=""
+                      />
+                    ) : null}
+                  </div>
                   <div>
                     {evolutionChain?.chain.species.name !== undefined
                       ? formatString(evolutionChain?.chain.species.name)
@@ -464,7 +469,10 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                 </div>
                 <div className="firstStageEvo">
                   {evolutionChain?.chain.evolves_to.map((evolution, index) => (
-                    <EvolutionDisplay key={evolution.species.name} isDarkMode={isDarkMode}>
+                    <EvolutionDisplay
+                      key={evolution.species.name}
+                      isDarkMode={isDarkMode}
+                    >
                       <div className="evoMethod">
                         {evolution.evolution_details.map(
                           (_method, methodIndex) => (
@@ -480,15 +488,17 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                         )}
                       </div>
                       <div className="monInfo">
-                        <div><img
-                          src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${getIDNo(
-                            evolution.species.url
-                          )}.png`}
-                          alt={evolution.species.name}
-                          onClick={() =>
-                            handleMonChange(evolution.species.name)
-                          }
-                        /></div>
+                        <div>
+                          <img
+                            src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${getIDNo(
+                              evolution.species.url
+                            )}.png`}
+                            alt={evolution.species.name}
+                            onClick={() =>
+                              handleMonChange(evolution.species.name)
+                            }
+                          />
+                        </div>
                         {evolution.species.name !== undefined
                           ? formatString(evolution.species.name)
                           : ""}
@@ -501,7 +511,10 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                     ? null
                     : evolutionChain?.chain.evolves_to[0].evolves_to.map(
                         (evolution, index) => (
-                          <EvolutionDisplay key={evolution.species.name} isDarkMode={isDarkMode}>
+                          <EvolutionDisplay
+                            key={evolution.species.name}
+                            isDarkMode={isDarkMode}
+                          >
                             <div className="evoMethod" key={index}>
                               {evolution.evolution_details.map(
                                 (_method, methodIndex) => (
@@ -517,15 +530,17 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                               )}
                             </div>
                             <div className="monInfo">
-                              <div><img
-                                src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${getIDNo(
-                                  evolution.species.url
-                                )}.png`}
-                                alt={evolution.species.name}
-                                onClick={() =>
-                                  handleMonChange(evolution.species.name)
-                                }
-                              /></div>
+                              <div>
+                                <img
+                                  src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${getIDNo(
+                                    evolution.species.url
+                                  )}.png`}
+                                  alt={evolution.species.name}
+                                  onClick={() =>
+                                    handleMonChange(evolution.species.name)
+                                  }
+                                />
+                              </div>
                               {evolution.species.name !== undefined
                                 ? formatString(evolution.species.name)
                                 : ""}
@@ -552,6 +567,18 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                 </VarietyLabels>
               ))}
             </PokeVarieties>
+            <DropdownDisplay
+              isDarkMode={isDarkMode}
+              hasForms={true}
+              value={gameTitle}
+              onChange={(event) => handleTitle(event.target.value)}
+            >
+              {Object.keys(sortedData.pokeMoves).map((title, index) => (
+                <option key={index} value={title}>
+                  {formatString(title)}
+                </option>
+              ))}
+            </DropdownDisplay>
             <LearnMethodStyle isDarkMode={isDarkMode}>
               <div className="learnMethodList">
                 {learnMethodList.map((method, index) => (
