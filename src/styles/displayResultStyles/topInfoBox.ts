@@ -14,10 +14,6 @@ display: flex;
     padding: 25px;
 }
 
-> div.mainPicture img {
-    image-rendering: pixelated;
-}
-
 
 
 > div.topInfoBox > div {

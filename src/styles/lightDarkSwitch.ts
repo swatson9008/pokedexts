@@ -63,7 +63,6 @@ export const LightDarkSwitchStyle = styled.div<LightDarkSwitchStyleProps>`
 
   .spriteDark img, .spriteLight img {
     width: 27px;
-    image-rendering: pixelated;
   }
 
   .ball img {

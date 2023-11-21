@@ -11,7 +11,6 @@ justify-content: center;
 gap: 15px;
 
 img {
-    image-rendering: pixelated;
     cursor: pointer;
 }
 

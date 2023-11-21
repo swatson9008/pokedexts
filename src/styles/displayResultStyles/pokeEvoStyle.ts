@@ -7,9 +7,6 @@ interface numberOfStages {
 }
 
 export const PokeEvoStyle = styled.div<numberOfStages & IsDarkMode>`
-  img {
-    image-rendering: pixelated;
-  }
   margin-top: 20px;
 
   .pokeEvoChain {

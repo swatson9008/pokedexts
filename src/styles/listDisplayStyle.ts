@@ -18,7 +18,6 @@ export const PokemonListStyle = styled.div<IsDarkMode>`
     cursor: pointer;
     height: 120px;
     width: 120px;
-    //image-rendering: pixelated;
     transition: background-color 0.2s linear, color 0.2s linear;
 
     &:hover {
