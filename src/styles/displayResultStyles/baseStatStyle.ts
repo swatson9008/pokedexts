@@ -20,13 +20,13 @@ export const BaseStatStyles = styled.div<IsDarkMode>`
     height: 100%; 
   }
 
-  @media only screen and (max-device-width: 768px) and (orientation: portrait) {
+  @media only screen and (max-width: 799px) {
     width: 85vw;
 
   }
 
 
-  @media only screen and (min-device-width: 769px) {
+  @media only screen and (min-width: 900px) {
     width: 35vw;
   }
 `;

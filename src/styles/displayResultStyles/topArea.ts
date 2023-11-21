@@ -11,11 +11,11 @@ export const TopAreaStyle = styled.div`
   justify-content: space-around;
   align-items: center;
 
-  @media only screen and (max-device-width: 768px) and (orientation: portrait) {
+  @media only screen and (max-width: 799px) {
     flex-direction: column;
   }
 
-  @media only screen and (min-device-width: 769px) {
+  @media only screen and (min-width: 800px) {
     
   }
 `;

@@ -49,10 +49,10 @@ export const EvolutionDisplay = styled.div<IsDarkMode>`
       }
     }
 
-  @media only screen and (max-device-width: 768px) and (orientation: portrait) {
+  @media only screen and (max-width: 799px) {
   }
 
-  @media only screen and (min-device-width: 769px) {
+  @media only screen and (min-width: 800px) {
     align-items: center;
   }
 }

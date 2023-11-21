@@ -97,7 +97,7 @@ export const PokeEvoStyle = styled.div<numberOfStages & IsDarkMode>`
     }
   }
 
-  @media only screen and (max-device-width: 768px) and (orientation: portrait) {
+  @media only screen and (max-width: 799px)  {
     width: 100%;
 
     .firstStageEvo,
@@ -151,7 +151,7 @@ export const PokeEvoStyle = styled.div<numberOfStages & IsDarkMode>`
     }
   }
 
-  @media only screen and (min-device-width: 769px) {
+  @media only screen and (min-width: 799px) {
     display: flex;
     justify-content: space-evenly;
 

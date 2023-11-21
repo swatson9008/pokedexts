@@ -26,7 +26,7 @@ export const PokemonListStyle = styled.div<IsDarkMode>`
     }
   }
 
-  @media only screen and (min-device-width: 769px) {
+  @media only screen and (min-width: 800px) {
     width: 90vw;
     flex-direction: row;
     flex-wrap: wrap;
@@ -38,8 +38,8 @@ export const PokemonListStyle = styled.div<IsDarkMode>`
     }
   }
 
-  @media only screen and (max-device-width: 768px) and (orientation: portrait) {
-    width: 100vw;
+  @media only screen and (max-width: 799px) {
+    width: 95vw;
     > div {
       width: 90%;
       justify-content: space-evenly;

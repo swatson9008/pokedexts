@@ -19,11 +19,11 @@ export const PokeVarieties = styled.div <PokeVarietyDisplay & IsDarkMode>`
   border-radius: 10px;
 
 
-  @media only screen and (min-device-width: 769px) {
+  @media only screen and (min-width: 799px) {
     max-width: 60vw;
   }
 
-  @media only screen and (max-device-width: 768px) and (orientation: portrait) {
+  @media only screen and (max-width: 800px)  {
     width: 90vw;
   }
 `;

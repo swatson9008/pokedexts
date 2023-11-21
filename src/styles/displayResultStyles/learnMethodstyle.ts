@@ -41,7 +41,7 @@ export const LearnMethodStyle = styled.div<IsDarkMode>`
     cursor: pointer;
   }
 
-  @media only screen and (max-device-width: 768px) and (orientation: portrait) {
+  @media only screen and (max-width: 799px)  {
     max-width: 96vw;
   }
 

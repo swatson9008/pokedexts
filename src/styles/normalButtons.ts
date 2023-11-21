@@ -12,6 +12,5 @@ transition: background-color 0.2s linear, color 0.2s linear, border 0.2s linear;
 font-size: 15px;
 padding: 5px;
 text-align: center;
-//margin-top: 5px;
 cursor: pointer;
 `

@@ -91,27 +91,27 @@ export function baseStatBarChart(pokeStats: PokeStat[], isDarkMode: boolean) {
     if (value < 35 && isDarkMode === false) {
       return "#b50b19";
     } else if (value < 35 && isDarkMode === true) {
-      return "#2f293b";
+      return "#750a13";
     } else if (value >= 35 && value <= 50 && isDarkMode === false) {
       return "#b84d0b";
     } else if (value >= 35 && value <= 50 && isDarkMode === true) {
-      return "#574d6e";
+      return "#863c0d";
     } else if (value >= 51 && value <= 75 && isDarkMode === false) {
       return "#e6f169";
     } else if (value >= 51 && value <= 75 && isDarkMode === true) {
-      return "#685d83";
+      return "#aab350";
     } else if (value >= 76 && value <= 99 && isDarkMode === false) {
       return "#b0eb7c";
     } else if (value >= 76 && value <= 99 && isDarkMode === true) {
-      return "#8172a5";
+      return "#84b15e";
     } else if (value >= 100 && value <= 126 && isDarkMode === false) {
       return "#4ced51";
     } else if (value >= 100 && value <= 126 && isDarkMode === true) {
-      return "#8b7ead";
+      return "#35a539";
     } else if (value > 126 && isDarkMode === false) {
       return "#4cedbf";
     } else if (value > 126 && isDarkMode === true) {
-      return "#b7a7e4";
+      return "#309478";
     } else {
       return "rgba(255, 255, 255, 0.5)";
     }

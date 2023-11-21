@@ -27,11 +27,11 @@ export const AbilitiesStyle = styled.div<DoAbilitiesExist & IsDarkMode>`
     }
   }
 
-  @media only screen and (max-device-width: 768px) and (orientation: portrait) {
+  @media only screen and (max-width: 799px) {
     margin-top: 20px;
   }
 
-  @media only screen and (min-device-width: 769px) {
+  @media only screen and (min-width: 800px) {
     width: 35vw;
   }
 `;

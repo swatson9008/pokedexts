@@ -50,7 +50,7 @@ export const AlgoStyle = styled.div<IsDarkMode>`
     margin-top: 10px;
   }
 
-  @media only screen and (max-device-width: 768px) and (orientation: portrait) {
+  @media only screen and (max-width: 799px) {
     .sortBox {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -59,7 +59,7 @@ export const AlgoStyle = styled.div<IsDarkMode>`
     }
   }
 
-  @media only screen and (min-device-width: 769px) {
+  @media only screen and (min-width: 800px) {
     .sortBox {
       display: flex;
       align-items: center;

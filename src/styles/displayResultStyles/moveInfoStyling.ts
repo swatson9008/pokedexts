@@ -10,7 +10,7 @@ export const MoveInfoStyle = styled.div`
     max-width: 60px;
   }
 
-  @media only screen and (max-device-width: 768px) and (orientation: portrait) {
+  @media only screen and (max-device-width: 799px) {
     padding: 5px;
   }
 

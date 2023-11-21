@@ -18,7 +18,7 @@ flex-direction: column;
 }
 
 
-  @media only screen and (min-device-width: 769px) {
+  @media only screen and (min-width: 799px) {
     margin-top: 20px;
     > div.searchMain > div {
     display: flex;
@@ -28,14 +28,13 @@ flex-direction: column;
 }
   }
 
-  @media only screen and (max-device-width: 768px) and (orientation: portrait) {
+  @media only screen and (max-width: 800px) {
     .searchMain {
       position: sticky;
       top: 0;
       padding-top: 10px;
       padding-bottom: 10px;
       z-index: 100;
-      width: 100vw;
       background-color: ${(props) => (props.isDarkMode ? "#404258" : "rgb(164 234 123)")};
       transition: background 0.2s linear;
     }

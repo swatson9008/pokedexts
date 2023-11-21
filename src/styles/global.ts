@@ -21,7 +21,7 @@ export const Global = createGlobalStyle<IsDarkMode>`
     image-rendering: -webkit-optimize-contrast;
   }
 
-  @media only screen and (min-device-width: 769px) {
+  @media only screen and (min-width: 799px) {
     body {
       align-items: center;
     }

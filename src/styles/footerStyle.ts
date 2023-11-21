@@ -14,7 +14,7 @@ export const FooterBox = styled.div<IsDarkMode>`
   text-align: center;
   font-size: 13px;
 
-  @media only screen and (max-device-width: 768px) and (orientation: portrait) {
+  @media only screen and (max-width: 799px) {
     > span {
       width: 90vw;
     }
