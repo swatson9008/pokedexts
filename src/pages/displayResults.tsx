@@ -35,6 +35,7 @@ import { PokeEvoStyle } from "../styles/displayResultStyles/pokeEvoStyle";
 import { SingleStageOnly } from "../styles/displayResultStyles/singleStageOnly";
 import { EvolutionDisplay } from "../styles/displayResultStyles/evolutionDisplay";
 import { DropdownDisplay } from "../styles/displayResultStyles/dropdownStyle";
+import { DropdownOption } from "../styles/displayResultStyles/dropdownStyle";
 import { useDarkMode } from "../pages/darkModeContext";
 
 interface DisplayResultsProps {
@@ -306,6 +307,27 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
               )
             )}
           </PokeVarieties>
+          <DropdownDisplay
+            isDarkMode={isDarkMode}
+            hasForms={pokeForms[0].forms[0].length > 1 ? true : false}
+            onChange={(e) => handleMonChange(e.target.value)}
+            value={pokeData.pokeName}
+          >
+            {pokeForms[0].forms[0].map(
+              (form: {
+                pokemon: { url: string | undefined; name: string };
+                is_default: boolean;
+              }) => (
+                <DropdownOption
+                  key={getIDNo(form.pokemon.url)}
+                  value={form.pokemon.name}
+                  isDarkMode={isDarkMode}
+                >
+                  {form.is_default ? "Default Form" : formatString(form.pokemon.name)}
+                </DropdownOption>
+              )
+            )}
+          </DropdownDisplay>
           <TopInfoStyle>
             <div className="mainPicture">
               {pokeSprites.sprite === null ? (
