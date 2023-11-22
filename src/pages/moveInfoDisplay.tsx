@@ -67,38 +67,44 @@ export default function MoveInfoDisplay({
 
   return (
     <MoveInfoStyle>
-      {moveData && (
-        <div>
-          <PokeTypeDisplay type={moveData.type.name}>
-            {formatString(moveData.type.name)}
-          </PokeTypeDisplay>
-        </div>
-      )}
-      {moveData && (
-        <div>
-          <img
-            src={
-              moveData.damage_class?.name === "physical"
-                ? physicalIcon
-                : moveData.damage_class?.name === "special"
-                ? specialIcon
-                : moveData.damage_class?.name === "status"
-                ? statusIcon
-                : undefined
-            }
-            alt={moveData.damage_class?.name}
-          />
-        </div>
-      )}
-      {moveData?.power === null ? "" : <div>Power: {moveData?.power}</div>}
-      {moveData?.accuracy === null ? (
-        ""
-      ) : (
-        <div>Accuracy: {moveData?.accuracy}%</div>
-      )}
-      <div>PP: {moveData?.pp}</div>
-      <div>Target: {formatString(moveData?.target?.name || "")}</div>
-      <div>
+      <div className="row1">
+        {moveData && (
+          <div>
+            <PokeTypeDisplay type={moveData.type.name}>
+              {formatString(moveData.type.name)}
+            </PokeTypeDisplay>
+          </div>
+        )}
+        {moveData && (
+          <div>
+            <img
+              src={
+                moveData.damage_class?.name === "physical"
+                  ? physicalIcon
+                  : moveData.damage_class?.name === "special"
+                  ? specialIcon
+                  : moveData.damage_class?.name === "status"
+                  ? statusIcon
+                  : undefined
+              }
+              alt={moveData.damage_class?.name}
+            />
+          </div>
+        )}
+      </div>
+      <div className="row2">
+        {moveData?.power === null ? "" : <div><span>Power:</span> {moveData?.power} BP</div>}
+        {moveData?.accuracy === null ? (
+          ""
+        ) : (
+          <div><span>Accuracy:</span> {moveData?.accuracy}%</div>
+        )}
+      </div>
+      <div className="row3">
+        <div><span>PP:</span> {moveData?.pp}</div>
+        <div><span>Target:</span> {formatString(moveData?.target?.name || "")}</div>
+      </div>
+      <div className="row4">
         {moveData?.effect_entries[0]?.short_effect === undefined
           ? moveDescription
           : effectChance(moveData?.effect_entries?.[0]?.short_effect)}

@@ -9,7 +9,7 @@ export const Global = createGlobalStyle<IsDarkMode>`
     flex-direction: column;
     transition: background 0.2s linear;
     background-color: ${(props) => (props.isDarkMode ? "#404258" : "rgb(164 234 123)")};
-    height: 100%;
+    height: 100vh;
   }
 
   a {
