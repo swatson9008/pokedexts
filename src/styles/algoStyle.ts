@@ -10,7 +10,6 @@ export const AlgoStyle = styled.div<IsDarkMode>`
 
   position: sticky;
   top: 0;
-  padding-top: 10px;
   padding-bottom: 10px;
   z-index: 100;
   background-color: ${(props) =>
@@ -56,6 +55,7 @@ export const AlgoStyle = styled.div<IsDarkMode>`
       grid-template-columns: 1fr 1fr;
       gap: 10px;
       margin-bottom: 10px;
+      margin-top: 10px;
     }
   }
 
@@ -64,7 +64,7 @@ export const AlgoStyle = styled.div<IsDarkMode>`
       display: flex;
       align-items: center;
       flex-direction: row;
-      height: 100px;
+      height: 50px;
       gap: 10px;
       width: fit-content;
       ${ButtonContainer} {

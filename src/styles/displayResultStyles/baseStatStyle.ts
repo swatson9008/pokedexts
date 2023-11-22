@@ -21,7 +21,12 @@ export const BaseStatStyles = styled.div<IsDarkMode>`
   }
 
   @media only screen and (max-width: 799px) {
-    width: 85vw;
+    width: 75vw;
+    margin-left: 20%;
+
+    .BST {
+      margin-right: 20%;
+    }
 
   }
 

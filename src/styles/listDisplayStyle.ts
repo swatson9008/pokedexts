@@ -39,7 +39,6 @@ export const PokemonListStyle = styled.div<IsDarkMode>`
   }
 
   @media only screen and (max-width: 799px) {
-    width: 95vw;
     > div {
       width: 90%;
       justify-content: space-evenly;
