@@ -107,12 +107,22 @@ export const PokeEvoStyle = styled.div<numberOfStages & IsDarkMode>`
       padding: 10px;
     }
 
+    .firstStageEvo > div,
+    .secondStageEvo > div {
+      justify-content: center;
+    }
+
     .secondStageEvo > div {
       flex-direction: row-reverse;
+
     }
 
     .evoMethod {
       max-width: fit-content;
+    }
+
+    .evoMethod > div {
+      justify-content: center;
     }
 
     .secondStageEvo > div > .evoMethod {
@@ -192,6 +202,12 @@ export const PokeEvoStyle = styled.div<numberOfStages & IsDarkMode>`
           return "";
         }
       }};
+
+      margin-right: 15px;
+    }
+
+    .secondStageEvo > div > .monInfo {
+      margin-bottom: 5px;
     }
 
     .evoMethod {
