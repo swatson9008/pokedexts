@@ -559,6 +559,15 @@ export default function formatEvos(
     )} from leveling up after obtaining 999 Gimmighoul Coins.`;
   } 
 
+  if (
+    ///hardcoded gen 9 evolution
+    baseSpecies === "poltchageist"
+  ) {
+    return `${formatString(baseSpecies)} evolves into ${formatString(
+      secondSpecies
+    )} using an Unremarkable Teacup or Masterpiece Teacup.`;
+  } 
+
 else return "";
 }
 

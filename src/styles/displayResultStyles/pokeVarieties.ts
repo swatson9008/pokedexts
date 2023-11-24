@@ -20,7 +20,7 @@ export const PokeVarieties = styled.div <PokeVarietyDisplay & IsDarkMode>`
 
 
   @media only screen and (min-width: 799px) {
-    max-width: 60vw;
+    width: 60vw;
   }
 
   @media only screen and (max-width: 800px) {
