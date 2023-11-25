@@ -23,6 +23,7 @@ export default function SearchBox() {
   const { storePokemonData } = usePokemonData();
   const navigate = useNavigate();
   const inputRef = useRef<HTMLInputElement>(null);
+  const [selectedSuggestionIndex, setSelectedSuggestionIndex] = useState<number>(-1);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const searchValue = event.target.value
@@ -30,9 +31,9 @@ export default function SearchBox() {
       .replace(/'/g, "")
       .replace(/\s+/g, "-");
     setSearch(searchValue);
+    setSelectedSuggestionIndex(-1); // Reset selected suggestion index
     if (!searchValue) {
       setSuggested([]);
-      setSearch("");
       return;
     }
     const filteredPokes = listOfPokemon.filter((pokemon) =>
@@ -44,6 +45,7 @@ export default function SearchBox() {
 
   useEffect(() => {
     setSearch("");
+    setSelectedSuggestionIndex(-1);
     if (inputRef.current) {
       inputRef.current.value = "";
     }
@@ -51,17 +53,23 @@ export default function SearchBox() {
   }, [navigate]);
 
   const handleSearch = async () => {
-    try {
+  try {
+    if (selectedSuggestionIndex !== -1 && suggestedPokes[selectedSuggestionIndex]) {
+      const selectedSuggestion = suggestedPokes[selectedSuggestionIndex];
+      storePokemonData(selectedSuggestion);
+      navigate(`/pokemon/${selectedSuggestion.name}`);
+    } else {
       const result = await Search(pokeSearch);
       if (result) {
         storePokemonData(result);
         navigate(`/pokemon/${result.pokeName}`);
       }
-    } catch (error) {
-      console.error(error);
-      alert("Please enter a proper name for a Pokemon species");
     }
-  };
+  } catch (error) {
+    console.error(error);
+    alert("Please enter a proper name for a Pokemon species");
+  }
+};
 
   const randomizer = async () => {
     const randomNumber = Math.floor(Math.random() * (1017 - 1 + 1) + 1);
@@ -78,17 +86,35 @@ export default function SearchBox() {
 
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
-      handleSearch();
+      if (selectedSuggestionIndex !== -1 && suggestedPokes[selectedSuggestionIndex]) {
+        const selectedSuggestion = suggestedPokes[selectedSuggestionIndex];
+        setSearch(selectedSuggestion.name);
+        setSuggested([]);
+        handleSearch();
+      } else {
+        handleSearch();
+      }
+    } else if (event.key === "ArrowUp") {
+      event.preventDefault();
+      setSelectedSuggestionIndex((prevIndex) =>
+        prevIndex > 0 ? prevIndex - 1 : suggestedPokes.length - 1
+      );
+    } else if (event.key === "ArrowDown") {
+      event.preventDefault();
+      setSelectedSuggestionIndex((prevIndex) =>
+        prevIndex < suggestedPokes.length - 1 ? prevIndex + 1 : 0
+      );
     }
   };
 
   const handleSuggestionClick = (pokemon: Pokemon) => {
     setSearch(pokemon.name);
     setSuggested([]);
+    handleSearch();
   };
 
   const handleList = () => {
-    navigate('/list')
+    navigate('/list');
   }
 
   return (
@@ -108,7 +134,11 @@ export default function SearchBox() {
           {suggestedPokes.length > 0 && (
             <div className="suggestions">
               {suggestedPokes.map((pokemon, index) => (
-                <div key={index} onClick={() => handleSuggestionClick(pokemon)}>
+                <div
+                  key={index}
+                  onClick={() => handleSuggestionClick(pokemon)}
+                  className={index === selectedSuggestionIndex ? "selected" : ""}
+                >
                   {formatString(pokemon.name)}
                 </div>
               ))}

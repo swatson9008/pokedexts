@@ -57,6 +57,13 @@ export const SearchBoxStyle = styled.div<IsDarkMode>`
     li {
       padding: 10px;
       cursor: pointer;
+      background-color: ${(props) => (props.isDarkMode ? "#6B728E" : "#fff")};
+      color: ${(props) => (props.isDarkMode ? "#000" : "#000")};
+
+      &.selected {
+        background-color: #000;
+        color: #fff;
+      }
 
       &:hover {
         background-color: #f0f0f0;
