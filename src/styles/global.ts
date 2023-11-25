@@ -23,6 +23,11 @@ export const Global = createGlobalStyle<IsDarkMode>`
     image-rendering: -webkit-optimize-contrast;
   }
 
+  .loadingGif {
+    display: flex;
+    justify-content: center;
+  }
+
   @media only screen and (min-width: 799px) {
     body {
       align-items: center;
