@@ -37,6 +37,7 @@ import { EvolutionDisplay } from "../styles/displayResultStyles/evolutionDisplay
 import { DropdownDisplay } from "../styles/displayResultStyles/dropdownStyle";
 import { DropdownOption } from "../styles/displayResultStyles/dropdownStyle";
 import { useDarkMode } from "../pages/darkModeContext";
+import loadingShake from '../assets/pokeShake.gif' 
 
 interface DisplayResultsProps {
   pokeData: PokemonData;
@@ -75,6 +76,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
   );
   const [moveDisplayStates, setMoveDisplayStates] = useState(new Map());
   const [currentTypes, setCurrentTypes] = useState<Array<string>>([]);
+  const [isLoading, setLoading] = useState(false);
 
   const { isDarkMode } = useDarkMode();
 
@@ -285,6 +287,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
   const { storePokemonData } = usePokemonData();
   const navigate = useNavigate();
   const handleMonChange = async (pokemon: string) => {
+    setLoading(true);
     try {
       const result = await Search(pokemon);
       if (result) {
@@ -296,6 +299,10 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
       alert(error);
     }
   };
+  
+  useEffect(() => {
+    setLoading(false);
+  }, [pokeName]);
 
   const toggleMoveInfoDisplay = (moveName: string) => {
     const newDisplayStates = new Map(moveDisplayStates);
@@ -303,7 +310,10 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
     setMoveDisplayStates(newDisplayStates);
   };
 
-  return (
+  if (isLoading) {
+    return <div className="loadingGif"><img src={loadingShake} alt="loading..." /></div>;
+  } else {
+    return (
     <div className="displayDetails">
       <div className="displayResult">
         <EntireDetailPage key={sortedData.pokeName} isDarkMode={isDarkMode}>
@@ -666,5 +676,5 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
         </EntireDetailPage>
       </div>
     </div>
-  );
-}
+    );
+  }}
