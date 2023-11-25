@@ -7,6 +7,7 @@ import { gen9Moves } from "../components/gen9Moves";
 import physicalIcon from "../assets/physical.png";
 import specialIcon from "../assets/special.png";
 import statusIcon from "../assets/status.png";
+import loadingShake from "../assets/pokeShake.gif";
 
 interface MoveInfoDisplayProps {
   moveString: string;
@@ -18,6 +19,7 @@ export default function MoveInfoDisplay({
   isMachine,
 }: MoveInfoDisplayProps) {
   const [moveData, setMoveData] = useState<Move | null>(null);
+  const [loading, setLoading] = useState(false);
 
   let modifiedMoveString = moveString;
 
@@ -46,10 +48,13 @@ export default function MoveInfoDisplay({
     const fetchMoveData = async () => {
       const api = new MoveClient();
       try {
+        setLoading(true);
         const data = await api.getMoveByName(modifiedMoveString);
         setMoveData(data);
       } catch (error) {
         console.error("Error fetching TM data:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -67,48 +72,69 @@ export default function MoveInfoDisplay({
 
   return (
     <MoveInfoStyle>
-      <div className="row1">
-        {moveData && (
-          <div>
-            <PokeTypeDisplay type={moveData.type.name}>
-              {formatString(moveData.type.name)}
-            </PokeTypeDisplay>
+      {loading ? (
+        <div className="loadingGif">
+          <img src={loadingShake} alt="loading..." />
+        </div>
+      ) : (
+        <>
+          <div className="row1">
+            {moveData && (
+              <div>
+                <PokeTypeDisplay type={moveData.type.name}>
+                  {formatString(moveData.type.name)}
+                </PokeTypeDisplay>
+              </div>
+            )}
+            {moveData && (
+              <div>
+                <img
+                  src={
+                    moveData.damage_class?.name === "physical"
+                      ? physicalIcon
+                      : moveData.damage_class?.name === "special"
+                      ? specialIcon
+                      : moveData.damage_class?.name === "status"
+                      ? statusIcon
+                      : undefined
+                  }
+                  alt={moveData.damage_class?.name}
+                />
+              </div>
+            )}
           </div>
-        )}
-        {moveData && (
-          <div>
-            <img
-              src={
-                moveData.damage_class?.name === "physical"
-                  ? physicalIcon
-                  : moveData.damage_class?.name === "special"
-                  ? specialIcon
-                  : moveData.damage_class?.name === "status"
-                  ? statusIcon
-                  : undefined
-              }
-              alt={moveData.damage_class?.name}
-            />
+          <div className="row2">
+            {moveData?.power === null ? (
+              ""
+            ) : (
+              <div>
+                <span>Power:</span> {moveData?.power} BP
+              </div>
+            )}
+            {moveData?.accuracy === null ? (
+              ""
+            ) : (
+              <div>
+                <span>Accuracy:</span> {moveData?.accuracy}%
+              </div>
+            )}
           </div>
-        )}
-      </div>
-      <div className="row2">
-        {moveData?.power === null ? "" : <div><span>Power:</span> {moveData?.power} BP</div>}
-        {moveData?.accuracy === null ? (
-          ""
-        ) : (
-          <div><span>Accuracy:</span> {moveData?.accuracy}%</div>
-        )}
-      </div>
-      <div className="row3">
-        <div><span>PP:</span> {moveData?.pp}</div>
-        <div><span>Target:</span> {formatString(moveData?.target?.name || "")}</div>
-      </div>
-      <div className="row4">
-        {moveData?.effect_entries[0]?.short_effect === undefined
-          ? moveDescription
-          : effectChance(moveData?.effect_entries?.[0]?.short_effect)}
-      </div>
+          <div className="row3">
+            <div>
+              <span>PP:</span> {moveData?.pp}
+            </div>
+            <div>
+              <span>Target:</span>{" "}
+              {formatString(moveData?.target?.name || "")}
+            </div>
+          </div>
+          <div className="row4">
+            {moveData?.effect_entries[0]?.short_effect === undefined
+              ? moveDescription
+              : effectChance(moveData?.effect_entries?.[0]?.short_effect)}
+          </div>
+        </>
+      )}
     </MoveInfoStyle>
   );
 }
