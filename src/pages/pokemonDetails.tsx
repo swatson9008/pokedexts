@@ -7,6 +7,7 @@ import { PokemonData } from "../components/pokemonData";
 import { getIDNo } from "../components/formatString";
 import { DetailsPage } from "../styles/detailsStyle";
 import { useDarkMode } from "./darkModeContext";
+import loadingShake from '../assets/pokeShake.gif' 
 
 export default function PokemonDetails() {
   const { name } = useParams<{ name: string }>() ?? { name: '' };
@@ -44,7 +45,7 @@ export default function PokemonDetails() {
       {pokemonDetails ? (
         <DisplayResults pokeData={pokemonDetails} key={keyValue}/>
       ) : (
-        <p>Loading...</p>
+        <div className="loadingGif"><img src={loadingShake} alt="loading..."/></div>
       )}
     </DetailsPage>
   );

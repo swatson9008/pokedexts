@@ -12,7 +12,7 @@ export const PokeTypeDisplay = styled.div<PokeTypeDisplayProps>`
   text-align: center;
   font-family: 'VT323', monospace;
   border: 2px solid black;
-  width: 72px;
+  width: 90px;
   padding: 3px;
   border-radius: 10px;
   color: white;
