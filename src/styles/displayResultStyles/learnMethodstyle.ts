@@ -3,6 +3,7 @@ import IsDarkMode from "../isDarkModeInferface";
 
 export const LearnMethodStyle = styled.div<IsDarkMode>`
 
+
   .learnMethodList {
     display: flex;
     justify-content: space-around;
@@ -43,6 +44,10 @@ export const LearnMethodStyle = styled.div<IsDarkMode>`
 
   @media only screen and (max-width: 799px)  {
     max-width: 96vw;
+  }
+
+  @media only screen and (min-width: 800px)  {
+    max-width: 62vw;
   }
 
 `;

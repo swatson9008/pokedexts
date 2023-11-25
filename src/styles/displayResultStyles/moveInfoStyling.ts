@@ -4,6 +4,7 @@ import styled from "styled-components";
 export const MoveInfoStyle = styled.div`
   display: flex;
   flex-direction: column;
+  width: fit-content;
 
   span {
     font-weight: bold;
@@ -15,9 +16,7 @@ export const MoveInfoStyle = styled.div`
     gap: 10px;
   }
 
-  .row1 {
-
-  }
+  
 
   img {
     margin-top: 5px;

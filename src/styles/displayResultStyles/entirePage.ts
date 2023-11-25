@@ -22,8 +22,9 @@ export const EntireDetailPage = styled.div<IsDarkMode>`
     font-weight: bold;
   }
 
-  @media only screen and (min-device-width: 799px) {
+  @media only screen and (min-width: 799px) {
     border-radius: 20px;
+
     
   }
 `;
