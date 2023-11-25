@@ -560,17 +560,33 @@ export default function formatEvos(
   } 
 
   if (
-    ///hardcoded gen 9 evolution
-    triggerMethod === "other" &&
-    baseSpecies === "bisharp"
+    //qwilfish evolution
+    triggerMethod === "strong-style-move" &&
+    Object.values(sliceEvoMethods(evoMethods, { knownMove: true })).every(
+      (prop) => !prop
+    )
   ) {
-    return `${formatString(baseSpecies)} evolves into ${formatString(
+    return `${formatString(baseSpecies)} evolves to ${formatString(
       secondSpecies
-    )} from defeating three Bisharp that hold a Leader's Crest.`;
-  } 
+    )} from using ${
+      evoShortcut?.known_move?.name === undefined
+        ? "unknown move"
+        : formatString(evoShortcut?.known_move?.name)
+    } in strong style 20 times in Pokemon Arceus`;
+  }
 
   if (
     ///hardcoded gen 9 evolution
+    baseSpecies === "poltchageist"
+  ) {
+    return `${formatString(baseSpecies)} evolves into ${formatString(
+      secondSpecies
+    )} using an Unremarkable Teacup or Masterpiece Teacup.`;
+  } 
+
+  if (
+    ///hardcoded gen 8 evolution
+    triggerMethod === "other" &&
     baseSpecies === "poltchageist"
   ) {
     return `${formatString(baseSpecies)} evolves into ${formatString(
