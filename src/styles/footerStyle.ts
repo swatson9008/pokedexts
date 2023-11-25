@@ -2,9 +2,9 @@ import styled from "styled-components";
 import IsDarkMode from "./isDarkModeInferface";
 
 export const FooterBox = styled.div<IsDarkMode>`
+  font-family: "VT323", monospace;
   transition: color 0.2s linear;
-  color: ${(props) =>
-    props.isDarkMode ? "#c9c9c9" : "#5e5e5e"};
+  color: ${(props) => (props.isDarkMode ? "#c9c9c9" : "#5e5e5e")};
   display: flex;
   flex-direction: column;
   margin-top: 50px;
@@ -13,7 +13,6 @@ export const FooterBox = styled.div<IsDarkMode>`
   align-items: center;
   text-align: center;
   font-size: 15px;
-  
 
   @media only screen and (max-width: 799px) {
     > span {

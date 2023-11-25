@@ -74,6 +74,8 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
     null
   );
   const [moveDisplayStates, setMoveDisplayStates] = useState(new Map());
+  const [currentTypes, setCurrentTypes] = useState<Array<string>>([]);
+
   const { isDarkMode } = useDarkMode();
 
   const moveList = useMemo(() => {
@@ -94,6 +96,28 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
     setGameTitle(newDefaultGameTitle);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pokeData]);
+
+  useEffect(() => {
+    if (
+      (generationList.generation1.includes(gameTitle) ||
+        generationList.generation2.includes(gameTitle) ||
+        generationList.generation3.includes(gameTitle) ||
+        generationList.generation4.includes(gameTitle) ||
+        generationList.generation5.includes(gameTitle)) &&
+      pastTypes[0].generation.name === "generation-v"
+    ) {
+      setCurrentTypes(pastTypes.map(typeObj => typeObj.types[0].type.name));
+    } else if (
+      generationList.generation1.includes(gameTitle) &&
+      pastTypes[0].generation.name === "generation-i"
+    ) {
+      setCurrentTypes(pastTypes.map(typeObj => typeObj.types[0].type.name));
+    } else {
+      setCurrentTypes(pokeTypes.map(typeObj => typeObj.name));
+    }
+  }, [gameTitle, pastTypes, pokeTypes]);
+  
+  
 
   const customLearnMethodOrder = [
     "level-up",
@@ -337,30 +361,13 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
               )}
             </div>
             <div className="pokeName">{formatString(sortedData.pokeName)}</div>
-            <div className="pokeTypes">
-              {" "}
-              {pastTypes.length &&
-              (generationList.generation1.includes(gameTitle) ||
-                generationList.generation2.includes(gameTitle) ||
-                generationList.generation3.includes(gameTitle) ||
-                generationList.generation4.includes(gameTitle) ||
-                generationList.generation5.includes(gameTitle)) &&
-              pastTypes[0].generation.name === "generation-v"
-                ? pastTypes[0].types.map((type, index) => (
-                    <div key={index}>{formatString(type.type.name)}</div>
-                  ))
-                : pastTypes.length &&
-                  generationList.generation1.includes(gameTitle) &&
-                  pastTypes[0].generation.name === "generation-i"
-                ? pastTypes[0].types.map((type, index) => (
-                    <div key={index}>{formatString(type.type.name)}</div>
-                  ))
-                : pokeTypes.map((type, index) => (
-                    <PokeTypeDisplay key={index} type={type.name}>
-                      {formatString(type.name)}
-                    </PokeTypeDisplay>
-                  ))}
-            </div>
+             <div className="pokeTypes">
+        {currentTypes.map((type, index) => (
+          <PokeTypeDisplay key={index} type={type}>
+            {formatString(type)}
+          </PokeTypeDisplay>
+        ))}
+      </div>
           </TopInfoStyle>
           <TopAreaStyle>
             <AbilitiesStyle

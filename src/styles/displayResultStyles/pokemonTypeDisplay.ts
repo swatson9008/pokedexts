@@ -16,5 +16,6 @@ export const PokeTypeDisplay = styled.div<PokeTypeDisplayProps>`
   color: white;
   text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
     1px 1px 0 #000;
-  background-color: ${(props) => (colorTypes[props.type as keyof typeof colorTypes] || "transparent")};
+  background-color: ${(props) =>
+    colorTypes[props.type as keyof typeof colorTypes] || "transparent"};
 `;

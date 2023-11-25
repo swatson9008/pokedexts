@@ -23,6 +23,10 @@ interface PokeStat {
 
 export const options: any = (isDarkMode: boolean) => ({
   plugins: {
+    labels: {
+      fontColor: '#fff',
+
+},
     datalabels: {
       display: true,
       color: isDarkMode ? "white" : "black",
@@ -30,6 +34,7 @@ export const options: any = (isDarkMode: boolean) => ({
       align: "right",
       font: {
         size: 16,
+        Family: "Barlow",
       },
     },
   },
@@ -66,7 +71,9 @@ export const options: any = (isDarkMode: boolean) => ({
       ticks: {
         color: isDarkMode ? "white" : "black",
         font: {
-          size: 14,
+          size: 16,
+          weight: "bold",
+          family: "barlow",
         },
       },
     },
