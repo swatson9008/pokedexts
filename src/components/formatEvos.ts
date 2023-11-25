@@ -561,6 +561,16 @@ export default function formatEvos(
 
   if (
     ///hardcoded gen 9 evolution
+    triggerMethod === "other" &&
+    baseSpecies === "bisharp"
+  ) {
+    return `${formatString(baseSpecies)} evolves into ${formatString(
+      secondSpecies
+    )} from defeating three Bisharp that hold a Leader's Crest.`;
+  } 
+
+  if (
+    ///hardcoded gen 9 evolution
     baseSpecies === "poltchageist"
   ) {
     return `${formatString(baseSpecies)} evolves into ${formatString(
