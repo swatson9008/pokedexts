@@ -101,24 +101,29 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
   }, [pokeData]);
 
   useEffect(() => {
-    if (
-      (generationList.generation1.includes(gameTitle) ||
-        generationList.generation2.includes(gameTitle) ||
-        generationList.generation3.includes(gameTitle) ||
-        generationList.generation4.includes(gameTitle) ||
-        generationList.generation5.includes(gameTitle)) &&
-      pastTypes[0].generation.name === "generation-v"
-    ) {
-      setCurrentTypes(pastTypes.map((typeObj) => typeObj.types[0].type.name));
-    } else if (
-      generationList.generation1.includes(gameTitle) &&
-      pastTypes[0].generation.name === "generation-i"
-    ) {
-      setCurrentTypes(pastTypes.map((typeObj) => typeObj.types[0].type.name));
+    if (pastTypes.length > 0) {
+      if (
+        (generationList.generation1.includes(gameTitle) ||
+          generationList.generation2.includes(gameTitle) ||
+          generationList.generation3.includes(gameTitle) ||
+          generationList.generation4.includes(gameTitle) ||
+          generationList.generation5.includes(gameTitle)) &&
+        pastTypes[0].generation.name === "generation-v"
+      ) {
+        setCurrentTypes(pastTypes.map((typeObj) => typeObj.types[0].type.name));
+      } else if (
+        generationList.generation1.includes(gameTitle) &&
+        pastTypes[0].generation.name === "generation-i"
+      ) {
+        setCurrentTypes(pastTypes.map((typeObj) => typeObj.types[0].type.name));
+      } else {
+        setCurrentTypes(pokeTypes.map((typeObj) => typeObj.name));
+      }
     } else {
       setCurrentTypes(pokeTypes.map((typeObj) => typeObj.name));
     }
   }, [gameTitle, pastTypes, pokeTypes]);
+  
 
   const customLearnMethodOrder = [
     "level-up",
