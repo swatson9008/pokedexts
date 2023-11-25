@@ -689,7 +689,6 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                     </>
                   )}
                 </div>
-                ;
               </LearnMethodStyle>
             </div>
           </EntireDetailPage>
