@@ -8,7 +8,7 @@ import { SearchContainer } from "../styles/searchContainer";
 import { PokemonClient } from "pokenode-ts";
 import { formatString } from "../components/formatString";
 import listOfPokemon from "../libraries/pokemonlist.json";
-import { useDarkMode } from '../pages/darkModeContext';
+import { useDarkMode } from "../pages/darkModeContext";
 
 interface Pokemon {
   name: string;
@@ -77,9 +77,24 @@ export default function SearchBox() {
     }
   };
 
+  const [selectedSuggestionIndex, setSelectedSuggestionIndex] =
+    useState<number>(-1);
+
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
-      handleSearch();
+      if (selectedSuggestionIndex !== -1) {
+        handleSuggestionClick(suggestedPokes[selectedSuggestionIndex]);
+      } else {
+        handleSearch();
+      }
+    } else if (event.key === "ArrowUp") {
+      event.preventDefault(); 
+      setSelectedSuggestionIndex((prevIndex) => Math.max(prevIndex - 1, 0));
+    } else if (event.key === "ArrowDown") {
+      event.preventDefault(); 
+      setSelectedSuggestionIndex((prevIndex) =>
+        Math.min(prevIndex + 1, suggestedPokes.length - 1)
+      );
     }
   };
 
@@ -87,20 +102,20 @@ export default function SearchBox() {
     setSearch(pokemon.name);
     setSuggested([]);
     setSuggestionClicked(true);
+    setSelectedSuggestionIndex(-1); 
   };
 
   useEffect(() => {
     if (suggestionClicked) {
       handleSearch();
-      setSuggestionClicked(false); 
+      setSuggestionClicked(false);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [suggestedPokes, suggestionClicked]);
-  
 
   const handleList = () => {
-    navigate('/list')
-  }
+    navigate("/list");
+  };
 
   return (
     <div className="searchMain">
@@ -119,7 +134,13 @@ export default function SearchBox() {
           {suggestedPokes.length > 0 && (
             <div className="suggestions">
               {suggestedPokes.map((pokemon, index) => (
-                <div key={index} onClick={() => handleSuggestionClick(pokemon)}>
+                <div
+                  key={index}
+                  onClick={() => handleSuggestionClick(pokemon)}
+                  className={
+                    index === selectedSuggestionIndex ? "selected" : ""
+                  }
+                >
                   {formatString(pokemon.name)}
                 </div>
               ))}
@@ -127,9 +148,15 @@ export default function SearchBox() {
           )}
         </SearchBoxStyle>
         <div>
-          <ButtonContainer onClick={handleSearch} isDarkMode={isDarkMode}>Search</ButtonContainer>
-          <ButtonContainer onClick={handleList} isDarkMode={isDarkMode}>List</ButtonContainer>
-          <ButtonContainer onClick={randomizer} isDarkMode={isDarkMode}>Random</ButtonContainer>
+          <ButtonContainer onClick={handleSearch} isDarkMode={isDarkMode}>
+            Search
+          </ButtonContainer>
+          <ButtonContainer onClick={handleList} isDarkMode={isDarkMode}>
+            List
+          </ButtonContainer>
+          <ButtonContainer onClick={randomizer} isDarkMode={isDarkMode}>
+            Random
+          </ButtonContainer>
         </div>
       </SearchContainer>
     </div>
