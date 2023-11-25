@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import listOfPokemon from "../libraries/pokemonlist.json";
-import { formatString, getIDNo } from "../components/formatString";
+import { formatString, getIDNo, formatNames } from "../components/formatString";
 import Search from "../components/search";
 import { useNavigate } from "react-router-dom";
 import { usePokemonData } from "./pokemonContext";
@@ -62,7 +62,7 @@ const ListPage: React.FC = () => {
         )}.png`}
         alt={pokemon.name}
       />
-      {formatString(pokemon.name)}
+      {formatString(formatNames(pokemon.name) || "Unknown")}
     </div>
   ));
 

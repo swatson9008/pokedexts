@@ -44,4 +44,115 @@ function getIDNo(input: string | undefined) {
 
 }
 
-export { otherFormatString, formatString, getIDNo };
+function formatNames(searchPoke: string){
+  if (searchPoke === "shaymin-land") {
+    searchPoke = "shaymin";
+}
+
+if (searchPoke === "meowstic-male") {
+    searchPoke = "meowstic";
+}
+
+if (searchPoke === "darmanitan-standard") {
+    searchPoke = "darmanitan";
+}
+
+if (searchPoke === "deoxys-normal") {
+    searchPoke = "deoxys";
+}
+
+if (searchPoke === "wormadam-plant") {
+    searchPoke = "wormadam";
+}
+
+if (searchPoke === "giratina-altered") {
+    searchPoke = "giratina";
+}
+
+if (searchPoke === "basculin-red-striped") {
+    searchPoke = "basculin";
+}
+
+if (searchPoke === "basculegion-male") {
+    searchPoke = "basculegion";
+}
+
+if (searchPoke === "tornadus-incarnate") {
+    searchPoke = "tornadus";
+}
+
+if (searchPoke === "thundurus-incarnate") {
+    searchPoke = "thundurus";
+}
+
+if (searchPoke === "landorus-incarnate") {
+    searchPoke = "landorus";
+}
+
+if (searchPoke === "enamorus-incarnate") {
+    searchPoke = "enamorus";
+}
+
+if (searchPoke === "keldeo-ordinary") {
+    searchPoke = "keldeo";
+}
+
+if (searchPoke === "meloetta-aria") {
+    searchPoke = "meloetta";
+}
+
+if (searchPoke === "aegislash-shield") {
+    searchPoke = "aegislash";
+}
+
+if (searchPoke === "pumpkaboo-average") {
+    searchPoke = "pumpkaboo";
+}
+
+if (searchPoke === "zygarde-50") {
+    searchPoke = "zygarde";
+}
+
+if (searchPoke === "oricorio-baile") {
+    searchPoke = "oricorio";
+}
+
+if (searchPoke === "lycanroc-midday") {
+    searchPoke = "lycanroc";
+}
+
+if (searchPoke === "wishiwashi-solo") {
+    searchPoke = "wishiwashi";
+}
+
+if (searchPoke === "minior-red-meteor") {
+    searchPoke = "minior";
+}
+
+if (searchPoke === "mimikyu-disguised") {
+    searchPoke = "mimikyu";
+}
+
+if (searchPoke === "toxtricity-amped") {
+    searchPoke = "toxtricity";
+}
+
+if (searchPoke === "eiscue-ice") {
+    searchPoke = "eiscue";
+}
+
+if (searchPoke === "indeedee-male") {
+    searchPoke = "indeedee";
+}
+
+if (searchPoke === "morpeko-full-belly") {
+    searchPoke = "morpeko";
+}
+
+if (searchPoke === "urshifu-single-strike") {
+    searchPoke = "urshifu";
+}
+else {return searchPoke}
+}
+
+export { otherFormatString, formatString, getIDNo, formatNames };
