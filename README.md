@@ -20,6 +20,7 @@ Live Demo - https://pokedexts.vercel.app/
 
 ## Screenshots
 
+<img src="/src/assets/screenshot1.PNG" width="30vw">
 
 ## Installation 
 
