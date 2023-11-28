@@ -24,6 +24,7 @@ export default function SearchBox() {
   const navigate = useNavigate();
   const inputRef = useRef<HTMLInputElement>(null);
   const [suggestionClicked, setSuggestionClicked] = useState<boolean>(false);
+  const suggestionsRef = useRef<HTMLDivElement>(null);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const searchValue = event.target.value
@@ -90,11 +91,23 @@ export default function SearchBox() {
     } else if (event.key === "ArrowUp") {
       event.preventDefault();
       setSelectedSuggestionIndex((prevIndex) => Math.max(prevIndex - 1, 0));
+      if (suggestionsRef.current && selectedSuggestionIndex - 1 >= 0) {
+        suggestionsRef.current.children[selectedSuggestionIndex - 1].scrollIntoView({
+          behavior: "smooth",
+          block: "nearest",
+        });
+      }
     } else if (event.key === "ArrowDown") {
       event.preventDefault();
       setSelectedSuggestionIndex((prevIndex) =>
         Math.min(prevIndex + 1, suggestedPokes.length - 1)
       );
+      if (suggestionsRef.current && selectedSuggestionIndex + 1 < suggestedPokes.length) {
+        suggestionsRef.current.children[selectedSuggestionIndex + 1].scrollIntoView({
+          behavior: "smooth",
+          block: "nearest",
+        });
+      }
     }
   };
 
@@ -132,7 +145,7 @@ export default function SearchBox() {
           />
           {/* Suggestions container */}
           {suggestedPokes.length > 0 && (
-            <div className="suggestions">
+            <div className="suggestions" ref={suggestionsRef}>
               {suggestedPokes.map((pokemon, index) => (
                 <div
                   key={index}

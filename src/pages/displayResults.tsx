@@ -295,6 +295,16 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
     newDisplayStates.set(moveName, !newDisplayStates.get(moveName));
     setMoveDisplayStates(newDisplayStates);
   };
+  
+  function formatMegas(name: string) {
+    const splitString = name.split('-');
+    if (splitString.length >= 2 && splitString[1].toLowerCase() === 'mega') {
+        splitString.splice(1, 1);
+        const modifiedString = `mega-${splitString.join('-')}`;
+        return modifiedString;
+    }
+    return name;
+}
 
   if (isLoading) {
     return (
@@ -326,7 +336,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                   >
                     {form.is_default
                       ? "Default Form"
-                      : formatString(form.pokemon.name)}
+                      : formatString(formatMegas(form.pokemon.name))}
                   </VarietyLabels>
                 )
               )}
@@ -363,7 +373,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                 )}
               </div>
               <div className="pokeName">
-                {formatString(sortedData.pokeName)}
+                {formatString(formatMegas(sortedData.pokeName))}
               </div>
               <div className="pokeTypes">
                 {currentTypes.map((type, index) => (

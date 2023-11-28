@@ -120,8 +120,6 @@ export default async function Search(searchPoke: string) {
       Record<string, Array<{ name: string; level?: string }>>
     > = {};
 
-    
-
     data.moves.forEach((move) => {
       move.version_group_details.forEach((groupDetail) => {
         const versionGroupName = groupDetail.version_group.name;
