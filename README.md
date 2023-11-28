@@ -20,10 +20,10 @@ Live Demo - https://pokedexts.vercel.app/
 
 ## Screenshots
 
-<img src="/src/assets/screenshot1.PNG" width="300">
-<img src="/src/assets/screenshot2.PNG" width="300">
-<img src="/src/assets/screenshot3.PNG" width="300">
-<img src="/src/assets/screenshot4.PNG" width="300">
+<img src="https://raw.githubusercontent.com/swatson9008/pokedexts/main/src/assets/screenshot1.PNG" width="300">
+<img src="https://raw.githubusercontent.com/swatson9008/pokedexts/main/src/assets/screenshot2.PNG" width="300">
+<img src="https://raw.githubusercontent.com/swatson9008/pokedexts/main/src/assets/screenshot3.PNG" width="300">
+<img src="https://raw.githubusercontent.com/swatson9008/pokedexts/main/src/assets/screenshot4.PNG" width="300">
 
 ## Installation 
 
