@@ -1,10 +1,10 @@
-## Simplified Pokedex
+# Simplified Pokedex
 
 A Pokedex written in React with Vite compiler
 
 Live Demo - https://pokedexts.vercel.app/
 
-# Features
+## Features
 
 ⭐️ Searching Data for all 1000+ Pokemon
 ⭐️ Shows all forms and varieties of Pokemon, including Megas and Regional forms.
@@ -13,16 +13,16 @@ Live Demo - https://pokedexts.vercel.app/
 ⭐️ Search and filter lists of Pokemon based on Name, Dex #, Generation, and Type
 ⭐️ Dark Mode, Keyboard Support
 
-# Screenshots
+## Screenshots
 
 
-# Installation 
+## Installation 
 
 Simply fork the repository and use this command in the terminal
 
 `npm install`
 
-# Credits
+## Credits
 
 Dogethis for their assistance with the project
 
