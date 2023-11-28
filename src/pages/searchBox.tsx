@@ -88,10 +88,10 @@ export default function SearchBox() {
         handleSearch();
       }
     } else if (event.key === "ArrowUp") {
-      event.preventDefault(); 
+      event.preventDefault();
       setSelectedSuggestionIndex((prevIndex) => Math.max(prevIndex - 1, 0));
     } else if (event.key === "ArrowDown") {
-      event.preventDefault(); 
+      event.preventDefault();
       setSelectedSuggestionIndex((prevIndex) =>
         Math.min(prevIndex + 1, suggestedPokes.length - 1)
       );
@@ -102,7 +102,7 @@ export default function SearchBox() {
     setSearch(pokemon.name);
     setSuggested([]);
     setSuggestionClicked(true);
-    setSelectedSuggestionIndex(-1); 
+    setSelectedSuggestionIndex(-1);
   };
 
   useEffect(() => {
@@ -137,9 +137,10 @@ export default function SearchBox() {
                 <div
                   key={index}
                   onClick={() => handleSuggestionClick(pokemon)}
-                  className={
+                  className={`suggestion ${
                     index === selectedSuggestionIndex ? "selected" : ""
-                  }
+                  }`}
+                  onMouseEnter={() => setSelectedSuggestionIndex(index)}
                 >
                   {formatString(pokemon.name)}
                 </div>

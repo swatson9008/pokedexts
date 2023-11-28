@@ -70,4 +70,9 @@ export const SearchBoxStyle = styled.div<IsDarkMode>`
       }
     }
   }
+  .suggestions .suggestion.selected,
+.suggestions .suggestion:hover {
+  background-color: #000;
+  color: #fff; 
+}
 `;
