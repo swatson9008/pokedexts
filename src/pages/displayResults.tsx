@@ -198,11 +198,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
                 );
                 if (bdspTMFind) {
                   moveName = `${bdspTMFind.TMNo}-${bdspTMFind.Name}`;
-                } else {
-                  console.log(
-                    `No machine found with version group name ${gameTitle}`
-                  );
-                }
+                } 
               } else if (moveName && gameTitle === "scarlet-violet") {
                 const gen9Find = Object.entries(gen9TMs).find(
                   ([value]) => value === moveName
@@ -210,10 +206,6 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
 
                 if (gen9Find) {
                   moveName = gen9Find[1];
-                } else {
-                  console.log(
-                    `No machine found with version group name ${gameTitle}`
-                  );
                 }
               }
 
@@ -223,9 +215,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
 
           moveDataArray.sort(customSort);
           setTmLoad(false);
-          console.log(moveDataArray);
           setTmHm(moveDataArray);
-          console.log(sortedData);
         }
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -245,14 +235,10 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
               const response = await fetch(abilities.url);
               const abilityData = await response.json();
               return abilityData;
-            } else {
-              console.log(`No URL found for ability: ${abilities.name}`);
-              return null;
-            }
+            } 
           })
         );
 
-        console.log("Ability Data:", abilityDataArray);
         setAbilityDataArray(abilityDataArray);
       } catch (error) {
         console.error("Error fetching ability data:", error);
@@ -278,11 +264,6 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pokeData]);
 
-  useEffect(() => {
-    if (evolutionChain) {
-      console.log(evolutionChain);
-    }
-  }, [evolutionChain]);
 
   const smogonLinkGen = (pokemon: string, generation: string) => {
     return `https://www.smogon.com/dex/${generationConverter(

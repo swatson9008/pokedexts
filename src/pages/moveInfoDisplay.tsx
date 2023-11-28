@@ -63,8 +63,6 @@ export default function MoveInfoDisplay({
     }
   }, [modifiedMoveString]);
 
-  console.log(moveData);
-
   const moveDescription =
     (moveData?.name && gen9Moves[moveData.name]?.description) ||
     moveData?.flavor_text_entries?.[7]?.flavor_text ||

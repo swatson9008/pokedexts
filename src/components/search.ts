@@ -227,8 +227,6 @@ export default async function Search(searchPoke: string) {
               searchedPokemonData.pokeMoves[versionGroup]["egg"] = egg;
             }
           });
-
-          console.log(searchedPokemonData.pokeMoves);
         }
       } catch (error) {
         console.error(error);
@@ -244,11 +242,6 @@ export default async function Search(searchPoke: string) {
           const matches = evolutionChainUrl.match(/\/(\d+)\/$/);
           if (matches && matches.length > 1) {
             searchedPokemonData.pokeEvoID = matches[1];
-          } else {
-            console.log(
-              "Evolution chain ID not found in URL:",
-              evolutionChainUrl
-            );
           }
         } else {
           console.error(
@@ -319,8 +312,6 @@ export default async function Search(searchPoke: string) {
       if (!response.ok) {
         throw new Error(`Unable to fetch ability data: ${response.statusText}`);
       }
-      const abilityData = await response.json();
-      console.log(abilityData);
     } catch (error) {
       console.error(`Error fetching ability data: ${error}`);
       throw error;
@@ -331,16 +322,10 @@ export default async function Search(searchPoke: string) {
       if (!response.ok) {
         throw new Error(`Unable to fetch species data: ${response.statusText}`);
       }
-      const speciesData = await response.json();
-      console.log(speciesData);
     } catch (error) {
       console.error(`Error fetching species data: ${error}`);
       throw error;
     }
-
-    console.log(data);
-    console.log(movesByVersionAndMethod);
-    console.log(searchedPokemonData);
     return searchedPokemonData;
   } catch (error) {
     console.error(error);

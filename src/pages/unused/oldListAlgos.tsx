@@ -63,7 +63,6 @@ const ListAlgos: React.FC<ListAlgosProps> = ({ setList, backupList, list }) => {
     );
 
     setList(sortedList);
-    console.log(list)
     setSelectedTypes((prevSelectedTypes) => [...prevSelectedTypes, type]);
   };
 
@@ -163,7 +162,6 @@ const ListAlgos: React.FC<ListAlgosProps> = ({ setList, backupList, list }) => {
       const sortedList = [...updatedList].sort(
         (a, b) => parseInt(getIDNo(a.url)) - parseInt(getIDNo(b.url))
       );
-      console.log(sortedList);
     
       const jsonString = JSON.stringify(sortedList, null, 2);
     
