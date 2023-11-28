@@ -6,12 +6,17 @@ Live Demo - https://pokedexts.vercel.app/
 
 ## Features
 
-⭐️ Searching Data for all 1000+ Pokemon
-⭐️ Shows all forms and varieties of Pokemon, including Megas and Regional forms.
-⭐️ Dynamically displays abilities and certain Pokemon types depending on generation.
-⭐️ Display information for their moves for all nine generations and a link to Smogon recommended movesets
-⭐️ Search and filter lists of Pokemon based on Name, Dex #, Generation, and Type
-⭐️ Dark Mode, Keyboard Support
+:star2: Searching Data for all 1000+ Pokemon
+
+:star2: Shows all forms and varieties of Pokemon, including Megas and Regional forms.
+
+:star2: Dynamically displays abilities and certain Pokemon types depending on generation.
+
+:star2: Display information for their moves for all nine generations and a link to Smogon recommended movesets
+
+:star2: Search and filter lists of Pokemon based on Name, Dex #, Generation, and Type
+
+:star2: Dark Mode, Keyboard Support
 
 ## Screenshots
 
