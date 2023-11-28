@@ -155,4 +155,14 @@ if (searchPoke === "urshifu-single-strike") {
 else {return searchPoke}
 }
 
-export { otherFormatString, formatString, getIDNo, formatNames };
+function formatMegas(name: string) {
+    const splitString = name.split('-');
+    if (splitString.length >= 2 && splitString[1].toLowerCase() === 'mega') {
+        splitString.splice(1, 1);
+        const modifiedString = `mega-${splitString.join('-')}`;
+        return modifiedString;
+    }
+    return name;
+}
+
+export { otherFormatString, formatString, getIDNo, formatNames, formatMegas };

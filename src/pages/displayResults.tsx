@@ -4,6 +4,7 @@ import {
   formatString,
   otherFormatString,
   getIDNo,
+  formatMegas,
 } from "../components/formatString";
 import { PokemonData } from "../components/pokemonData";
 import sortMoves from "../components/sortMove";
@@ -295,16 +296,7 @@ export default function DisplayResults({ pokeData }: DisplayResultsProps) {
     newDisplayStates.set(moveName, !newDisplayStates.get(moveName));
     setMoveDisplayStates(newDisplayStates);
   };
-  
-  function formatMegas(name: string) {
-    const splitString = name.split('-');
-    if (splitString.length >= 2 && splitString[1].toLowerCase() === 'mega') {
-        splitString.splice(1, 1);
-        const modifiedString = `mega-${splitString.join('-')}`;
-        return modifiedString;
-    }
-    return name;
-}
+
 
   if (isLoading) {
     return (

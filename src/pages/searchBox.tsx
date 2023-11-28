@@ -6,7 +6,7 @@ import { ButtonContainer } from "../styles/normalButtons";
 import { SearchBoxStyle } from "../styles/searchBox";
 import { SearchContainer } from "../styles/searchContainer";
 import { PokemonClient } from "pokenode-ts";
-import { formatString } from "../components/formatString";
+import { formatString, formatMegas } from "../components/formatString";
 import listOfPokemon from "../libraries/pokemonlist.json";
 import { useDarkMode } from "../pages/darkModeContext";
 
@@ -155,7 +155,7 @@ export default function SearchBox() {
                   }`}
                   onMouseEnter={() => setSelectedSuggestionIndex(index)}
                 >
-                  {formatString(pokemon.name)}
+                  {formatString(formatMegas(pokemon.name))}
                 </div>
               ))}
             </div>
